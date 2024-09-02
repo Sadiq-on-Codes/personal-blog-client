@@ -1,80 +1,80 @@
 <template>
-    <div>
-      <!-- Header with Hamburger Menu -->
-      <div class="flex h-16 items-center justify-between px-4 sm:px-10">
-        <!-- Logo -->
-        <div
-          class="flex items-center justify-center w-16 bg-[--color-background-soft] rounded-full border-2 border-[--color-border]"
-        >
-          <img src="../assets/logo.svg" alt="logo">
-        </div>
-  
-        <!-- Hamburger Icon (visible on mobile) -->
-        <button 
-          @click="toggleMenu" 
-          class="text-2xl sm:hidden"
-        >
-          ☰
-        </button>
-  
-        <!-- Menu Bar (hidden on mobile, visible on larger screens) -->
-        <div
-          class="flex w-full bg-[--color-background-soft] rounded-full border-2 border-[--color-border] sm:flex hidden"
-        >
-          <div class="flex text-xl items-center justify-between mx-10 w-full">
-            <a
-              v-for="(menuItem, index) in ['ABOUT', 'PORTFOLIO', 'CONTACT']"
-              :key="index"
-              :href="'#' + menuItem.toLowerCase()"
-              :class="{
-                'text-[--color-text-hover] font-bold': activeMenuItem === menuItem,
-                'hover:text-[--color-text-hover] font-semibold': true
-              }"
-              @click="setActiveMenuItem(menuItem)"
-            >
-              {{ menuItem }}
-            </a>
-          </div>
-        </div>
+  <div class="flex h-12 gap-2">
+    <button @click="toggleMenu" v-if="!isMenuOpen" class="text-2xl sm:hidden justify-self-end">☰</button>
+
+    <div class="items-center w-full h-full sm:flex hidden">
+      <div class="w-full text-xl">
+        <span>Yahaya A. Sadick</span>
       </div>
-  
-      <!-- Mobile Menu (visible when hamburger is clicked) -->
-      <div v-if="isMenuOpen" class="flex flex-col text-xl items-center mt-4 sm:hidden">
-        <a
-          v-for="(menuItem, index) in ['ABOUT', 'PORTFOLIO', 'CONTACT']"
+      <div class="flex text-xl items-center justify-end gap-[--spacing] mx-10 w-full">
+        <router-link
+          v-for="(menuItem, index) in ['Blog', 'Projects', 'About', 'Newsletter']"
           :key="index"
-          :href="'#' + menuItem.toLowerCase()"
-          :class="{
-            'text-[--color-text-hover] font-bold': activeMenuItem === menuItem,
-            'hover:text-[--color-text-hover] font-semibold': true
-          }"
-          @click="closeMenu(menuItem)"
+          :to="menuItem.toLowerCase()"
+          class="hover:underline"
+          active-class="underline"
+          exact-active-class="underline"
         >
           {{ menuItem }}
-        </a>
+        </router-link>
+        <div
+          class="flex items-center justify-around w-28 h-12 dark:bg-[--color-background] bg-[--color-background-black] rounded-full"
+        >
+          <SunIcon
+            v-if="isDarkMode"
+            :stroke="isDarkMode ? '#090D1F' : '#ffffff'"
+            @click="toggleDarkMode"
+          />
+          <MoonIcon v-else :stroke="isDarkMode ? '#090D1F' : '#ffffff'" @click="toggleDarkMode" />
+        </div>
       </div>
     </div>
-  </template>
-  
-  <script setup lang="ts">
-  import { ref } from 'vue';
-  
-  const activeMenuItem = ref('');
-  const isMenuOpen = ref(false);
-  
-  const toggleMenu = () => {
-    isMenuOpen.value = !isMenuOpen.value;
-  };
-  
-  const setActiveMenuItem = (menuItem: string) => {
-    activeMenuItem.value = menuItem;
-  };
-  
-  const closeMenu = (menuItem: string) => {
-    setActiveMenuItem(menuItem); // Set the active menu item
-    isMenuOpen.value = false; // Close menu after selection
-  };
-  </script>
-  
-  <style></style>
-  
+    <div
+      v-if="isMenuOpen"
+      class="flex gap-[--spacing] justify-center w-full h-screen flex-col text-xl items-center sm:hidden"
+    >
+      <router-link
+        v-for="(menuItem, index) in ['Blog', 'Projects', 'About', 'Newsletter']"
+        :key="index"
+        :to="menuItem.toLowerCase()"
+        class="hover:underline"
+        active-class="underline"
+        exact-active-class="underline"
+      >
+        {{ menuItem }}
+      </router-link>
+      <div
+        class="flex items-center justify-around w-28 h-12 dark:bg-[--color-background] bg-[--color-background-black] rounded-full"
+      >
+        <SunIcon
+          v-if="isDarkMode"
+          :stroke="isDarkMode ? '#090D1F' : '#ffffff'"
+          @click="toggleDarkMode"
+        />
+        <MoonIcon v-else :stroke="isDarkMode ? '#090D1F' : '#ffffff'" @click="toggleDarkMode" />
+      </div>
+
+      <CloseIcon :fill="isDarkMode ? '#fff' : '#090D1F'" @click="isMenuOpen = false" />
+    </div>
+  </div>
+</template>
+
+<script setup lang="ts">
+import CloseIcon from '@/assets/CloseIcon.vue';
+import MoonIcon from '@/assets/MoonIcon.vue'
+import SunIcon from '@/assets/SunIcon.vue'
+import { inject, ref } from 'vue'
+
+const toggleDarkMode = inject('toggleDarkMode') as () => void
+const isDarkMode = inject('isDarkMode') as boolean
+
+const isMenuOpen = ref(false)
+
+const toggleMenu = () => {
+  isMenuOpen.value = !isMenuOpen.value
+}
+</script>
+
+<style scoped>
+/* Add your styles here */
+</style>
