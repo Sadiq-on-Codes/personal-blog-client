@@ -1,7 +1,7 @@
 <template>
   <div :class="{ dark: isDarkMode }" class="bg-[--color-background-white]">
     <HeaderComponent />
-    <!-- <router-view /> -->
+    <router-view />
   </div>
 </template>
 

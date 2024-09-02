@@ -4,7 +4,7 @@
 
     <div class="items-center w-full h-full sm:flex hidden">
       <div class="w-full text-xl">
-        <span>Yahaya A. Sadick</span>
+        <span class="font-semibold">Yahaya A. Sadick</span>
       </div>
       <div class="flex text-xl items-center justify-end gap-[--spacing] mx-10 w-full">
         <router-link
@@ -12,8 +12,8 @@
           :key="index"
           :to="menuItem.toLowerCase()"
           class="hover:underline"
-          active-class="underline"
-          exact-active-class="underline"
+          active-class="underline font-semibold"
+          exact-active-class="underline font-semibold"
         >
           {{ menuItem }}
         </router-link>
