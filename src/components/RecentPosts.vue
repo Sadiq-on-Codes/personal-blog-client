@@ -7,10 +7,13 @@
       </div>
 
       <div class="flex flex-col gap-[--spacing]">
-          <BlogPost :blogPost="blogPosts[1]" :isHalfHeight="true" />
-          <BlogPost :blogPost="blogPosts[2]" :isHalfHeight="true" />
+        <BlogPost :blogPost="blogPosts[1]" :isHalfHeight="true" />
+        <BlogPost :blogPost="blogPosts[2]" :isHalfHeight="true" />
       </div>
     </div>
+    <!-- <div>
+      <BlogPost :blogPost="blogPosts[0]" />
+    </div> -->
   </div>
 </template>
 

@@ -1,9 +1,11 @@
 <template>
-  <div
-    :class="{ 'flex-col': !isHalfHeight }"
-    class="flex gap-[--spacing] mt-[--spacing] h-full"
-  >
-    <img :class="{ 'h-1/2': isHalfHeight }" :src="blogPost.image" alt="" class="object-cover w-full" />
+  <div :class="{ 'flex-col': !isHalfHeight }" class="flex gap-[--spacing] mt-[--spacing] h-fit">
+    <img
+      :class="{ 'h-1/2': isHalfHeight }"
+      :src="blogPost.image"
+      alt=""
+      class="object-cover w-full"
+    />
     <div :class="{ 'gap-1.5': isHalfHeight }" class="flex flex-col gap-[--spacing]">
       <div class="text-sm text-[--color-post-primary]">
         <span class="font-semibold">{{ blogPost.author }}</span>
@@ -14,7 +16,9 @@
         class="text-sm text-[--color-post-secondary2] dark:text-[--color-text-dark] font-semibold"
         >{{ blogPost.title }}</span
       >
-      <span :class="{ 'text-sm': isHalfHeight }" class="text-[--color-post-secondary] text-lg">{{ blogPost.description }}</span>
+      <span :class="{ 'text-sm': isHalfHeight }" class="text-[--color-post-secondary] text-lg">{{
+        blogPost.description
+      }}</span>
       <div>
         <span
           v-for="item in blogPost.pins"
