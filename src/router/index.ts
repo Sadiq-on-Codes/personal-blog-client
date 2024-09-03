@@ -1,7 +1,7 @@
-import AboutComponent from '@/components/AboutComponent.vue'
-import BlogComponent from '@/components/BlogComponent.vue'
-import NewsLetterComponent from '@/components/NewsLetterComponent.vue'
-import ProjectsComponent from '@/components/ProjectsComponent.vue'
+import AboutComponent from '@/views/AboutComponent.vue'
+import BlogComponent from '@/views/BlogComponent.vue'
+import NewsLetterComponent from '@/views/NewsLetterComponent.vue'
+import ProjectsComponent from '@/views/ProjectsComponent.vue'
 import { createRouter, createWebHistory } from 'vue-router'
 
 const routes = [

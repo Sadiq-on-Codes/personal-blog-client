@@ -1,6 +1,8 @@
 <template>
   <div class="flex h-12 gap-2">
-    <button @click="toggleMenu" v-if="!isMenuOpen" class="text-2xl sm:hidden justify-self-end">☰</button>
+    <button @click="toggleMenu" v-if="!isMenuOpen" class="text-2xl sm:hidden justify-self-end">
+      ☰
+    </button>
 
     <div class="items-center w-full h-full sm:flex hidden">
       <div class="w-full text-xl">
@@ -18,7 +20,7 @@
           {{ menuItem }}
         </router-link>
         <div
-          class="flex items-center justify-around w-28 h-12 dark:bg-[--color-background] bg-[--color-background-black] rounded-full"
+          class="flex items-center justify-around w-28 h-12 dark:bg-[--color-background] bg-[--color-background-dark] rounded-full"
         >
           <SunIcon
             v-if="isDarkMode"
@@ -31,7 +33,7 @@
     </div>
     <div
       v-if="isMenuOpen"
-      class="flex gap-[--spacing] justify-center w-full h-screen flex-col text-xl items-center sm:hidden"
+      class="flex gap-[--spacing] justify-center w-screen h-screen flex-col dark:bg-[--color-background-dark] bg-[--color-background] text-xl items-center sm:hidden z-10"
     >
       <router-link
         v-for="(menuItem, index) in ['Blog', 'Projects', 'About', 'Newsletter']"
@@ -40,11 +42,12 @@
         class="hover:underline"
         active-class="underline"
         exact-active-class="underline"
+        @click.prevent="isMenuOpen = false"
       >
         {{ menuItem }}
       </router-link>
       <div
-        class="flex items-center justify-around w-28 h-12 dark:bg-[--color-background] bg-[--color-background-black] rounded-full"
+        class="flex items-center justify-around w-28 h-12 dark:bg-[--color-background] bg-[--color-background-dark] rounded-full"
       >
         <SunIcon
           v-if="isDarkMode"
@@ -60,9 +63,9 @@
 </template>
 
 <script setup lang="ts">
-import CloseIcon from '@/assets/CloseIcon.vue';
-import MoonIcon from '@/assets/MoonIcon.vue'
-import SunIcon from '@/assets/SunIcon.vue'
+import CloseIcon from '@/components/icons/CloseIcon.vue'
+import MoonIcon from '@/components/icons/MoonIcon.vue'
+import SunIcon from '@/components/icons/SunIcon.vue'
 import { inject, ref } from 'vue'
 
 const toggleDarkMode = inject('toggleDarkMode') as () => void
