@@ -11,7 +11,7 @@
         <BlogPost :blogPost="blogPosts[2]" :isHalfHeight="false" layout="horizontal" />
       </div>
     </div>
-    <div class="mt-[--spacing]">
+    <div class="mt-14">
       <BlogPost
         :blogPost="blogPosts[5]"
         :isHalfHeight="false"

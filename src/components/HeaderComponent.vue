@@ -1,8 +1,11 @@
 <template>
   <div class="flex h-12 gap-2">
-    <button @click="toggleMenu" v-if="!isMenuOpen" class="text-2xl sm:hidden justify-self-end">
-      ☰
-    </button>
+    <div class="flex justify-between w-full">
+      <span class="font-semibold">Yahaya A. Sadick</span>
+      <button @click="toggleMenu" v-if="!isMenuOpen" class="text-2xl sm:hidden justify-self-end">
+        ☰
+      </button>
+    </div>
 
     <div class="items-center w-full h-full sm:flex hidden">
       <div class="w-full text-xl">
