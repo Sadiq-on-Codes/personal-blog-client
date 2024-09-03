@@ -3,17 +3,22 @@
     <span class="text-xl">Recent blog posts</span>
     <div class="grid grid-cols-2 gap-[--spacing]">
       <div>
-        <BlogPost :blogPost="blogPosts[0]" />
+        <BlogPost :blogPost="blogPosts[0]" :isHalfHeight="false" layout="vertical" />
       </div>
 
       <div class="flex flex-col gap-[--spacing]">
-        <BlogPost :blogPost="blogPosts[1]" :isHalfHeight="true" />
-        <BlogPost :blogPost="blogPosts[2]" :isHalfHeight="true" />
+        <BlogPost :blogPost="blogPosts[7]" :isHalfHeight="false" layout="horizontal" />
+        <BlogPost :blogPost="blogPosts[2]" :isHalfHeight="false" layout="horizontal" />
       </div>
     </div>
-    <!-- <div>
-      <BlogPost :blogPost="blogPosts[0]" />
-    </div> -->
+    <div class="mt-[--spacing]">
+      <BlogPost
+        :blogPost="blogPosts[5]"
+        :isHalfHeight="false"
+        layout="horizontal"
+        :reverse="true"
+      />
+    </div>
   </div>
 </template>
 

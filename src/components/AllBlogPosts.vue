@@ -1,5 +1,5 @@
 <template>
-    <div class="mt-[--spacing]">
+    <div class="mt-10">
       <span class="text-xl">All blog posts</span>
       <div class="grid grid-cols-3 gap-[--spacing]">
         <div v-for="post in blogPosts" :key="post.id">
