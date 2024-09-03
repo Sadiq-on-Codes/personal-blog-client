@@ -2,10 +2,10 @@
     <div
       :class="[
         {
-          'flex-col': layout === 'vertical',
-          'flex-row': layout === 'horizontal',
-          'flex-col-reverse': layout === 'vertical' && reverse,
-          'flex-row-reverse': layout === 'horizontal' && reverse
+          'flex-col': layout === 'vertical' || isMobileOrTablet,
+          'flex-row': layout === 'horizontal' && !isMobileOrTablet,
+          'flex-col-reverse': (layout === 'vertical' || isMobileOrTablet) && reverse,
+          'flex-row-reverse': layout === 'horizontal' && reverse && !isMobileOrTablet
         },
         'flex gap-[--spacing] mt-[--spacing] h-fit'
       ]"
@@ -13,10 +13,9 @@
       <img
         :class="[
           {
-            'h-1/2 w-full': isHalfHeight && layout === 'vertical',
-            'h-full w-1/2': isHalfHeight && layout === 'horizontal',
-            'h-full w-full': !isHalfHeight && layout === 'vertical',
-            'h-full w-1/2': !isHalfHeight && layout === 'horizontal'
+            'h-1/2 w-full': isHalfHeight && (layout === 'vertical' || isMobileOrTablet),
+            'h-full w-1/2': layout === 'horizontal' && !isMobileOrTablet,
+            'h-full w-full': !isHalfHeight && (layout === 'vertical' || isMobileOrTablet)
           },
           'object-cover'
         ]"
@@ -49,6 +48,7 @@
   </template>
   
   <script setup lang="ts">
+  import { ref, onMounted } from 'vue'
   import { defineProps } from 'vue'
   
   const props = defineProps({
@@ -78,6 +78,18 @@
       default: false // If true, reverses the order of image and content
     }
   })
+  
+  const isMobileOrTablet = ref(false)
+  
+  const checkIsMobileOrTablet = () => {
+    isMobileOrTablet.value = window.innerWidth <= 1024 // Adjust breakpoint for tablets
+  }
+  
+  onMounted(() => {
+    checkIsMobileOrTablet()
+    window.addEventListener('resize', checkIsMobileOrTablet)
+  })
+  
   </script>
   
   <style scoped>

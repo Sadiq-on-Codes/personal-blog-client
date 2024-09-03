@@ -1,10 +1,8 @@
 <template>
   <div class="flex h-12 gap-2">
-    <div class="flex justify-between w-full">
+    <div class="sm:hidden flex items-center justify-between w-full">
       <span class="font-semibold">Yahaya A. Sadick</span>
-      <button @click="toggleMenu" v-if="!isMenuOpen" class="text-2xl sm:hidden justify-self-end">
-        ☰
-      </button>
+      <button @click="toggleMenu" v-if="!isMenuOpen" class="text-2xl justify-self-end">☰</button>
     </div>
 
     <div class="items-center w-full h-full sm:flex hidden">
@@ -36,7 +34,7 @@
     </div>
     <div
       v-if="isMenuOpen"
-      class="flex gap-[--spacing] justify-center w-screen h-screen flex-col dark:bg-[--color-background-dark] bg-[--color-background] text-xl items-center sm:hidden z-10"
+      class="fixed inset-0 flex flex-col items-center justify-center gap-[--spacing] dark:bg-[--color-background-dark] bg-[--color-background] text-xl z-50"
     >
       <router-link
         v-for="(menuItem, index) in ['Blog', 'Projects', 'About', 'Newsletter']"

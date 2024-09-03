@@ -1,7 +1,7 @@
 <template>
   <div class="mt-[--spacing]">
     <span class="text-xl">Recent blog posts</span>
-    <div class="grid grid-cols-2 gap-[--spacing]">
+    <div class="grid sm:grid-cols-2 grid-cols-1 gap-[--spacing]">
       <div>
         <BlogPost :blogPost="blogPosts[0]" :isHalfHeight="false" layout="vertical" />
       </div>

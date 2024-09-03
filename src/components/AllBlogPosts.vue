@@ -1,7 +1,7 @@
 <template>
     <div class="mt-14">
       <span class="text-xl">All blog posts</span>
-      <div class="grid grid-cols-3 gap-[--spacing]">
+      <div class="grid sm:grid-cols-3 grid-cols-1  gap-[--spacing]">
         <div v-for="post in blogPosts" :key="post.id">
           <BlogPost :blogPost="post" />
         </div>
