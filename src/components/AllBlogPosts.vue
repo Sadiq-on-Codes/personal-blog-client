@@ -1,23 +1,31 @@
 <template>
-    <div class="mt-14">
-      <span class="text-xl">All blog posts</span>
-      <div class="grid sm:grid-cols-3 grid-cols-1  gap-[--spacing]">
-        <div v-for="post in blogPosts" :key="post.id">
+  <div class="mt-14">
+    <span class="text-xl">{{ !horizontal ? 'All blog posts' : 'Recent blog posts' }}</span>
+    <div :class="['grid gap-[--spacing]', horizontal ? 'grid-cols-1' : 'sm:grid-cols-3']">
+      <div v-for="post in blogPosts" :key="post.id">
+        <router-link :to="{ name: 'BlogDetailsPage', params: { id: post.id } }">
           <BlogPost :blogPost="post" />
-        </div>
+        </router-link>
       </div>
     </div>
-  </template>
-  
-  <script setup lang="ts">
-  import { blogPosts } from '@/data/blogPosts'
-  import BlogPost from './BlogPost.vue'
-  </script>
-  
-  <style scoped>
-  /* Ensure grid items take full height */
-  .grid-cols-2 > div {
-    height: 100%;
+  </div>
+</template>
+
+<script setup lang="ts">
+import { defineProps } from 'vue'
+import BlogPost from './PostComponent.vue'
+import { blogPosts } from '@/data/blogPosts'
+
+defineProps({
+  horizontal: {
+    type: Boolean,
+    default: false
   }
-  </style>
-  
+})
+</script>
+
+<style scoped>
+.grid-cols-2 > div {
+  height: 100%;
+}
+</style>

@@ -12,7 +12,7 @@
   --vt-c-blue: #6941c6;
 
   --vt-c-gray: #667085;
-  --vt-c-ash: #c0c0c0;
+  --vt-c-ash: C0C5D0;
   --vt-c-orange: #f35034;
 
   --vt-c-divider-light-1: rgba(60, 60, 60, 0.29);
@@ -107,7 +107,7 @@ body {
   background: var(--color-background-dark);
   color: var(--color-text-dark);
 }
-
-/* * {
+/* 
+* {
   outline: 1px solid;
 } */

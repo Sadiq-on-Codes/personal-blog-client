@@ -51,7 +51,7 @@
   import { ref, onMounted } from 'vue'
   import { defineProps } from 'vue'
   
-  const props = defineProps({
+defineProps({
     blogPost: {
       type: Object,
       required: true,

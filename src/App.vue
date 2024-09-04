@@ -2,12 +2,14 @@
   <div :class="{ dark: isDarkMode }" class="bg-[--color-background-white]">
     <HeaderComponent />
     <router-view />
+    <FooterComponent />
   </div>
 </template>
 
 <script setup lang="ts">
 import { ref, provide, onMounted } from 'vue'
 import HeaderComponent from './components/HeaderComponent.vue'
+import FooterComponent from './components/FooterComponent.vue'
 
 const isDarkMode = ref(false)
 
