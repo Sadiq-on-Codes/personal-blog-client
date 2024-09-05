@@ -20,16 +20,7 @@
         >
           {{ menuItem }}
         </router-link>
-        <div
-          class="flex items-center justify-around w-28 h-12 dark:bg-[--color-background] bg-[--color-background-dark] rounded-full"
-        >
-          <SunIcon
-            v-if="isDarkMode"
-            :stroke="isDarkMode ? '#090D1F' : '#ffffff'"
-            @click="toggleDarkMode"
-          />
-          <MoonIcon v-else :stroke="isDarkMode ? '#090D1F' : '#ffffff'" @click="toggleDarkMode" />
-        </div>
+       <DarkModeToggle />
       </div>
     </div>
     <div
@@ -47,16 +38,7 @@
       >
         {{ menuItem }}
       </router-link>
-      <div
-        class="flex items-center justify-around w-28 h-12 dark:bg-[--color-background] bg-[--color-background-dark] rounded-full"
-      >
-        <SunIcon
-          v-if="isDarkMode"
-          :stroke="isDarkMode ? '#090D1F' : '#ffffff'"
-          @click="toggleDarkMode"
-        />
-        <MoonIcon v-else :stroke="isDarkMode ? '#090D1F' : '#ffffff'" @click="toggleDarkMode" />
-      </div>
+      <DarkModeToggle />
 
       <CloseIcon :fill="isDarkMode ? '#fff' : '#090D1F'" @click="isMenuOpen = false" />
     </div>
@@ -65,11 +47,9 @@
 
 <script setup lang="ts">
 import CloseIcon from '@/components/icons/CloseIcon.vue'
-import MoonIcon from '@/components/icons/MoonIcon.vue'
-import SunIcon from '@/components/icons/SunIcon.vue'
 import { inject, ref } from 'vue'
+import DarkModeToggle from './common/DarkModeToggle.vue';
 
-const toggleDarkMode = inject('toggleDarkMode') as () => void
 const isDarkMode = inject('isDarkMode') as boolean
 
 const isMenuOpen = ref(false)

@@ -1,17 +1,21 @@
 <template>
   <div :class="{ dark: isDarkMode }" class="bg-[--color-background-white]">
-    <HeaderComponent />
+    <!-- Conditionally render the header based on the current route -->
+    <HeaderComponent v-if="showHeader" />
     <router-view />
-    <FooterComponent />
+    <!-- Conditionally render the footer based on the current route -->
+    <FooterComponent v-if="showFooter" />
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref, provide, onMounted } from 'vue'
+import { ref, provide, onMounted, computed } from 'vue'
+import { useRoute } from 'vue-router'
 import HeaderComponent from './components/HeaderComponent.vue'
 import FooterComponent from './components/FooterComponent.vue'
 
 const isDarkMode = ref(false)
+const route = useRoute()
 
 const toggleDarkMode = () => {
   isDarkMode.value = !isDarkMode.value
@@ -27,6 +31,11 @@ onMounted(() => {
   isDarkMode.value = storedDarkMode
   document.documentElement.classList.toggle('dark', storedDarkMode)
 })
+
+const hideOnRoutes = ['/register', '/dashboard'];
+
+const showHeader = computed(() => !hideOnRoutes.includes(route.path))
+const showFooter = computed(() => !hideOnRoutes.includes(route.path))
 </script>
 
 <style scoped>

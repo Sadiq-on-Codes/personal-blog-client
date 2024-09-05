@@ -1,5 +1,7 @@
 import AboutComponent from '@/views/AboutComponent.vue'
 import AuthenticationComponent from '@/views/Admin/AuthenticationComponent.vue'
+import DashboardComponent from '@/views/Admin/DashboardComponent.vue'
+import PostsComponent from '@/views/Admin/PostsComponent.vue'
 import BlogComponent from '@/views/BlogComponent.vue'
 import BlogDetailsPage from '@/views/BlogDetailsPage.vue'
 import NewsLetterComponent from '@/views/NewsLetterComponent.vue'
@@ -18,7 +20,9 @@ const routes = [
     component: BlogDetailsPage,
     props: true
   },
-  { path: '/register', component: AuthenticationComponent }
+  { path: '/register', component: AuthenticationComponent },
+  { path: '/posts', component: PostsComponent },
+  { path: '/dashboard', component: DashboardComponent },
 ]
 
 export const router = createRouter({

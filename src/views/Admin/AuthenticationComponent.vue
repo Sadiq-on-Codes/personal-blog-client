@@ -6,11 +6,16 @@
           class="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700"
         >
           <div class="p-6 space-y-4 md:space-y-6 sm:p-8">
-            <h1
-              class="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white"
-            >
-              {{ mode === 'register' ? 'Create an account' : 'Login' }}
-            </h1>
+            <div class="flex justify-between items-center">
+              <h1
+                class="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white"
+              >
+                {{ mode === 'register' ? 'Create an account' : 'Login' }}
+              </h1>
+
+              <DarkModeToggle :reduceSize="true" />
+            </div>
+
             <form class="space-y-4 md:space-y-6" @submit.prevent="submitForm">
               <InputField
                 v-if="mode === 'register'"
@@ -48,7 +53,9 @@
                 linkText="Terms and Conditions"
                 required
               />
-              <Button>{{ mode === 'register' ? 'Create an account' : 'Login' }}</Button>
+              <Button @click="submitForm">{{
+                mode === 'register' ? 'Create an account' : 'Login'
+              }}</Button>
               <p class="text-sm font-light text-gray-500 dark:text-gray-400">
                 {{ mode === 'register' ? 'Already have an account?' : 'Don’t have an account?' }}
                 <a
@@ -71,11 +78,12 @@
 import { ref } from 'vue'
 import axios from 'axios'
 import { useRouter } from 'vue-router'
-import InputField from '../../components/common/InputField.vue'
-import Checkbox from '../../components/common/Checkbox.vue'
-import Button from '../../components/common/Button.vue'
+import InputField from '@/components/common/InputComponent.vue'
+import Checkbox from '@/components/common/CheckboxComponent.vue'
+import Button from '@/components/common/ButtonComponent.vue'
+import DarkModeToggle from '@/components/common/DarkModeToggle.vue'
 
-const mode = ref<'login' | 'register'>('register')
+const mode = ref<'login' | 'register'>('login')
 const username = ref('')
 const email = ref('')
 const password = ref('')
@@ -102,7 +110,7 @@ const submitForm = async () => {
 
     const response = await axios.post(url, data)
     localStorage.setItem('token', response.data.token)
-    router.push('/blog')
+    router.push('/dashboard')
   } catch (error: any) {
     console.error(
       `${mode.value === 'register' ? 'Registration' : 'Login'} error:`,

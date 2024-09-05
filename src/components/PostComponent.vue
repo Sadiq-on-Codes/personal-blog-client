@@ -23,7 +23,7 @@
         alt=""
       />
       <div :class="[{ 'gap-1.5': isHalfHeight }, 'flex flex-col gap-[--spacing] flex-1']">
-        <div class="text-sm text-[--color-post-primary]">
+        <div v-if="isBlog" class="text-sm text-[--color-post-primary]">
           <span class="font-semibold">{{ blogPost.author }}</span>
           <span class="ml-0.5">•</span>
           <span class="ml-0.5 font-semibold">{{ blogPost.date }}</span>
@@ -76,6 +76,10 @@ defineProps({
     reverse: {
       type: Boolean,
       default: false // If true, reverses the order of image and content
+    },
+    isBlog: {
+      type: Boolean,
+      default: true
     }
   })
   
