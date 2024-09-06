@@ -1,4 +1,5 @@
 import AboutComponent from '@/views/AboutComponent.vue'
+import AddPost from '@/views/Admin/AddPost.vue'
 import AuthenticationComponent from '@/views/Admin/AuthenticationComponent.vue'
 import DashboardComponent from '@/views/Admin/DashboardComponent.vue'
 import PostsComponent from '@/views/Admin/PostsComponent.vue'
@@ -22,13 +23,21 @@ const routes = [
   },
   { path: '/register', component: AuthenticationComponent },
   { path: '/posts', component: PostsComponent },
-  { path: '/dashboard', component: DashboardComponent },
+  {
+    path: '/dashboard',
+    component: DashboardComponent,
+    children: [
+      { path: 'home', component: DashboardComponent },
+      { path: 'view-posts', component: PostsComponent },
+      { path: 'add-posts', component: AddPost }
+    ]
+  }
 ]
 
 export const router = createRouter({
   history: createWebHistory(),
   routes
-});
+})
 
 // router.beforeEach((to, from, next) => {
 //   const token = localStorage.getItem('token');

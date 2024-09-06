@@ -8,8 +8,8 @@ export interface Post {
   _id: string
   author?: string
   date?: string
-  image: string
+  image: File | null 
   title: string
   description: string
-  pins: Pin[]
+  pins?: Pin[]
 }

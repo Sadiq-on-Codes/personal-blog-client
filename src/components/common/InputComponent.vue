@@ -17,13 +17,13 @@
   </div>
 </template>
 
-<script setup>
-import { defineProps, defineEmits } from 'vue';
+<script setup lang="ts">
+import { defineProps, defineEmits } from 'vue'
 
-const props = defineProps({
+defineProps({
   type: {
     type: String,
-    default: 'text',
+    default: 'text'
   },
   id: String,
   name: String,
@@ -31,18 +31,19 @@ const props = defineProps({
   label: String,
   inputClass: {
     type: String,
-    default: 'bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500',
+    default:
+      'bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'
   },
   required: {
     type: Boolean,
-    default: false,
+    default: false
   },
-  modelValue: String, // Add modelValue prop to support v-model
-});
+  modelValue: String // Add modelValue prop to support v-model
+})
 
-const emit = defineEmits(['update:modelValue']);
+const emit = defineEmits(['update:modelValue'])
 
-const onInput = (event) => {
-  emit('update:modelValue', event.target.value);
-};
+const onInput = (event: any) => {
+  emit('update:modelValue', event.target.value)
+}
 </script>

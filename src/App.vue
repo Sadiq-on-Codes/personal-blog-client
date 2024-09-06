@@ -32,7 +32,15 @@ onMounted(() => {
   document.documentElement.classList.toggle('dark', storedDarkMode)
 })
 
-const hideOnRoutes = ['/register', '/dashboard'];
+const hideOnRoutes = [
+  '/register',
+  '/dashboard',
+  '/dashboard/home',
+  '/dashboard/add-posts',
+  '/dashboard/view-posts',
+  '/dashboard/view-projects',
+]
+
 
 const showHeader = computed(() => !hideOnRoutes.includes(route.path))
 const showFooter = computed(() => !hideOnRoutes.includes(route.path))

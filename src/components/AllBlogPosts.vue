@@ -14,7 +14,6 @@
 <script setup lang="ts">
 import { defineProps, onMounted, ref } from 'vue'
 import BlogPost from './PostComponent.vue'
-// import { blogPosts } from '@/data/blogPosts';
 import { fetchBlogPosts } from '@/services/apiServices.js'
 import type { Post } from '@/types'
 

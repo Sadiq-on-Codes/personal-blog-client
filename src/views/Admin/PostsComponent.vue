@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="flex justify-center items-start w-full md:inset-0 h-modal md:h-full">
       <select v-model="selectedContent" @change="fetchData">
         <option value="projects">Projects</option>
         <option value="blogPosts">Blog Posts</option>
