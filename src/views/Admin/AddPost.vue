@@ -40,7 +40,6 @@
               type="file"
               placeholder="Select image"
               label="Image"
-              required
               @change="handleFileUpload"
             />
 
@@ -48,13 +47,13 @@
               <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
                 Content
               </label>
-              <div>
-                <QuillEditor v-model:content="form.description" theme="snow" toolbar="full" />
+              <div ref="descriptionContainer" class="quill-editor">
+                <!-- Quill Editor will be initialized here -->
               </div>
             </div>
 
             <Button @click="submitForm" type="submit">
-              {{ 'Publish' }}
+              {{ form._id ? 'Update' : 'Publish' }}
             </Button>
           </div>
         </form>
@@ -64,15 +63,17 @@
 </template>
 
 <script setup lang="ts">
-import { reactive } from 'vue'
+import { ref, onMounted, watch } from 'vue'
+import { useRoute, useRouter } from 'vue-router'
 import Button from '@/components/common/ButtonComponent.vue'
 import InputComponent from '@/components/common/InputComponent.vue'
-import { QuillEditor } from '@vueup/vue-quill'
-import '@vueup/vue-quill/dist/vue-quill.snow.css'
+import Quill from 'quill'
+import 'quill/dist/quill.snow.css'
+import { createPost, updateBlogPost, fetchBlogPostById } from '@/services/apiServices'
 import type { Post } from '@/types'
-import { createPost } from '@/services/apiServices'
 
-const form = reactive<Post>({
+const form = ref<Post>({
+  _id: '',
   title: '',
   author: '',
   date: '',
@@ -80,84 +81,82 @@ const form = reactive<Post>({
   description: ''
 })
 
-const imageHandler = async () => {
-  const input = document.createElement('input')
-  input.setAttribute('type', 'file')
-  input.setAttribute('accept', 'image/*')
-  input.click()
+const route = useRoute()
+const router = useRouter()
+const descriptionContainer = ref<HTMLElement | null>(null)
 
-  input.onchange = async () => {
-    const file = input.files?.[0]
-    if (file) {
-      const formData = new FormData()
-      formData?.append('image', file)
-
-      // Replace this URL with your actual image upload endpoint
-      const uploadUrl = 'YOUR_IMAGE_UPLOAD_ENDPOINT'
-      const response = await fetch(uploadUrl, {
-        method: 'POST',
-        body: formData
-      })
-
-      const data = await response.json()
-      const imageUrl = data.url // Replace with actual URL returned by your server
-
-      // Insert the image URL into the editor
-      const quill = QuillEditor?.getEditor()
-      const range = quill?.getSelection()
-      quill?.insertEmbed(range?.index, 'image', imageUrl)
+// Fetch existing post data for editing
+onMounted(async () => {
+  const id = route.query.id as string
+  if (id) {
+    try {
+      const post = await fetchBlogPostById(id)
+      form.value = post
+      setQuillContent(post.description)
+    } catch (error) {
+      console.error('Error fetching post data', error)
     }
+  }
+})
+
+// Initialize Quill Editor and set content
+const setQuillContent = (content: string) => {
+  if (descriptionContainer.value) {
+    const quill = new Quill(descriptionContainer.value, {
+      theme: 'snow',
+      readOnly: false,
+      modules: {
+        toolbar: true
+      }
+    })
+    
+    // Parse and set the content
+    const descriptionContent = JSON.parse(content)
+    quill.setContents(descriptionContent)
+    
+    // Update form when content changes
+    quill.on('text-change', () => {
+      form.value.description = JSON.stringify(quill.getContents())
+    })
   }
 }
 
-const quillModules: Partial<Record<string, any>> = {
-  toolbar: {
-    container: [
-      [{ header: '1' }, { header: '2' }, { font: [] }],
-      [{ list: 'ordered' }, { list: 'bullet' }],
-      [{ script: 'sub' }, { script: 'super' }],
-      [{ indent: '-1' }, { indent: '+1' }],
-      [{ direction: 'rtl' }],
-      [{ size: ['small', 'medium', 'large', 'huge'] }],
-      [{ color: [] }, { background: [] }],
-      [{ align: [] }],
-      ['link', 'image', 'video'],
-      ['clean'] // remove formatting button
-    ],
-    handlers: {
-      image: imageHandler
-    }
-  }
-}
-
+// Handle image file upload
 const handleFileUpload = (event: Event) => {
   const input = event.target as HTMLInputElement
   if (input.files && input.files.length > 0) {
-    form.image = input.files[0]
+    form.value.image = input.files[0]
   }
 }
 
+// Convert Quill content to string
 const getDescriptionAsString = (): string => {
-  if (typeof form.description === 'object') {
-    return JSON.stringify(form.description)
-  }
-  return form.description as string
+  return typeof form.value.description === 'object'
+    ? JSON.stringify(form.value.description)
+    : form.value.description as string
 }
 
+// Submit the form
 const submitForm = async () => {
   try {
     const formData = new FormData()
-    formData.append('title', form.title)
-    formData.append('author', form.author)
-    formData.append('date', form.date)
+    formData.append('title', form.value.title)
+    formData.append('author', form.value.author)
+    formData.append('date', form.value.date)
     formData.append('description', getDescriptionAsString())
-    if (form.image) {
-      formData.append('image', form.image)
+    if (form.value.image) {
+      formData.append('image', form.value.image)
     }
 
-    const response = await createPost(formData)
+    if (form.value._id) {
+      await updateBlogPost(form.value._id, formData)
+      console.log('Post updated successfully')
+    } else {
+      await createPost(formData)
+      console.log('Post created successfully')
+    }
 
-    console.log('Form submitted successfully', response)
+    router.push({ path: '/dashboard/view-posts' }) // Navigate to the posts list or wherever you need
   } catch (error) {
     console.error('Error submitting form', error)
   }
@@ -167,5 +166,8 @@ const submitForm = async () => {
 <style scoped>
 .ql-container.ql-snow {
   height: 20em !important;
+}
+.quill-editor {
+  height: 20em;
 }
 </style>
