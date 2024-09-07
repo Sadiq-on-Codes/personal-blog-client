@@ -165,7 +165,7 @@ const submitForm = async () => {
 </script>
 
 <style scoped>
-.ql-container {
-  height: 20em;
+.ql-container.ql-snow {
+  height: 20em !important;
 }
 </style>
