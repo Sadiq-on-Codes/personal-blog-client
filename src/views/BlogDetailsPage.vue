@@ -1,5 +1,5 @@
 <template>
-  <div class="flex flex-col-reverse sm:flex-row gap-[--spacing]">
+  <div class="flex flex-col-reverse sm:flex-row gap-[--spacing] h-screen">
     <div class="sm:w-1/3 w-full">
       <AllBlogPosts :horizontal="true" />
     </div>
@@ -54,5 +54,6 @@ onMounted(async () => {
 <style>
 .ql-container.ql-snow {
   border: none;
+  height: 100vh;
 }
 </style>

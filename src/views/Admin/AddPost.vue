@@ -1,6 +1,6 @@
 <template>
   <div aria-hidden="true" class="flex justify-center items-start w-full md:inset-0 md:h-full">
-    <div class="relative p-4 h-full md:h-auto">
+    <div class="relative w-full p-4 h-full md:h-auto">
       <div class="relative p-4 bg-white rounded-lg shadow dark:bg-gray-800 sm:p-5">
         <form @submit.prevent="submitForm">
           <div class="flex flex-col gap-[--spacing]">
@@ -44,7 +44,7 @@
               @change="handleFileUpload"
             />
 
-            <div class="">
+            <div>
               <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
                 Content
               </label>
@@ -80,6 +80,56 @@ const form = reactive<Post>({
   description: ''
 })
 
+const imageHandler = async () => {
+  const input = document.createElement('input')
+  input.setAttribute('type', 'file')
+  input.setAttribute('accept', 'image/*')
+  input.click()
+
+  input.onchange = async () => {
+    const file = input.files?.[0]
+    if (file) {
+      const formData = new FormData()
+      formData?.append('image', file)
+
+      // Replace this URL with your actual image upload endpoint
+      const uploadUrl = 'YOUR_IMAGE_UPLOAD_ENDPOINT'
+      const response = await fetch(uploadUrl, {
+        method: 'POST',
+        body: formData
+      })
+
+      const data = await response.json()
+      const imageUrl = data.url // Replace with actual URL returned by your server
+
+      // Insert the image URL into the editor
+      const quill = QuillEditor?.getEditor()
+      const range = quill?.getSelection()
+      quill?.insertEmbed(range?.index, 'image', imageUrl)
+    }
+  }
+}
+
+const quillModules: Partial<Record<string, any>> = {
+  toolbar: {
+    container: [
+      [{ header: '1' }, { header: '2' }, { font: [] }],
+      [{ list: 'ordered' }, { list: 'bullet' }],
+      [{ script: 'sub' }, { script: 'super' }],
+      [{ indent: '-1' }, { indent: '+1' }],
+      [{ direction: 'rtl' }],
+      [{ size: ['small', 'medium', 'large', 'huge'] }],
+      [{ color: [] }, { background: [] }],
+      [{ align: [] }],
+      ['link', 'image', 'video'],
+      ['clean'] // remove formatting button
+    ],
+    handlers: {
+      image: imageHandler
+    }
+  }
+}
+
 const handleFileUpload = (event: Event) => {
   const input = event.target as HTMLInputElement
   if (input.files && input.files.length > 0) {
@@ -113,6 +163,7 @@ const submitForm = async () => {
   }
 }
 </script>
+
 <style>
 .ql-container {
   height: 20em !important;
