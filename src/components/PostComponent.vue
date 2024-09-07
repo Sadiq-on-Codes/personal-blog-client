@@ -19,7 +19,7 @@
         },
         'object-cover'
       ]"
-      :src="`http://localhost:5000/${blogPost.image}`"
+      :src="`${apiUrl}${blogPost.image}`"
       alt=""
     />
     <div :class="[{ 'gap-1.5': isHalfHeight }, 'flex flex-col gap-[--spacing] flex-1']">
@@ -48,6 +48,7 @@
 <script setup lang="ts">
 import { ref, onMounted, computed } from 'vue'
 import { defineProps } from 'vue'
+import { apiUrl } from '@/utils'
 import Quill from 'quill'
 import 'quill/dist/quill.snow.css'
 
@@ -94,8 +95,6 @@ onMounted(() => {
   window.addEventListener('resize', checkIsMobileOrTablet)
 })
 
-console.log('http://localhost:5000/' + props.blogPost.image)
-
 // Convert Quill Delta to HTML
 const deltaToHtml = (delta: any): string => {
   const quill = new Quill(document.createElement('div'))
@@ -109,8 +108,4 @@ const formattedDescription = computed(() => {
 })
 </script>
 
-<style scoped>
-.ql-container {
-  height: 20em;
-}
-</style>
+<style scoped></style>

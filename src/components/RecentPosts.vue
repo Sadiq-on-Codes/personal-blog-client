@@ -14,17 +14,17 @@
 
       <div class="flex flex-col gap-[--spacing]">
         <router-link v-if="blogPosts?.length > 0" :to="{ name: 'BlogDetailsPage', params: { id: blogPosts[0]?._id } }">
-          <BlogPost :blogPost="blogPosts[0]" :isHalfHeight="false" layout="horizontal" />
+          <BlogPost :blogPost="blogPosts[1]" :isHalfHeight="false" layout="horizontal" />
         </router-link>
         <router-link v-if="blogPosts?.length > 0" :to="{ name: 'BlogDetailsPage', params: { id: blogPosts[0]?._id } }">
-          <BlogPost :blogPost="blogPosts[0]" :isHalfHeight="false" layout="horizontal" />
+          <BlogPost :blogPost="blogPosts[2]" :isHalfHeight="false" layout="horizontal" />
         </router-link>
       </div>
     </div>
     <div class="mt-14">
       <router-link v-if="blogPosts?.length > 0" :to="{ name: 'BlogDetailsPage', params: { id: blogPosts[0]?._id } }">
         <BlogPost
-          :blogPost="blogPosts[0 ]"
+          :blogPost="blogPosts[3]"
           :isHalfHeight="false"
           layout="horizontal"
           :reverse="true"
@@ -47,7 +47,6 @@ onMounted(async () => {
 </script>
 
 <style scoped>
-/* Ensure grid items take full height */
 .grid-cols-2 > div {
   height: 100%;
 }
