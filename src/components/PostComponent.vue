@@ -19,7 +19,7 @@
         },
         'object-cover'
       ]"
-      :src="blogPost.image"
+      :src="`http://localhost:5000/${blogPost.image}`"
       alt=""
     />
     <div :class="[{ 'gap-1.5': isHalfHeight }, 'flex flex-col gap-[--spacing] flex-1']">
@@ -93,6 +93,8 @@ onMounted(() => {
   checkIsMobileOrTablet()
   window.addEventListener('resize', checkIsMobileOrTablet)
 })
+
+console.log('http://localhost:5000/' + props.blogPost.image)
 
 // Convert Quill Delta to HTML
 const deltaToHtml = (delta: any): string => {

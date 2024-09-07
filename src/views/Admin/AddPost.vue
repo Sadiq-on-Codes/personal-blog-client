@@ -86,37 +86,40 @@ const form = reactive<Post>({
 // Handle file input changes
 const handleFileUpload = (event: Event) => {
   const input = event.target as HTMLInputElement
-  if (input.files) {
-    const file = input.files[0]
-    form.image = URL.createObjectURL(file) // Use a URL object to preview the image
+  if (input.files && input.files.length > 0) {
+    form.image = input.files[0] // Store the file directly in the form object
   }
 }
 
-// Convert Quill editor content to plain string
-const getDescriptionAsString = () => {
+// Convert Quill editor content to a string
+const getDescriptionAsString = (): string => {
   if (typeof form.description === 'object') {
-    // Convert Quill editor content to a string
     return JSON.stringify(form.description)
   }
-  return form.description
+  return form.description as string
 }
 
 // Submit form data to the API
 const submitForm = async () => {
   try {
-    const response = await axios.post(
-      'http://localhost:5000/api/blogPosts',
-      {
-        ...form,
-        description: getDescriptionAsString(), // Ensure description is a string
-        image: form.image // You might need to adjust this if your API expects the image differently
-      },
-      {
-        headers: {
-          'Content-Type': 'application/json'
-        }
+    // Create a FormData object to handle file uploads
+    const formData = new FormData()
+    formData.append('title', form.title)
+    formData.append('author', form.author)
+    formData.append('date', form.date)
+    formData.append('description', getDescriptionAsString()) // Convert description to string
+    if (form.image) {
+      // Append the image file if it exists
+      formData.append('image', form.image)
+    }
+
+    // Post the form data to the API
+    const response = await axios.post('http://localhost:5000/api/blogPosts', formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data' // Set content type for file upload
       }
-    )
+    })
+
     // Handle success (e.g., show a success message or redirect)
     console.log('Form submitted successfully', response.data)
   } catch (error) {
@@ -125,9 +128,3 @@ const submitForm = async () => {
   }
 }
 </script>
-
-<style>
-.ql-container {
-  height: 20em;
-}
-</style>

@@ -5,9 +5,9 @@ export interface Pin {
 }
 
 export interface Post {
-  _id: string
-  author?: string
-  date?: string
+  _id?: string
+  author: string
+  date: string
   image: File | null 
   title: string
   description: string
