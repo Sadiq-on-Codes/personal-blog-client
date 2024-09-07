@@ -11,16 +11,16 @@
       </div>
       <div class="flex text-xl items-center justify-end gap-[--spacing] mx-10 w-full">
         <router-link
-          v-for="(menuItem, index) in ['Blog', 'Projects', 'About', 'Newsletter']"
+          v-for="(menuItem, index) in menuItems"
           :key="index"
-          :to="menuItem.toLowerCase()"
+          :to="{ name: menuItem.routeName }"
           class="hover:underline"
           active-class="underline font-semibold"
           exact-active-class="underline font-semibold"
         >
-          {{ menuItem }}
+          {{ menuItem.name }}
         </router-link>
-       <DarkModeToggle />
+        <DarkModeToggle />
       </div>
     </div>
     <div
@@ -48,11 +48,17 @@
 <script setup lang="ts">
 import CloseIcon from '@/components/icons/CloseIcon.vue'
 import { inject, ref } from 'vue'
-import DarkModeToggle from './common/DarkModeToggle.vue';
+import DarkModeToggle from './common/DarkModeToggle.vue'
 
 const isDarkMode = inject('isDarkMode') as boolean
 
 const isMenuOpen = ref(false)
+const menuItems = [
+  { name: 'Blog', routeName: 'BlogComponent' },
+  { name: 'Projects', routeName: 'ProjectsComponent' },
+  { name: 'About', routeName: 'AboutComponent' },
+  { name: 'Newsletter', routeName: 'NewsLetterComponent' }
+]
 
 const toggleMenu = () => {
   isMenuOpen.value = !isMenuOpen.value

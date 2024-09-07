@@ -1,8 +1,11 @@
 <template>
-  <div class="flex flex-col-reverse sm:flex-row gap-[--spacing] h-screen">
-    <div class="sm:w-1/3 w-full">
+  <div class="flex flex-col-reverse sm:flex-row gap-[--spacing]">
+    <!-- AllBlogPosts Section -->
+    <div class="all-blog-posts sm:w-1/3 w-full sm:h-screen overflow-y-auto">
       <AllBlogPosts :horizontal="true" />
     </div>
+
+    <!-- BlogDetails Section -->
     <div class="sm:w-2/3 w-full mt-14 flex flex-col gap-[--spacing]">
       <span class="text-sm text-[--color-post-primary] font-semibold">{{ blogDetails?.date }}</span>
       <span
@@ -51,9 +54,32 @@ onMounted(async () => {
 })
 </script>
 
-<style>
+<style scoped>
+
+.sm\:h-screen {
+  height: 100vh;
+}
+
+
+.all-blog-posts {
+  scrollbar-width: thin;
+}
+
+.all-blog-posts::-webkit-scrollbar {
+  width: 8px; 
+}
+
+.all-blog-posts::-webkit-scrollbar-thumb {
+  background-color: rgba(0, 0, 0, 0.2);
+  border-radius: 10px;
+}
+
+.all-blog-posts::-webkit-scrollbar-track {
+  background-color: transparent;
+}
+
 .ql-container.ql-snow {
   border: none;
-  height: 100vh;
+  /* height: 100vh; */
 }
 </style>

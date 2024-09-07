@@ -1,5 +1,5 @@
 <template>
-  <div aria-hidden="true" class="flex justify-center items-start w-full md:inset-0 md:h-full">
+  <div aria-hidden="true" class="flex justify-center items-start w-full md:inset-0 md:h-screen">
     <div class="relative w-full p-4 h-full md:h-auto">
       <div class="relative p-4 bg-white rounded-lg shadow dark:bg-gray-800 sm:p-5">
         <form @submit.prevent="submitForm">
@@ -164,8 +164,8 @@ const submitForm = async () => {
 }
 </script>
 
-<style>
+<style scoped>
 .ql-container {
-  height: 20em !important;
+  height: 20em;
 }
 </style>
