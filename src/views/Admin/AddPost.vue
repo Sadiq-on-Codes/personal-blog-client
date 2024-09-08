@@ -1,7 +1,7 @@
 <template>
   <div
     aria-hidden="true"
-    class="flex flex-col justify-center items-start w-full md:inset-0 md:h-screen"
+    class="flex flex-col justify-center items-start w-full md:inset-0 "
   >
     <div class="px-5">
       <SelectField
@@ -59,6 +59,7 @@
             />
 
             <TextAreaComponent
+              v-model="form.description"
               v-if="selectedContent === 'projects'"
               id="description"
               name="description"
@@ -87,17 +88,24 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import Button from '@/components/common/ButtonComponent.vue'
 import InputComponent from '@/components/common/InputComponent.vue'
 import Quill from 'quill'
 import { QuillEditor } from '@vueup/vue-quill'
 import 'quill/dist/quill.snow.css'
-import { createPost, updateBlogPost, fetchBlogPostById } from '@/services/apiServices'
+import {
+  createBlogPost,
+  updateBlogPost,
+  fetchBlogPostById,
+  createProject,
+  updateProject,
+  fetchProjectById
+} from '@/services/apiServices'
 import SelectField from '@/components/common/SingleSelectComponent.vue'
-import type { Post } from '@/types'
 import TextAreaComponent from '@/components/common/TextAreaComponent.vue'
+import type { Post } from '@/types'
 
 const form = ref<Post>({
   _id: '',
@@ -125,12 +133,23 @@ onMounted(async () => {
   if (id) {
     editMode.value = true
     try {
-      const post = await fetchBlogPostById(id)
-      form.value = post
-      setQuillContent(post.description)
+      if (selectedContent.value === 'blogPosts') {
+        const post = await fetchBlogPostById(id)
+        form.value = post
+        setQuillContent(post.description)
+      } else if (selectedContent.value === 'projects') {
+        const project = await fetchProjectById(id)
+        form.value = project
+      }
     } catch (error) {
-      console.error('Error fetching post data', error)
+      console.error('Error fetching data', error)
     }
+  }
+})
+
+watch(selectedContent, (newContent) => {
+  if (newContent === 'blogPosts' && descriptionContainer.value) {
+    setQuillContent(form.value.description)
   }
 })
 
@@ -170,19 +189,31 @@ const submitForm = async () => {
   try {
     const formData = new FormData()
     formData.append('title', form.value.title)
-    formData.append('author', form.value.author)
-    formData.append('date', form.value.date)
+    if (selectedContent.value === 'blogPosts') {
+      formData.append('author', form.value.author)
+      formData.append('date', form.value.date)
+    }
     formData.append('description', getDescriptionAsString())
     if (form.value.image) {
       formData.append('image', form.value.image)
     }
 
     if (form.value._id) {
-      await updateBlogPost(form.value._id, formData)
-      console.log('Post updated successfully')
+      if (selectedContent.value === 'blogPosts') {
+        await updateBlogPost(form.value._id, formData)
+        console.log('Post updated successfully')
+      } else if (selectedContent.value === 'projects') {
+        await updateProject(form.value._id, formData)
+        console.log('Project updated successfully')
+      }
     } else {
-      await createPost(formData)
-      console.log('Post created successfully')
+      if (selectedContent.value === 'blogPosts') {
+        await createBlogPost(formData)
+        console.log('Post created successfully')
+      } else if (selectedContent.value === 'projects') {
+        await createProject(formData)
+        console.log('Project created successfully')
+      }
     }
 
     router.push({ path: '/dashboard/view-posts' })

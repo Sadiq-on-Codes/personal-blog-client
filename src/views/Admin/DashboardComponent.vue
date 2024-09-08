@@ -45,25 +45,20 @@
             </div>
           </a>
         </div>
-        <div class="flex justify-start items-center gap-4 text-xl">
-          <router-link to="/dashboard" class="flex items-center gap-3">
-            <DashboardIcon />
-            <span>Dashboard</span>
-          </router-link>
+        <div class="flex justify-start items-center gap-[--spacing] text-xl">
           <router-link to="/dashboard/view-posts" class="flex items-center gap-3">
-            <DashboardIcon />
+            <PostIcon />
             <span>View posts</span>
           </router-link>
           <router-link to="/dashboard/add-posts" class="flex items-center gap-3">
-            <DashboardIcon />
+            <AddIcon />
             <span>Add posts</span>
           </router-link>
-
-          <div>
-            <DarkModeToggle />
-          </div>
         </div>
         <div class="flex items-center lg:order-2">
+          <div>
+            <DarkModeToggle :reduceSize="true" :showText="true" />
+          </div>
           <button
             type="button"
             class="flex mx-3 text-sm bg-gray-800 rounded-full md:mr-0 focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600"
@@ -90,6 +85,6 @@
 
 <script setup lang="ts">
 import DarkModeToggle from '@/components/common/DarkModeToggle.vue'
-import InputField from '@/components/common/InputComponent.vue'
-import DashboardIcon from '@/components/icons/DashboardIcon.vue'
+import AddIcon from '@/components/icons/AddIcon.vue'
+import PostIcon from '@/components/icons/PostIcon.vue'
 </script>

@@ -24,11 +24,14 @@
           <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
             {{ item.title.slice(0, 35) }}
           </td>
-          <td class="px-6 py-4">
+          <td v-if="!isProject" class="px-6 py-4">
             {{ item.date }}
           </td>
-          <td class="px-6 py-4">
+          <td v-if="!isProject" class="px-6 py-4">
             {{ item.author }}
+          </td>
+          <td v-if="isProject" class="px-6 py-4">
+            {{ item.description }}
           </td>
           <td class="px-6 py-4">
             <span v-if="item.tags.length > 0" class="text-gray-600 dark:text-gray-300">
@@ -45,7 +48,9 @@
             </router-link>
           </td>
           <td class="px-6 py-4">
-            <span class="cursor-pointer font-medium text-red-600 dark:text-red-500 hover:underline">Delete</span>
+            <span class="cursor-pointer font-medium text-red-600 dark:text-red-500 hover:underline"
+              >Delete</span
+            >
           </td>
         </tr>
       </tbody>
@@ -60,5 +65,9 @@ defineProps<{
   headers: string[]
   data: Post[]
   path: string
+  isProject: {
+    type: Boolean
+    default: false
+  }
 }>()
 </script>

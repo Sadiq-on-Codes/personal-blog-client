@@ -32,7 +32,12 @@
         class="text-sm text-[--color-post-secondary2] dark:text-[--color-text-dark] font-semibold"
         >{{ blogPost.title }}</span
       >
-      <div v-html="formattedDescription" class="text-[--color-post-secondary] text-lg"></div>
+      <div
+        v-if="isBlog"
+        v-html="formattedDescription"
+        class="text-[--color-post-secondary] text-lg"
+      ></div>
+      <div v-else>{{ blogPost.description }}</div>
       <div>
         <span
           v-for="item in blogPost.pins"
