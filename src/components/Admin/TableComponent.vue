@@ -38,11 +38,14 @@
           </td>
           <td class="px-6 py-4">
             <router-link
-              :to="{ path: '/dashboard/add-posts', query: { id: item._id } }"
+              :to="{ path: path, query: { id: item._id } }"
               class="font-medium text-blue-600 dark:text-blue-500 hover:underline"
             >
               Edit
             </router-link>
+          </td>
+          <td class="px-6 py-4">
+            <span class="cursor-pointer font-medium text-red-600 dark:text-red-500 hover:underline">Delete</span>
           </td>
         </tr>
       </tbody>
@@ -51,16 +54,11 @@
 </template>
 
 <script setup lang="ts">
-interface BlogPost {
-  _id: string
-  title: string
-  date: string
-  author: string
-  tags: string[]
-}
+import type { Post } from '@/types'
 
 defineProps<{
   headers: string[]
-  data: BlogPost[]
+  data: Post[]
+  path: string
 }>()
 </script>

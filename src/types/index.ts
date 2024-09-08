@@ -11,5 +11,5 @@ export interface Post {
   image: File | null 
   title: string
   description: string
-  pins?: Pin[]
+  tags: Pin[]
 }

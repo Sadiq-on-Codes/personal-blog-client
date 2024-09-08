@@ -1,5 +1,18 @@
 <template>
-  <div aria-hidden="true" class="flex justify-center items-start w-full md:inset-0 md:h-screen">
+  <div
+    aria-hidden="true"
+    class="flex flex-col justify-center items-start w-full md:inset-0 md:h-screen"
+  >
+    <div class="px-5">
+      <SelectField
+        id="category"
+        name="category"
+        label=""
+        v-model="selectedContent"
+        :options="categoryOptions"
+      />
+    </div>
+
     <div class="relative w-full p-4 h-full md:h-auto">
       <div class="relative p-4 bg-white rounded-lg shadow dark:bg-gray-800 sm:p-5">
         <form @submit.prevent="submitForm">
@@ -15,6 +28,7 @@
             />
 
             <InputComponent
+              v-if="selectedContent === 'blogPosts'"
               v-model="form.author"
               id="author"
               name="author"
@@ -25,6 +39,7 @@
             />
 
             <InputComponent
+              v-if="selectedContent === 'blogPosts'"
               v-model="form.date"
               id="date"
               name="date"
@@ -43,12 +58,19 @@
               @change="handleFileUpload"
             />
 
-            <div>
+            <TextAreaComponent
+              v-if="selectedContent === 'projects'"
+              id="description"
+              name="description"
+              placeholder="Select image"
+              label="Content"
+            />
+
+            <div v-if="selectedContent === 'blogPosts'">
               <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
                 Content
               </label>
-              <div v-if="editMode" ref="descriptionContainer" class="quill-editor">
-              </div>
+              <div v-if="editMode" ref="descriptionContainer" class="quill-editor"></div>
               <div v-else>
                 <QuillEditor v-model:content="form.description" theme="snow" toolbar="full" />
               </div>
@@ -73,7 +95,9 @@ import Quill from 'quill'
 import { QuillEditor } from '@vueup/vue-quill'
 import 'quill/dist/quill.snow.css'
 import { createPost, updateBlogPost, fetchBlogPostById } from '@/services/apiServices'
+import SelectField from '@/components/common/SingleSelectComponent.vue'
 import type { Post } from '@/types'
+import TextAreaComponent from '@/components/common/TextAreaComponent.vue'
 
 const form = ref<Post>({
   _id: '',
@@ -81,8 +105,15 @@ const form = ref<Post>({
   author: '',
   date: '',
   image: null,
-  description: ''
+  description: '',
+  tags: []
 })
+
+const selectedContent = ref('blogPosts')
+const categoryOptions = [
+  { value: 'projects', text: 'Projects' },
+  { value: 'blogPosts', text: 'Blog Posts' }
+]
 
 const route = useRoute()
 const router = useRouter()

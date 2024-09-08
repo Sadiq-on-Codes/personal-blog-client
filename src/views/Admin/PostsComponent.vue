@@ -17,8 +17,9 @@
       </ul>
       <div v-if="selectedContent === 'blogPosts'">
         <TableComponent
-          :headers="['Id', 'Title', 'Data Published', 'Author', 'Tags', 'Edit']"
+          :headers="['Id', 'Title', 'Data Published', 'Author', 'Tags', 'Edit', 'Delete']"
           :data="data"
+          path="/dashboard/add-posts"
         />
       </div>
     </div>
