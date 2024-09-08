@@ -1,11 +1,9 @@
 <template>
   <div class="flex flex-col-reverse sm:flex-row gap-[--spacing]">
-    <!-- AllBlogPosts Section -->
-    <div class="all-blog-posts sm:w-1/3 w-full sm:h-screen overflow-y-auto">
+    <div class="all-blog-posts sm:w-1/3 w-full sm:h-screen">
       <AllBlogPosts :horizontal="true" />
     </div>
 
-    <!-- BlogDetails Section -->
     <div class="sm:w-2/3 w-full mt-14 flex flex-col gap-[--spacing]">
       <span class="text-sm text-[--color-post-primary] font-semibold">{{ blogDetails?.date }}</span>
       <span
@@ -26,7 +24,7 @@ import { apiUrl } from '@/utils'
 import { onMounted, ref } from 'vue'
 import { useRoute } from 'vue-router'
 import Quill from 'quill'
-import 'quill/dist/quill.snow.css' // Import Quill styles
+import 'quill/dist/quill.snow.css'
 
 const route = useRoute()
 const blogDetails = ref<Post>()
@@ -44,12 +42,10 @@ onMounted(async () => {
       }
     })
 
-    // Parse and set the content
     const descriptionContent = JSON.parse(blogDetails.value.description)
     quill.setContents(descriptionContent)
 
-    // Ensure that styles are applied
-    quill.enable(false) // Disable user interaction
+    quill.enable(false)
   }
 })
 </script>
@@ -80,6 +76,5 @@ onMounted(async () => {
 
 .ql-container.ql-snow {
   border: none;
-  /* height: 100vh; */
 }
 </style>

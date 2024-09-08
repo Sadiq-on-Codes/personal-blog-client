@@ -47,8 +47,10 @@
               <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
                 Content
               </label>
-              <div ref="descriptionContainer" class="quill-editor">
-                <!-- Quill Editor will be initialized here -->
+              <div v-if="editMode" ref="descriptionContainer" class="quill-editor">
+              </div>
+              <div v-else>
+                <QuillEditor v-model:content="form.description" theme="snow" toolbar="full" />
               </div>
             </div>
 
@@ -63,11 +65,12 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted, watch } from 'vue'
+import { ref, onMounted } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import Button from '@/components/common/ButtonComponent.vue'
 import InputComponent from '@/components/common/InputComponent.vue'
 import Quill from 'quill'
+import { QuillEditor } from '@vueup/vue-quill'
 import 'quill/dist/quill.snow.css'
 import { createPost, updateBlogPost, fetchBlogPostById } from '@/services/apiServices'
 import type { Post } from '@/types'
@@ -84,11 +87,12 @@ const form = ref<Post>({
 const route = useRoute()
 const router = useRouter()
 const descriptionContainer = ref<HTMLElement | null>(null)
+const editMode = ref(false)
 
-// Fetch existing post data for editing
 onMounted(async () => {
   const id = route.query.id as string
   if (id) {
+    editMode.value = true
     try {
       const post = await fetchBlogPostById(id)
       form.value = post
@@ -99,7 +103,6 @@ onMounted(async () => {
   }
 })
 
-// Initialize Quill Editor and set content
 const setQuillContent = (content: string) => {
   if (descriptionContainer.value) {
     const quill = new Quill(descriptionContainer.value, {
@@ -109,19 +112,16 @@ const setQuillContent = (content: string) => {
         toolbar: true
       }
     })
-    
-    // Parse and set the content
+
     const descriptionContent = JSON.parse(content)
     quill.setContents(descriptionContent)
-    
-    // Update form when content changes
+
     quill.on('text-change', () => {
       form.value.description = JSON.stringify(quill.getContents())
     })
   }
 }
 
-// Handle image file upload
 const handleFileUpload = (event: Event) => {
   const input = event.target as HTMLInputElement
   if (input.files && input.files.length > 0) {
@@ -129,14 +129,12 @@ const handleFileUpload = (event: Event) => {
   }
 }
 
-// Convert Quill content to string
 const getDescriptionAsString = (): string => {
   return typeof form.value.description === 'object'
     ? JSON.stringify(form.value.description)
-    : form.value.description as string
+    : (form.value.description as string)
 }
 
-// Submit the form
 const submitForm = async () => {
   try {
     const formData = new FormData()
@@ -156,7 +154,7 @@ const submitForm = async () => {
       console.log('Post created successfully')
     }
 
-    router.push({ path: '/dashboard/view-posts' }) // Navigate to the posts list or wherever you need
+    router.push({ path: '/dashboard/view-posts' })
   } catch (error) {
     console.error('Error submitting form', error)
   }

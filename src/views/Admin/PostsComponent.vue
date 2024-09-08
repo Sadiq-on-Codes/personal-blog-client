@@ -29,7 +29,6 @@
 import { ref, watch, onMounted } from 'vue'
 import { fetchBlogPosts, Projects } from '@/services/apiServices'
 import TableComponent from '@/components/Admin/TableComponent.vue'
-import SelectComponent from '@/components/common/SelectComponent.vue'
 import SelectField from '@/components/common/SingleSelectComponent.vue'
 
 const selectedContent = ref('blogPosts')
