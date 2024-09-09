@@ -1,8 +1,5 @@
 <template>
-  <div
-    aria-hidden="true"
-    class="flex flex-col justify-center items-start w-full md:inset-0 "
-  >
+  <div aria-hidden="true" class="flex flex-col justify-center items-start w-full md:inset-0">
     <div class="px-5">
       <SelectField
         id="category"
@@ -10,6 +7,7 @@
         label=""
         v-model="selectedContent"
         :options="categoryOptions"
+        :disabled="disableSelection"
       />
     </div>
 
@@ -65,6 +63,7 @@
               name="description"
               placeholder="Select image"
               label="Content"
+              ref="projectTextArea"
             />
 
             <div v-if="selectedContent === 'blogPosts'">
@@ -106,6 +105,7 @@ import {
 import SelectField from '@/components/common/SingleSelectComponent.vue'
 import TextAreaComponent from '@/components/common/TextAreaComponent.vue'
 import type { Post } from '@/types'
+import { usePostStore } from '@/stores'
 
 const form = ref<Post>({
   _id: '',
@@ -117,7 +117,9 @@ const form = ref<Post>({
   tags: []
 })
 
-const selectedContent = ref('blogPosts')
+const store = usePostStore()
+
+const selectedContent = ref(store.selectedContent)
 const categoryOptions = [
   { value: 'projects', text: 'Projects' },
   { value: 'blogPosts', text: 'Blog Posts' }
@@ -127,11 +129,13 @@ const route = useRoute()
 const router = useRouter()
 const descriptionContainer = ref<HTMLElement | null>(null)
 const editMode = ref(false)
+const disableSelection = ref(false)
 
 onMounted(async () => {
   const id = route.query.id as string
   if (id) {
     editMode.value = true
+    disableSelection.value = true
     try {
       if (selectedContent.value === 'blogPosts') {
         const post = await fetchBlogPostById(id)
@@ -151,6 +155,7 @@ watch(selectedContent, (newContent) => {
   if (newContent === 'blogPosts' && descriptionContainer.value) {
     setQuillContent(form.value.description)
   }
+  store.setSelectedContent(selectedContent.value)
 })
 
 const setQuillContent = (content: string) => {

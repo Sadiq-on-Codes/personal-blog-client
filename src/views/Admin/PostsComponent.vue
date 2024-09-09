@@ -38,17 +38,26 @@ import { ref, watch, onMounted } from 'vue'
 import { fetchBlogPosts, fetchProjects } from '@/services/apiServices'
 import TableComponent from '@/components/Admin/TableComponent.vue'
 import SelectField from '@/components/common/SingleSelectComponent.vue'
+import { usePostStore } from '@/stores'
 
-const selectedContent = ref('blogPosts')
+const store = usePostStore()
 const data = ref([])
 const loading = ref(false)
+const selectedContent = ref(store.selectedContent || 'blogPosts')
 
 const fetchData = async () => {
   loading.value = true
   try {
     if (selectedContent.value === 'projects') {
+      store.setSelectedContent(selectedContent.value)
+      console.log(selectedContent.value)
+      console.log(store.selectedContent)
+
       data.value = await fetchProjects()
     } else {
+      store.setSelectedContent(selectedContent.value)
+      console.log(selectedContent.value)
+      console.log(store.selectedContent)
       data.value = await fetchBlogPosts()
     }
   } catch (error) {
@@ -69,6 +78,7 @@ onMounted(() => {
 
 watch(selectedContent, () => {
   fetchData()
+  store.setSelectedContent(selectedContent)
 })
 </script>
 
