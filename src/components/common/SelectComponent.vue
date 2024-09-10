@@ -1,53 +1,69 @@
 <template>
-    <div>
-      <Multiselect
-        v-model="selectedValues"
-        :options="availableOptions"
-        :taggable="true"
-        @tag="handleTag"
-        track-by="code"
-        label="name"
-        placeholder="Select or add tags"
-      />
-    </div>
-  </template>
-  
-  <script setup>
-  import { ref, defineProps, defineEmits } from 'vue'
-  import Multiselect from 'vue-multiselect'
-  
-  // Props for customizing the component
-  const props = defineProps({
-    modelValue: {
-      type: Array,
-      default: () => []
-    },
-    options: {
-      type: Array,
-      default: () => []
-    }
-  })
-  
-  // Emits
-  const emit = defineEmits(['update:modelValue'])
-  
-  // Reactive properties
-  const selectedValues = ref([...props.modelValue])
-  const availableOptions = ref([...props.options])
-  
-  // Method to handle adding new tags
-  const handleTag = (newTag) => {
-    const tag = {
-      name: newTag,
-      code: newTag.substring(0, 2) + Math.floor((Math.random() * 10000000))
-    }
-    availableOptions.value.push(tag)
-    selectedValues.value.push(tag)
-    emit('update:modelValue', selectedValues.value)
+  <div>
+    <label class="typo__label">Tagging</label>
+    <multiselect 
+      v-model="selectedTags"
+      placeholder="Search or add a tag"
+      label="tag"
+      track-by="_id"
+      :options="options"
+      :multiple="true">
+      <template #option="{ option }">
+        <div :style="{ color: option.textColor, backgroundColor: option.bgColor }" class="custom-option">
+          {{ option.tag }}
+        </div>
+      </template>
+      <template #tag="{ option, remove }">
+        <span :style="{ color: option.textColor, backgroundColor: option.bgColor }" class="custom-tag">
+          {{ option.tag }}
+          <span @click="remove(option)">✖</span>
+        </span>
+      </template>
+    </multiselect>
+    <pre class="language-json"><code>{{ selectedTags }}</code></pre>
+  </div>
+</template>
+
+<script setup>
+import { ref, watch, defineProps, defineEmits } from 'vue';
+import Multiselect from 'vue-multiselect';
+import 'vue-multiselect/dist/vue-multiselect.css';
+
+const props = defineProps({
+  modelValue: {
+    type: Array,
+    default: () => []
+  },
+  options: {
+    type: Array,
+    default: () => []
   }
-  </script>
-  
-  <style scoped>
-  /* Add component-specific styles here */
-  </style>
-  
+});
+
+const emit = defineEmits(['update:modelValue']);
+
+const selectedTags = ref(props.modelValue);
+
+watch(selectedTags, (newVal) => {
+  emit('update:modelValue', newVal);
+});
+
+watch(() => props.modelValue, (newVal) => {
+  selectedTags.value = newVal;
+});
+</script>
+
+<style scoped>
+.custom-option {
+  padding: 5px 10px;
+  border-radius: 3px;
+}
+
+.custom-tag {
+  display: inline-flex;
+  align-items: center;
+  padding: 2px 6px;
+  margin: 2px;
+  border-radius: 3px;
+}
+</style>

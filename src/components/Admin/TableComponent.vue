@@ -34,10 +34,17 @@
             {{ item.description }}
           </td>
           <td class="px-6 py-4">
-            <span v-if="item.tags.length > 0" class="text-gray-600 dark:text-gray-300">
-              {{ item.tags.join(', ') }}
-            </span>
-            <span v-else class="text-gray-400 dark:text-gray-500"> No tags </span>
+            <div v-if="item.tags.length > 0" class="flex flex-wrap">
+              <span
+                v-for="tag in item.tags"
+                :key="tag._id"
+                :style="{ color: tag.textColor, backgroundColor: tag.bgColor }"
+                class="text-gray-600 dark:text-gray-300 py-1 px-2 m-0.5 rounded-full"
+              >
+                {{ tag.tag }}
+              </span>
+            </div>
+            <span v-else >No tags</span>
           </td>
           <td class="px-6 py-4">
             <router-link

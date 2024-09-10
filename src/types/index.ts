@@ -1,7 +1,17 @@
 export interface Pin {
-  pin: string
+  _id: string
+  tag: string
   textColor: string
   bgColor: string
+}
+
+export interface Tag {
+  data: {
+    _id: string
+    tag: string
+    textColor: string
+    bgColor: string
+  }
 }
 
 export interface Post {

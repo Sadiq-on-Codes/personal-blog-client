@@ -1,6 +1,6 @@
 <template>
     <div>
-      <label :for="id" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+      <label :for="id" class=" w-full block mb-2 text-sm font-medium text-gray-900 dark:text-white">
         {{ label }}
       </label>
       <select
@@ -14,7 +14,7 @@
       >
         <option v-if="!defaultOption" value="" disabled>Select an option</option>
         <option v-for="option in options" :key="option.value" :value="option.value">
-          {{ option.text }}
+          {{ option.text || option.tag }}
         </option>
       </select>
     </div>
@@ -26,6 +26,7 @@
   interface Option {
     value: string | number;
     text: string;
+    tag: string;
   }
   
   defineProps({

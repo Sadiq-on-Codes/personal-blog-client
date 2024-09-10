@@ -34,16 +34,17 @@
       >
       <div
         v-if="isBlog"
-        v-html="formattedDescription"
+        :ref="descriptionContainer"
         class="text-[--color-post-secondary] text-lg"
       ></div>
       <div v-else>{{ blogPost.description }}</div>
       <div>
         <span
-          v-for="item in blogPost.pins"
-          :key="item.pin"
-          :class="[`bg-${item.bgColor}`, `text-${item.textColor}`, 'rounded-full mr-2 text-sm']"
-          >{{ item.pin }}</span
+          v-for="tag in blogPost.tags"
+          :key="tag._id"
+          :style="{ color: tag.textColor, backgroundColor: tag.bgColor }"
+          class="rounded-full mr-2 text-sm px-2 py-1"
+          >{{ tag.tag }}</span
         >
       </div>
     </div>
@@ -51,10 +52,9 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted, computed } from 'vue'
+import { ref, onMounted } from 'vue'
 import { defineProps } from 'vue'
-import { apiUrl } from '@/utils'
-import Quill from 'quill'
+import { apiUrl, initializeQuill } from '@/utils'
 import 'quill/dist/quill.snow.css'
 
 const props = defineProps({
@@ -67,7 +67,7 @@ const props = defineProps({
       date: '',
       title: '',
       description: '',
-      pins: []
+      tags: []
     })
   },
   isHalfHeight: {
@@ -90,6 +90,7 @@ const props = defineProps({
 })
 
 const isMobileOrTablet = ref(false)
+const descriptionContainer = ref<any>(null)
 
 const checkIsMobileOrTablet = () => {
   isMobileOrTablet.value = window.innerWidth <= 1024 // Adjust breakpoint for tablets
@@ -98,19 +99,10 @@ const checkIsMobileOrTablet = () => {
 onMounted(() => {
   checkIsMobileOrTablet()
   window.addEventListener('resize', checkIsMobileOrTablet)
+  initializeQuill(descriptionContainer.value, props.blogPost.description)
 })
 
-// Convert Quill Delta to HTML
-const deltaToHtml = (delta: any): string => {
-  const quill = new Quill(document.createElement('div'))
-  quill.setContents(delta)
-  return quill.root.innerHTML
-}
 
-// Convert Delta to HTML string
-const formattedDescription = computed(() => {
-  return deltaToHtml(props.blogPost.description)
-})
 </script>
 
 <style scoped></style>

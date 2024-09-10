@@ -20,33 +20,34 @@
 import AllBlogPosts from '@/components/AllBlogPosts.vue'
 import { fetchBlogPostById } from '@/services/apiServices'
 import type { Post } from '@/types'
-import { apiUrl } from '@/utils'
+import { apiUrl, initializeQuill } from '@/utils'
 import { onMounted, ref } from 'vue'
 import { useRoute } from 'vue-router'
-import Quill from 'quill'
 import 'quill/dist/quill.snow.css'
 
 const route = useRoute()
 const blogDetails = ref<Post>()
-const descriptionContainer = ref<HTMLDivElement | null>(null)
+const descriptionContainer = ref<any>(null)
 
 onMounted(async () => {
   blogDetails.value = await fetchBlogPostById('' + route.params.id)
 
-  if (descriptionContainer.value && blogDetails.value?.description) {
-    const quill = new Quill(descriptionContainer.value, {
-      theme: 'snow',
-      readOnly: true,
-      modules: {
-        toolbar: false
-      }
-    })
+  // if (descriptionContainer.value && blogDetails.value?.description) {
+  //   const quill = new Quill(descriptionContainer.value, {
+  //     theme: 'snow',
+  //     readOnly: true,
+  //     modules: {
+  //       toolbar: false
+  //     }
+  //   })
 
-    const descriptionContent = JSON.parse(blogDetails.value.description)
-    quill.setContents(descriptionContent)
+  //   const descriptionContent = JSON.parse(blogDetails.value.description)
+  //   quill.setContents(descriptionContent)
 
-    quill.enable(false)
-  }
+  //   quill.enable(false)
+  // }
+
+  initializeQuill(descriptionContainer.value, blogDetails.value.description)
 })
 </script>
 

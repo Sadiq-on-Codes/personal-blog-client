@@ -56,6 +56,8 @@
               @change="handleFileUpload"
             />
 
+            <SelectComponent v-model="form.tags" :options="tags" />
+
             <TextAreaComponent
               v-model="form.description"
               v-if="selectedContent === 'projects'"
@@ -100,12 +102,14 @@ import {
   fetchBlogPostById,
   createProject,
   updateProject,
-  fetchProjectById
+  fetchProjectById,
+  fetchTags
 } from '@/services/apiServices'
 import SelectField from '@/components/common/SingleSelectComponent.vue'
 import TextAreaComponent from '@/components/common/TextAreaComponent.vue'
-import type { Post } from '@/types'
+import type { Pin, Post, Tag } from '@/types'
 import { usePostStore } from '@/stores'
+import SelectComponent from '@/components/common/SelectComponent.vue'
 
 const form = ref<Post>({
   _id: '',
@@ -120,7 +124,7 @@ const form = ref<Post>({
 const store = usePostStore()
 
 const selectedContent = ref(store.selectedContent)
-const categoryOptions = [
+const categoryOptions: any = [
   { value: 'projects', text: 'Projects' },
   { value: 'blogPosts', text: 'Blog Posts' }
 ]
@@ -130,6 +134,7 @@ const router = useRouter()
 const descriptionContainer = ref<HTMLElement | null>(null)
 const editMode = ref(false)
 const disableSelection = ref(false)
+const tags = ref()
 
 onMounted(async () => {
   const id = route.query.id as string
@@ -149,6 +154,11 @@ onMounted(async () => {
       console.error('Error fetching data', error)
     }
   }
+  (async function () {
+    const result: any = await fetchTags()
+    tags.value =  result.data
+    
+  })()
 })
 
 watch(selectedContent, (newContent) => {
@@ -194,6 +204,12 @@ const submitForm = async () => {
   try {
     const formData = new FormData()
     formData.append('title', form.value.title)
+    formData.append(
+      'tags',
+      form.value.tags.map((tag) => tag._id)
+    )
+    console.log(typeof form.value.tags.map((tag) => tag._id))
+
     if (selectedContent.value === 'blogPosts') {
       formData.append('author', form.value.author)
       formData.append('date', form.value.date)
@@ -220,8 +236,7 @@ const submitForm = async () => {
         console.log('Project created successfully')
       }
     }
-
-    router.push({ path: '/dashboard/view-posts' })
+    // router.push({ path: '/dashboard/view-posts' })
   } catch (error) {
     console.error('Error submitting form', error)
   }
