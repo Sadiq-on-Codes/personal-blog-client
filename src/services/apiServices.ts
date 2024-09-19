@@ -112,7 +112,7 @@ export const updateProject = async (id: string, formData: FormData): Promise<Pos
       }
     })
     return response.data
-  } catch (error) {
+  } catch (error)   {
     console.error('Failed to update project:', error)
     throw error
   }
