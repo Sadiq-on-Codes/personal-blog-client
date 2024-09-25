@@ -10,9 +10,12 @@ export default defineConfig({
     vue(),
     // vueDevTools(),
   ],
+  assetsInclude: ['**/*.JPEG', '**/*.jpeg', '**/*.png', '**/*.jpg'],
   resolve: {
     alias: {
       '@': fileURLToPath(new URL('./src', import.meta.url))
     }
   }
 })
+
+

@@ -202,45 +202,48 @@ const getDescriptionAsString = (): string => {
 
 const submitForm = async () => {
   try {
-    const formData = new FormData()
-    formData.append('title', form.value.title)
-    formData.append(
-      'tags',
-      form.value.tags.map((tag) => tag._id)
-    )
-    console.log(typeof form.value.tags.map((tag) => tag._id))
+    const formData = new FormData();
+    formData.append('title', form.value.title);
+
+    // Append each tag separately
+    form.value.tags.forEach((tag) => {
+      formData.append('tags', tag._id);
+    });
 
     if (selectedContent.value === 'blogPosts') {
-      formData.append('author', form.value.author)
-      formData.append('date', form.value.date)
+      formData.append('author', form.value.author);
+      formData.append('date', form.value.date);
     }
-    formData.append('description', getDescriptionAsString())
+
+    formData.append('description', getDescriptionAsString());
+
     if (form.value.image) {
-      formData.append('image', form.value.image)
+      formData.append('image', form.value.image);
     }
 
     if (form.value._id) {
       if (selectedContent.value === 'blogPosts') {
-        await updateBlogPost(form.value._id, formData)
-        console.log('Post updated successfully')
+        await updateBlogPost(form.value._id, formData);
+        console.log('Post updated successfully');
       } else if (selectedContent.value === 'projects') {
-        await updateProject(form.value._id, formData)
-        console.log('Project updated successfully')
+        await updateProject(form.value._id, formData);
+        console.log('Project updated successfully');
       }
     } else {
       if (selectedContent.value === 'blogPosts') {
-        await createBlogPost(formData)
-        console.log('Post created successfully')
+        await createBlogPost(formData);
+        console.log('Post created successfully');
       } else if (selectedContent.value === 'projects') {
-        await createProject(formData)
-        console.log('Project created successfully')
+        await createProject(formData);
+        console.log('Project created successfully');
       }
     }
-    // router.push({ path: '/dashboard/view-posts' })
+    // router.push({ path: '/dashboard/view-posts' });
   } catch (error) {
-    console.error('Error submitting form', error)
+    console.error('Error submitting form', error);
   }
-}
+};
+
 </script>
 
 <style scoped>
