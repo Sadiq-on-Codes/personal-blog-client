@@ -52,8 +52,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted } from 'vue'
-import { defineProps } from 'vue'
+import { ref, onMounted, defineProps } from 'vue'
 import { apiUrl, initializeQuill } from '@/utils'
 import 'quill/dist/quill.snow.css'
 
@@ -99,7 +98,11 @@ const checkIsMobileOrTablet = () => {
 onMounted(() => {
   checkIsMobileOrTablet()
   window.addEventListener('resize', checkIsMobileOrTablet)
-  initializeQuill(descriptionContainer.value, props.blogPost.description)
+  
+  // Only initialize Quill if the description container exists
+  if (props.isBlog && descriptionContainer.value) {
+    initializeQuill(descriptionContainer.value, props.blogPost.description)
+  }
 })
 
 
