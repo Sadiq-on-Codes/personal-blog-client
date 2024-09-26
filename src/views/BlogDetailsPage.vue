@@ -1,17 +1,18 @@
 <template>
-  <div class="flex flex-col-reverse sm:flex-row gap-[--spacing]">
-    <div class="all-blog-posts sm:w-1/3 w-full sm:h-screen">
+  <div class="flex flex-col sm:flex-row h-screen overflow-hidden">
+    <div class="all-blog-posts sm:w-1/3 w-full h-full overflow-y-auto scrollbar-hide">
       <AllBlogPosts :horizontal="true" />
     </div>
 
-    <div class="sm:w-2/3 w-full mt-14 flex flex-col gap-[--spacing]">
-      <span class="text-sm text-[--color-post-primary] font-semibold">{{ blogDetails?.date }}</span>
-      <span
-        class="text-4xl text-[--color-post-secondary2] dark:text-[--color-text-dark] font-semibold"
-        >{{ blogDetails?.title }}</span
-      >
-      <img :src="`${apiUrl}${blogDetails?.image}`" alt="post image" />
-      <div ref="descriptionContainer" class="text-[--color-post-secondary] text-lg"></div>
+    <div class="sm:w-2/3 w-full h-full overflow-y-auto scrollbar-hide">
+      <div class="w-full py-8 px-4 sm:px-8">
+        <span class="text-sm text-[--color-post-primary] font-semibold">{{ blogDetails?.date }}</span>
+        <h1 class="text-4xl text-[--color-post-secondary2] dark:text-[--color-text-dark] font-semibold leading-tight mt-2">
+          {{ blogDetails?.title }}
+        </h1>
+        <img :src="`${apiUrl}${blogDetails?.image}`" alt="post" class="rounded-lg shadow-md w-full object-cover max-h-96 my-6" />
+        <div ref="descriptionContainer" class="text-[--color-post-secondary] text-lg prose max-w-none"></div>
+      </div>
     </div>
   </div>
 </template>
@@ -31,51 +32,38 @@ const descriptionContainer = ref<any>(null)
 
 onMounted(async () => {
   blogDetails.value = await fetchBlogPostById('' + route.params.id)
-
-  // if (descriptionContainer.value && blogDetails.value?.description) {
-  //   const quill = new Quill(descriptionContainer.value, {
-  //     theme: 'snow',
-  //     readOnly: true,
-  //     modules: {
-  //       toolbar: false
-  //     }
-  //   })
-
-  //   const descriptionContent = JSON.parse(blogDetails.value.description)
-  //   quill.setContents(descriptionContent)
-
-  //   quill.enable(false)
-  // }
-
   initializeQuill(descriptionContainer.value, blogDetails.value.description)
 })
 </script>
 
 <style scoped>
-
-.sm\:h-screen {
-  height: 100vh;
+.scrollbar-hide {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
 }
 
-
-.all-blog-posts {
-  scrollbar-width: thin;
-}
-
-.all-blog-posts::-webkit-scrollbar {
-  width: 8px; 
-}
-
-.all-blog-posts::-webkit-scrollbar-thumb {
-  background-color: rgba(0, 0, 0, 0.2);
-  border-radius: 10px;
-}
-
-.all-blog-posts::-webkit-scrollbar-track {
-  background-color: transparent;
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;  /* Chrome, Safari and Opera */
 }
 
 .ql-container.ql-snow {
   border: none;
+}
+
+/* Add smooth transitions */
+.all-blog-posts, img {
+  transition: all 0.3s ease-in-out;
+}
+
+/* Hover effect for the image */
+img:hover {
+  transform: scale(1.02);
+}
+
+/* Responsive font sizes */
+@media (max-width: 640px) {
+  h1 {
+    font-size: 2rem;
+  }
 }
 </style>

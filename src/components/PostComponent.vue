@@ -13,11 +13,11 @@
     <img
       :class="[
         {
-          'h-1/2 w-full': isHalfHeight && (layout === 'vertical' || isMobileOrTablet),
-          'h-full w-1/2': layout === 'horizontal' && !isMobileOrTablet,
-          'h-full w-full': !isHalfHeight && (layout === 'vertical' || isMobileOrTablet)
+          'w-full': layout === 'vertical' || isMobileOrTablet,
+          'w-1/2': layout === 'horizontal' && !isMobileOrTablet,
         },
-        'object-cover'
+        'object-cover',
+        layout === 'horizontal' && !isMobileOrTablet ? 'h-[150px]' : 'h-[300px]'
       ]"
       :src="`${apiUrl}${blogPost.image}`"
       alt=""
@@ -99,7 +99,6 @@ onMounted(() => {
   checkIsMobileOrTablet()
   window.addEventListener('resize', checkIsMobileOrTablet)
   
-  // Only initialize Quill if the description container exists
   if (props.isBlog && descriptionContainer.value) {
     initializeQuill(descriptionContainer.value, props.blogPost.description)
   }
@@ -108,4 +107,14 @@ onMounted(() => {
 
 </script>
 
-<style scoped></style>
+<style scoped>
+img {
+  object-fit: cover;
+}
+
+@media (max-width: 1024px) {
+  img {
+    height: 300px !important;
+  }
+}
+</style>
