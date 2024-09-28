@@ -17,6 +17,7 @@
   "dependencies": {
     "@vueup/vue-quill": "^1.2.0",
     "axios": "^1.7.7",
+    "dompurify": "^3.1.7",
     "pinia": "^2.1.7",
     "vue": "^3.4.29",
     "vue-multiselect": "^3.0.0",
@@ -25,6 +26,7 @@
   "devDependencies": {
     "@rushstack/eslint-patch": "^1.8.0",
     "@tsconfig/node20": "^20.1.4",
+    "@types/dompurify": "^3.0.5",
     "@types/jsdom": "^21.1.7",
     "@types/node": "^20.14.5",
     "@types/quill": "^2.0.14",

@@ -17,9 +17,9 @@
           <h1 class="text-4xl text-[--color-post-secondary2] dark:text-[--color-text-dark] font-semibold leading-tight mt-2">
             {{ blogPost.title }}
           </h1>
-          <img :src="blogPostImageUrl" :alt="blogPost.title" class="rounded-lg shadow-md w-full object-cover max-h-96 my-6" />
+          <img :src="blogPostImageUrl" :alt="blogPost.title || 'Blog post image'" class="rounded-lg shadow-md w-full object-cover max-h-96 my-6" />
           <div ref="descriptionContainer" class="text-[--color-post-secondary] text-lg prose max-w-none">
-            <p v-if="!descriptionLoaded">Loading description...</p>
+            <div v-html="sanitizedDescription"></div>
           </div>
         </div>
       </div>
@@ -32,29 +32,36 @@
 </template>
 
 <script setup lang="ts">
-import { ref, watch, onMounted, computed } from 'vue'
+import { ref, watch, computed, nextTick } from 'vue'
 import { useRoute } from 'vue-router'
 import { fetchBlogPostById } from '@/services/apiServices'
 import { apiUrl, initializeQuill } from '@/utils'
 import type { Post } from '@/types'
 import AllBlogPosts from '@/components/AllBlogPosts.vue'
 import Loader from '@/components/common/LoaderComponent.vue'
-import 'quill/dist/quill.snow.css'
+import DOMPurify from 'dompurify'
 
 const route = useRoute()
 const blogPost = ref<Post | null>(null)
 const isLoading = ref(true)
-const descriptionContainer = ref<HTMLElement | null>(null)
-const descriptionLoaded = ref(false)
+const descriptionContainer = ref<HTMLElement | any>(null)
 
 const blogPostImageUrl = computed(() => 
   blogPost.value ? `${apiUrl}${blogPost.value.image}` : ''
 )
 
+const sanitizedDescription = computed(() => {
+  return blogPost.value ? DOMPurify.sanitize(blogPost.value.description) : ''
+})
+
 const loadBlogPost = async (id: string) => {
   isLoading.value = true
   try {
     blogPost.value = await fetchBlogPostById(id)
+    await nextTick()
+    if (descriptionContainer.value) {
+      initializeQuill(descriptionContainer.value, sanitizedDescription.value)
+    }
   } catch (error) {
     console.error('Error fetching blog post:', error)
     blogPost.value = null
@@ -69,20 +76,7 @@ watch(() => route.params.id, (newId) => {
   }
 }, { immediate: true })
 
-watch(blogPost, () => {
-  if (blogPost.value && descriptionContainer.value) {
-    descriptionLoaded.value = false
-    initializeQuill(descriptionContainer.value, blogPost.value.description)
-    descriptionLoaded.value = true
-  }
-})
-
-onMounted(() => {
-  if (blogPost.value && descriptionContainer.value) {
-    initializeQuill(descriptionContainer.value, blogPost.value.description)
-    descriptionLoaded.value = true
-  }
-})
+// Remove the watch hook for blogPost and the onMounted hook
 </script>
 
 <style scoped>
