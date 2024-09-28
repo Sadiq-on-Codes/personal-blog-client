@@ -3,9 +3,9 @@
     <span class="text-xl">{{ !horizontal ? 'All blog posts' : 'Recent blog posts' }}</span>
     <div :class="['grid gap-[--spacing]', horizontal ? 'grid-cols-1' : 'sm:grid-cols-3']">
       <div v-for="post in blogPosts" :key="post._id">
-        <router-link :to="{ name: 'BlogDetailsPage', params: { id: post._id } }">
+        <div @click="navigateToBlogPost(post._id ?? '')" style="cursor: pointer;">
           <BlogPost :blogPost="post" />
-        </router-link>
+        </div>
       </div>
     </div>
   </div>
@@ -13,9 +13,12 @@
 
 <script setup lang="ts">
 import { defineProps, onMounted, ref } from 'vue'
+import { useRouter } from 'vue-router'
 import BlogPost from './PostComponent.vue'
 import { fetchBlogPosts } from '@/services/apiServices.js'
 import type { Post } from '@/types'
+
+const router = useRouter()
 
 defineProps({
   horizontal: {
@@ -29,6 +32,10 @@ const blogPosts = ref<Post[]>()
 onMounted(async () => {
   blogPosts.value = await fetchBlogPosts()
 })
+
+const navigateToBlogPost = (id: string) => {
+  router.push({ name: 'BlogDetailsPage', params: { id } })
+}
 </script>
 
 <style scoped>

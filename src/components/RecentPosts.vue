@@ -1,7 +1,8 @@
 <template>
   <div class="mt-[--spacing]">
     <span class="text-xl">Recent blog posts</span>
-    <div class="grid sm:grid-cols-2 grid-cols-1 gap-[--spacing]">
+    <div v-if="!isLoading && blogPosts?.length > 0">
+      <div class="grid sm:grid-cols-2 grid-cols-1 gap-[--spacing]">
       <div>
         <router-link
           v-if="blogPosts?.length > 0"
@@ -31,6 +32,10 @@
         />
       </router-link>
     </div>
+    </div>
+   
+    <LoaderComponent v-else-if="isLoading" :isLoading="isLoading" />
+    <p v-else class="text-center text-gray-600">No projects found.</p>
   </div>
 </template>
 
@@ -38,11 +43,19 @@
 import { fetchBlogPosts } from '@/services/apiServices'
 import { onMounted, ref } from 'vue'
 import BlogPost from './PostComponent.vue'
+import LoaderComponent from '@/components/common/LoaderComponent.vue';
 
 const blogPosts = ref()
+const isLoading = ref(true)
 
 onMounted(async () => {
-  blogPosts.value = await fetchBlogPosts()
+  try {
+    blogPosts.value = await fetchBlogPosts()
+  } catch (error) {
+    console.error('Failed to fetch projects:', error)
+  } finally { 
+    isLoading.value = false
+  }
 })
 </script>
 
