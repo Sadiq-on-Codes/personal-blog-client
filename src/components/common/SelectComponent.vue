@@ -9,7 +9,7 @@
       :options="options"
       :multiple="true">
       <template #option="{ option }">
-        <div :style="{ color: option.textColor, backgroundColor: option.bgColor }" class="custom-option">
+        <div  class="custom-option">
           {{ option.tag }}
         </div>
       </template>
@@ -20,7 +20,6 @@
         </span>
       </template>
     </multiselect>
-    <pre class="language-json"><code>{{ selectedTags }}</code></pre>
   </div>
 </template>
 
@@ -53,16 +52,20 @@ watch(() => props.modelValue, (newVal) => {
 });
 </script>
 
-<style scoped>
+<style>
 .custom-option {
   padding: 5px 10px;
   border-radius: 3px;
 }
 
+.multiselect__tags {
+  padding: 8px 8px 8px 8px !important;
+}
+
 .custom-tag {
   display: inline-flex;
   align-items: center;
-  padding: 2px 6px;
+  padding: 6px 6px;
   margin: 2px;
   border-radius: 3px;
 }

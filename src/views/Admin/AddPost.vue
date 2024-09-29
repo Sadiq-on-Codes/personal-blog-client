@@ -42,7 +42,7 @@
               id="date"
               name="date"
               type="date"
-              placeholder="Select date"
+              :placeholder="todayDate"
               label="Date"
               required
             />
@@ -69,10 +69,10 @@
             />
 
             <div v-if="selectedContent === 'blogPosts'">
-              <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+              <label for="description" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
                 Content
               </label>
-              <div v-if="editMode" ref="descriptionContainer" class="quill-editor"></div>
+              <div v-if="editMode" id="description" ref="descriptionContainer" class="quill-editor"></div>
               <div v-else>
                 <QuillEditor v-model:content="form.description" theme="snow" toolbar="full" />
               </div>
@@ -89,8 +89,8 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted, watch } from 'vue'
-import { useRoute, useRouter } from 'vue-router'
+import { ref, onMounted, watch, computed } from 'vue'
+import { useRoute } from 'vue-router'
 import Button from '@/components/common/ButtonComponent.vue'
 import InputComponent from '@/components/common/InputComponent.vue'
 import Quill from 'quill'
@@ -107,7 +107,7 @@ import {
 } from '@/services/apiServices'
 import SelectField from '@/components/common/SingleSelectComponent.vue'
 import TextAreaComponent from '@/components/common/TextAreaComponent.vue'
-import type { Pin, Post, Tag } from '@/types'
+import type { Post } from '@/types'
 import { usePostStore } from '@/stores'
 import SelectComponent from '@/components/common/SelectComponent.vue'
 
@@ -115,7 +115,7 @@ const form = ref<Post>({
   _id: '',
   title: '',
   author: '',
-  date: '',
+  date: new Date().toISOString().split('T')[0], // Set default date to today
   image: null,
   description: '',
   tags: []
@@ -130,11 +130,14 @@ const categoryOptions: any = [
 ]
 
 const route = useRoute()
-const router = useRouter()
 const descriptionContainer = ref<HTMLElement | null>(null)
 const editMode = ref(false)
 const disableSelection = ref(false)
 const tags = ref()
+
+const todayDate = computed(() => {
+  return new Date().toISOString().split('T')[0]
+})
 
 onMounted(async () => {
   const id = route.query.id as string
@@ -153,6 +156,8 @@ onMounted(async () => {
     } catch (error) {
       console.error('Error fetching data', error)
     }
+  } else {
+    selectedContent.value = 'blogPosts'
   }
   (async function () {
     const result: any = await fetchTags()
