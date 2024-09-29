@@ -4,7 +4,7 @@
       <p class="text-xl text-[--color-post-secondary]">{{ error }}</p>
     </div>
       <div v-if="!isLoading" class="flex-grow overflow-y-auto">
-        <div class="container mx-auto py-8 px-4 sm:px-6 lg:px-8">
+        <div class="container mx-auto py-8 sm:px-6 lg:px-8">
           <button @click="goBack" class="mb-4 text-[--color-post-primary] hover:underline">
             &larr; Back to all posts
           </button>
@@ -22,7 +22,7 @@
               class="rounded-lg shadow-md w-full object-cover max-h-96 mb-8 transition-transform duration-300 ease-in-out hover:scale-[1.02]"
               loading="lazy"
             />
-            <div ref="descriptionContainer" class="text-[--color-post-secondary] text-lg  max-w-full">
+            <div ref="descriptionContainer" class="text-[--color-post-secondary] text-lg max-w-full">
               <!-- This div will be populated by Quill -->
             </div>
           </article>
@@ -67,7 +67,7 @@ const loadBlogPost = async (id: string) => {
       quillInstance.value = initializeQuill(
         descriptionContainer.value,
         blogPost.value.description,
-        true // Set to true for read-only mode
+        true 
       )
     }
   } catch (err) {
@@ -80,18 +80,19 @@ const loadBlogPost = async (id: string) => {
 }
 
 const goBack = () => {
-  router.push({ name: 'Blog' }) // Assuming 'Blog' is the name of your blog listing route
+  router.push({ name: 'BlogComponent' }) 
 }
 
 watch(() => route.params.id, (newId) => {
-  if (newId) {
-    loadBlogPost(newId as string)
+  if (newId && typeof newId === 'string') {
+    loadBlogPost(newId)
   }
 }, { immediate: true })
 
 onMounted(() => {
-  if (route.params.id) {
-    loadBlogPost(route.params.id as string)
+  const id = route.params.id
+  if (id && typeof id === 'string') {
+    loadBlogPost(id)
   }
 })
 </script>
