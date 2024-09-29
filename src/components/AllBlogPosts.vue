@@ -38,7 +38,7 @@ onMounted(async () => {
 })
 
 const navigateToBlogPost = (id: string) => {
-  router.push({ name: 'BlogDetailsPage', params: { id } })
+  window.location.href = `/blog-details/${id}`
 }
 </script>
 
