@@ -1,6 +1,6 @@
 <template>
   <div class="mt-14">
-    <span class="text-xl">{{ !horizontal ? 'All blog posts' : 'Recent blog posts' }}</span>
+    <span class="text-xl">{{ text }}</span>
     <div :class="['grid gap-[--spacing]', horizontal ? 'grid-cols-1' : 'sm:grid-cols-3']">
       <div v-for="post in blogPosts" :key="post._id">
         <div @click="navigateToBlogPost(post._id ?? '')" style="cursor: pointer;">
@@ -24,6 +24,10 @@ defineProps({
   horizontal: {
     type: Boolean,
     default: false
+  },
+  text: {
+    type: String,
+    default: 'All Posts'
   }
 })
 
