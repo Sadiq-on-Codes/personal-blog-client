@@ -9,6 +9,9 @@ import NewsLetterComponent from '@/views/NewsLetterComponent.vue'
 import ProjectsComponent from '@/views/ProjectsComponent.vue'
 import { createRouter, createWebHistory } from 'vue-router'
 
+// Add this import for the authentication check
+import { isAuthenticated } from '@/utils/auth' // You'll need to create this utility function
+
 const routes = [
   { path: '/', component: BlogComponent, name: 'BlogComponent' },
   { path: '/about', component: AboutComponent, name: 'AboutComponent' },
@@ -26,6 +29,7 @@ const routes = [
   {
     path: '/dashboard',
     component: DashboardComponent,
+    meta: { requiresAuth: true }, 
     children: [
       { path: 'home', component: DashboardComponent },
       { path: 'view-posts', component: PostsComponent },
@@ -39,11 +43,17 @@ export const router = createRouter({
   routes
 })
 
-// router.beforeEach((to, from, next) => {
-//   const token = localStorage.getItem('token');
-//   if (to.path !== '/login' && to.path !== '/register' && !token) {
-//     next('/login');
-//   } else {
-//     next();
-//   }
-// });
+router.beforeEach((to, from, next) => {
+  if (to.matched.some(record => record.meta.requiresAuth)) {
+    if (!isAuthenticated()) {
+      next({ path: '/register', query: { redirect: to.fullPath } })
+    } else {
+      next()
+      console.log('authenticated');
+      
+    }
+  } else {
+    next()
+  }
+})
+

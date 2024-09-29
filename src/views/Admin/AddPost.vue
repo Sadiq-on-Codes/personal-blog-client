@@ -90,7 +90,7 @@
 
 <script setup lang="ts">
 import { ref, onMounted, watch, computed } from 'vue'
-import { useRoute } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
 import Button from '@/components/common/ButtonComponent.vue'
 import InputComponent from '@/components/common/InputComponent.vue'
 import Quill from 'quill'
@@ -122,6 +122,7 @@ const form = ref<Post>({
 })
 
 const store = usePostStore()
+const router = useRouter()
 
 const selectedContent = ref(store.selectedContent)
 const categoryOptions: any = [
@@ -243,7 +244,7 @@ const submitForm = async () => {
         console.log('Project created successfully');
       }
     }
-    // router.push({ path: '/dashboard/view-posts' });
+    router.push({ path: '/dashboard/view-posts' });
   } catch (error) {
     console.error('Error submitting form', error);
   }

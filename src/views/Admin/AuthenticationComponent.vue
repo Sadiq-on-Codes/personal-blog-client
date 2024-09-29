@@ -110,7 +110,7 @@ const submitForm = async () => {
 
     const response = await axios.post(url, data)
     localStorage.setItem('token', response.data.token)
-    router.push('/dashboard')
+    router.push('/dashboard/add-posts')
   } catch (error: any) {
     console.error(
       `${mode.value === 'register' ? 'Registration' : 'Login'} error:`,
