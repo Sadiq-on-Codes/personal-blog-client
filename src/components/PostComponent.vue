@@ -32,7 +32,7 @@
         'object-cover',
         layout === 'horizontal' && !isMobileOrTablet ? 'h-[150px]' : 'h-[300px]'
       ]"
-      :src="`${apiUrl}${blogPost.image}`"
+      :src="`${API_URL}${blogPost.image}`"
       alt=""
     />
     <div :class="[{ 'gap-1.5': isHalfHeight }, 'flex flex-col gap-[--spacing] flex-1']">
@@ -78,7 +78,7 @@
 
 <script setup lang="ts">
 import { ref, onMounted, defineProps } from 'vue'
-import { apiUrl, initializeQuill } from '@/utils'
+import { API_URL, initializeQuill } from '@/utils'
 import 'quill/dist/quill.snow.css'
 
 const props = defineProps({
