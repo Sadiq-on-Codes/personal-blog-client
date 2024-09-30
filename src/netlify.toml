@@ -3,23 +3,9 @@
   publish = "dist"  # Adjust this to your build output directory
   command = "npm run build"  # Adjust this to your build command
 
-# Redirect rules
+# Redirect and rewrite rules
 [[redirects]]
   from = "/*"
   to = "/index.html"
   status = 200
-
-[[redirects]]
-  from = "/about"
-  to = "/about.html"
-  status = 200
-
-[[redirects]]
-  from = "/projects"
-  to = "/projects.html"
-  status = 200
-
-[[redirects]]
-  from = "/contact"
-  to = "/contact.html"
-  status = 200
+  force = true
