@@ -4,7 +4,7 @@
     <div class="grid grid-cols-1 lg:grid-cols-3 gap-12 mt-14">
       <div class="profile-card lg:col-span-1 animate-slide-in-left">
         <div class="profile-image-container">
-          <img class="w-full rounded-lg shadow-2xl" src="../data/images/IMG_2773.JPEG" alt="Profile" />
+          <img class="w-full rounded-lg shadow-2xl" src="../data/images/sadick.jpg" alt="Profile" />
         </div>
         <p class="mt-4 text-center text-[--color-post-secondary] text-sm italic">
           Tallest in this picture. 😊
