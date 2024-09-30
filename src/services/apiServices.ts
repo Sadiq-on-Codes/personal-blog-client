@@ -1,8 +1,9 @@
 import type { Post } from '@/types'
 import axios, { type AxiosResponse } from 'axios'
+import { API_URL } from '@/utils'
 
 const api = axios.create({
-  baseURL: 'http://localhost:5000/api'
+  baseURL: API_URL
 })
 
 // Define types for API responses if known
@@ -140,9 +141,7 @@ export const Tags = (): Promise<AxiosResponse<Post[]>> => api.get('/tags')
 // };
 
 export const fetchTags = () => {
-  return new Promise((resolve) => {
-    resolve(Tags())
-  })
+  return Promise.resolve(Tags())
 }
 
 // const onSuccess = (response: any) => {
