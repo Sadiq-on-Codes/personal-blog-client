@@ -82,6 +82,7 @@ import InputField from '@/components/common/InputComponent.vue'
 import Checkbox from '@/components/common/CheckboxComponent.vue'
 import Button from '@/components/common/ButtonComponent.vue'
 import DarkModeToggle from '@/components/common/DarkModeToggle.vue'
+import { API_URL } from '@/utils'
 
 const mode = ref<'login' | 'register'>('login')
 const username = ref('')
@@ -93,8 +94,8 @@ const submitForm = async () => {
   try {
     const url =
       mode.value === 'register'
-        ? 'http://localhost:5000/api/auth/register'
-        : 'http://localhost:5000/api/auth/login'
+        ? `${API_URL}/auth/register`
+        : `${API_URL}/auth/login`
 
     const data =
       mode.value === 'register'
