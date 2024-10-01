@@ -32,7 +32,7 @@
         'object-cover',
         layout === 'horizontal' && !isMobileOrTablet ? 'h-[150px]' : 'h-[300px]'
       ]"
-      :src="`${API_URL}/${blogPost.image}`"
+      :src="blogPostImageUrl"
       alt=""
     />
     <div :class="[{ 'gap-1.5': isHalfHeight }, 'flex flex-col gap-[--spacing] flex-1']">
@@ -57,7 +57,7 @@
         <div class="h-4 w-2/3 bg-gray-300 dark:bg-gray-700 animate-pulse rounded"></div>
       </div>
       <div v-else-if="isBlog" :ref="descriptionContainer" class="text-[--color-post-secondary] text-lg"></div>
-      <div v-else>{{ blogPost.description }}</div>
+      <div v-else-if="isProject">{{ blogPost.description }}</div>
       
       <!-- Skeleton for tags -->
       <div v-if="isLoading" class="flex gap-2">
@@ -77,9 +77,10 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted, defineProps } from 'vue'
+import { ref, onMounted, defineProps, computed } from 'vue'
 import { API_URL, initializeQuill } from '@/utils'
 import 'quill/dist/quill.snow.css'
+
 
 const props = defineProps({
   blogPost: {
@@ -111,6 +112,10 @@ const props = defineProps({
     type: Boolean,
     default: true
   },
+  isProject: {
+    type: Boolean,
+    default: false
+  },
   isLoading: {
     type: Boolean,
     default: false
@@ -120,6 +125,9 @@ const props = defineProps({
 const isMobileOrTablet = ref(false)
 const descriptionContainer = ref<any>(null)
 
+const blogPostImageUrl = computed(() => 
+  props.blogPost.image ? `${API_URL}/${props.blogPost.image}` : ''
+)
 const checkIsMobileOrTablet = () => {
   isMobileOrTablet.value = window.innerWidth <= 1024 // Adjust breakpoint for tablets
 }
