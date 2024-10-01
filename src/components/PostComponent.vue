@@ -32,7 +32,7 @@
         'object-cover',
         layout === 'horizontal' && !isMobileOrTablet ? 'h-[150px]' : 'h-[300px]'
       ]"
-      :src="`${API_URL}${blogPost.image}`"
+      :src="`${API_URL}/${blogPost.image}`"
       alt=""
     />
     <div :class="[{ 'gap-1.5': isHalfHeight }, 'flex flex-col gap-[--spacing] flex-1']">

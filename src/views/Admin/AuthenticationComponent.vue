@@ -94,8 +94,8 @@ const submitForm = async () => {
   try {
     const url =
       mode.value === 'register'
-        ? `${API_URL}/auth/register`
-        : `${API_URL}/auth/login`
+        ? `${API_URL}/api/auth/register`
+        : `${API_URL}/api/auth/login`
 
     const data =
       mode.value === 'register'

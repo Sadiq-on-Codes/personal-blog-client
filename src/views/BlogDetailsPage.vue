@@ -55,7 +55,7 @@ const descriptionContainer = ref<HTMLElement | null>(null)
 const quillInstance = ref<any>(null)
 
 const blogPostImageUrl = computed(() => 
-  blogPost.value?.image ? `${API_URL}${blogPost.value.image}` : ''
+  blogPost.value?.image ? `${API_URL}/${blogPost.value.image}` : ''
 )
 
 const loadBlogPost = async (id: string) => {

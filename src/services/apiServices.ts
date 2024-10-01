@@ -3,10 +3,9 @@ import axios, { type AxiosResponse } from 'axios'
 import { API_URL } from '@/utils'
 
 const api = axios.create({
-  baseURL: API_URL
+  baseURL: `${API_URL}/api`
 })
 
-// Define types for API responses if known
 
 // Blog posts endpoints
 export const BlogPosts = (): Promise<AxiosResponse<Post[]>> => api.get('/blogPosts')
