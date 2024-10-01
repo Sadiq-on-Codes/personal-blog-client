@@ -1,74 +1,74 @@
 <template>
   <div class="about-container">
     <HeadingComponent text="About" class="mb-10 animate-fade-in" />
-    <div class="grid grid-cols-1 lg:grid-cols-3 gap-12 mt-14">
-      <div class="profile-card lg:col-span-1 animate-slide-in-left">
+    <div class="hero-section">
+      <div class="profile-card">
         <div class="profile-image-container">
-          <img class="w-full rounded-lg shadow-2xl" src="../data/images/sadick.jpg" alt="Profile" />
+          <img class="profile-image" src="../data/images/sadick.jpg" alt="Profile" />
         </div>
-        <p class="mt-4 text-center text-[--color-post-secondary] text-sm italic">
-          Tallest in this picture. 😊
+        <p class="title">Software Developer</p>
+        <div class="social-icons">
+          <a href="https://github.com/SadickYahaya" class="social-icon" aria-label="GitHub"><i class="fab fa-github"></i></a>
+          <a href="https://www.linkedin.com/in/abubakar-sadick-y-57a858b0/" class="social-icon" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
+          <a href="https://www.credly.com/users/sadick-abubakar-yahaya" class="social-icon" aria-label="Credly"><i class="fab fa-credly"></i></a>
+        </div>
+      </div>
+      <div class="hero-content">
+        <h2 class="hero-greeting">Hello, I'm Sadick</h2>
+        <p class="hero-text">
+          Passionate about computers and coding, I bring 5 years of experience as a Software Developer to the table. With a strong foundation in Computer Science and a knack for problem-solving, I'm always eager to take on new challenges and push the boundaries of what's possible in tech.
         </p>
-        <div class="mt-6 text-center">
-          <h3 class="text-2xl font-bold text-[--color-primary]">Sadick</h3>
-          <p class="text-[--color-post-secondary]">Software Developer</p>
-        </div>
-        <div class="mt-6 flex justify-center space-x-4">
-          <a href="#" class="social-icon" aria-label="GitHub"><i class="fab fa-github"></i></a>
-          <a href="#" class="social-icon" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
-          <a href="#" class="social-icon" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
-        </div>
-      </div>
-      <div class="about-content lg:col-span-2 animate-slide-in-right">
-        <section class="mb-8 bg-gradient-to-r from-[--color-bg-secondary] to-[--color-bg-primary] p-6 rounded-lg shadow-lg">
-          <h2 class="text-3xl font-bold mb-4 text-[--color-primary] border-b-2 border-[--color-accent] pb-2">About Me</h2>
-          <p class="text-[--color-post-secondary] text-lg leading-relaxed">
-            I'm passionate about Computers, and I love spending my free time coding. With a strong background in Computer Science and Software Development, I'm always eager to learn new things and take on exciting challenges. I'm a firm believer in continuous improvement, and I strive to bring positivity and dedication to everything I do.
-          </p>
-        </section>
-        <section class="mb-8 bg-gradient-to-r from-[--color-bg-secondary] to-[--color-bg-primary] p-6 rounded-lg shadow-lg">
-          <h2 class="text-3xl font-bold mb-6 text-[--color-primary] border-b-2 border-[--color-accent] pb-2">Skills</h2>
-          <ul class="grid grid-cols-2 md:grid-cols-3 gap-4 text-[--color-post-secondary] text-lg">
-            <li v-for="skill in skills" :key="skill.name" class="flex items-center skill-item">
-              <span class="mr-2 text-[--color-accent] w-8"><i :class="skill.icon"></i></span>{{ skill.name }}
-            </li>
-          </ul>
-        </section>
+        <a href="#contact" class="cta-button">Let's Collaborate</a>
       </div>
     </div>
-    <div class="mt-12 grid grid-cols-1 md:grid-cols-2 gap-8 animate-fade-in">
-      <section class="bg-gradient-to-br from-[--color-bg-secondary] to-[--color-bg-primary] p-6 rounded-lg shadow-lg">
-        <h2 class="text-3xl font-bold mb-6 text-[--color-primary] border-b-2 border-[--color-accent] pb-2">Key Strengths</h2>
-        <ul class="space-y-4 text-[--color-post-secondary] text-lg">
-          <li v-for="strength in strengths" :key="strength.name" class="flex items-center strength-item">
-            <span class="mr-3 text-[--color-accent] text-2xl w-8">{{ strength.icon }}</span>{{ strength.name }}
-          </li>
-        </ul>
-      </section>
-      <section class="bg-gradient-to-bl from-[--color-bg-secondary] to-[--color-bg-primary] p-6 rounded-lg shadow-lg">
-        <h2 class="text-3xl font-bold mb-6 text-[--color-primary] border-b-2 border-[--color-accent] pb-2">Experience</h2>
-        <ul class="space-y-6 text-[--color-post-secondary] text-lg">
-          <li v-for="exp in experience" :key="exp.description" class="flex items-start experience-item">
-            <span class="mr-3 text-[--color-accent] text-3xl w-8">{{ exp.icon }}</span>
-            <p>{{ exp.description }}</p>
-          </li>
-        </ul>
-      </section>
-    </div>
-    <section class="mt-12 animate-fade-in bg-gradient-to-t from-[--color-bg-secondary] to-[--color-bg-primary] p-6 rounded-lg shadow-lg">
-      <h2 class="text-3xl font-bold mb-6 text-[--color-primary] border-b-2 border-[--color-accent] pb-2">Education</h2>
-      <ul class="space-y-4 text-[--color-post-secondary] text-lg">
-        <li v-for="edu in education" :key="edu.name" class="flex items-center education-item">
-          <span class="mr-3 text-[--color-accent] text-2xl w-8">{{ edu.icon }}</span>{{ edu.name }}
-        </li>
-      </ul>
+
+    <section class="skills-section">
+      <h2 class="section-title">Skills & Expertise</h2>
+      <div class="skills-grid">
+        <div v-for="skill in skills" :key="skill.name" class="skill-item">
+          <i :class="skill.icon"></i>
+          <span>{{ skill.name }}</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="experience-section">
+      <h2 class="section-title">Professional Journey</h2>
+      <div class="timeline">
+        <div v-for="(exp, index) in experience" :key="index" class="timeline-item">
+          <div class="timeline-icon">{{ exp.icon }}</div>
+          <div class="timeline-content">
+            <h3 class="timeline-title">{{ exp.title }}</h3>
+            <p class="timeline-description">{{ exp.description }}</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="education-section">
+      <h2 class="section-title">Education & Certifications</h2>
+      <div class="education-grid">
+        <div v-for="edu in education" :key="edu.name" class="education-item">
+          <span class="education-icon">{{ edu.icon }}</span>
+          <h3 class="education-title">{{ edu.name }}</h3>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact" class="contact-section">
+      <h2 class="section-title">Let's Connect</h2>
+      <p class="contact-text">Ready to bring your ideas to life? Let's create something amazing together!</p>
+      <a href="mailto:sadickashton@live.com" class="contact-button">
+        <i class="fas fa-paper-plane"></i>
+        Send Me a Message
+      </a>
     </section>
   </div>
 </template>
 
 <script setup lang="ts">
+import HeadingComponent from '@/components/common/HeadingComponent.vue';
 import { ref } from 'vue'
-import HeadingComponent from '@/components/common/HeadingComponent.vue'
 
 const skills = ref([
   { name: 'JavaScript', icon: 'fab fa-js' },
@@ -76,35 +76,26 @@ const skills = ref([
   { name: 'Vue.js', icon: 'fab fa-vuejs' },
   { name: 'React', icon: 'fab fa-react' },
   { name: 'Git', icon: 'fab fa-git-alt' },
-  { name: 'JIRA', icon: 'fab fa-jira' },
   { name: 'Docker', icon: 'fab fa-docker' },
-  { name: 'Microsoft 365', icon: 'fab fa-microsoft' },
-  { name: 'Google Suite', icon: 'fab fa-google' },
-  { name: 'Slack', icon: 'fab fa-slack' },
   { name: 'AWS', icon: 'fab fa-aws' },
   { name: 'Jenkins', icon: 'fab fa-jenkins' },
 ])
 
-const strengths = ref([
-  { name: 'Technical Proficiency', icon: '💻' },
-  { name: 'Collaborative Team Player', icon: '👥' },
-  { name: 'Problem-Solving Skills', icon: '🧩' },
-  { name: 'Attention to Detail', icon: '🔍' }
-])
-
 const experience = ref([
   { 
-    description: '5 years of experience as a Software developer, working on a variety of projects for clients in the tech and retail industries',
+    title: 'Senior Software Developer',
+    description: 'Led development of enterprise solutions, optimizing operations for tech and retail clients.',
     icon: '💼'
   },
   {
-    description: 'Led the development of an Enterprise Resource Planning (ERP) system as a Technical Lead, optimizing daily operations and enhancing overall efficiency for the enterprise.',
-    icon: '📈'
+    title: 'Technical Lead',
+    description: 'Spearheaded the creation of an innovative ERP system, boosting enterprise efficiency.',
+    icon: '🚀'
   }
 ])
 
 const education = ref([
-  { name: 'Bachelor\'s Degree in Computer Science', icon: '🎓' },
+  { name: 'B.Sc. in Computer Science', icon: '🎓' },
   { name: 'AWS Certified Practitioner', icon: '☁️' }
 ])
 </script>
@@ -113,80 +104,347 @@ const education = ref([
 .about-container {
   max-width: 1200px;
   margin: 0 auto;
+  padding: 2rem;
+  color: var(--color-text);
+  background-color: var(--color-bg-primary);
+}
+
+.hero-section {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 4rem;
+  background: linear-gradient(135deg, var(--color-bg-secondary), var(--color-bg-primary));
+  border-radius: 1rem;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
 }
 
 .profile-card {
-  background: linear-gradient(135deg, var(--color-bg-secondary), var(--color-bg-primary));
-  border-radius: 1rem;
-  padding: 2rem;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-  transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+  flex: 0 0 40%;
+  text-align: center;
+  padding: 3rem;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  border-right: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-.profile-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+.profile-image-container {
+  position: relative;
+  width: 200px;
+  height: 200px;
+  margin: 0 auto 2rem;
+  overflow: hidden;
+  border-radius: 50%;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
 }
 
-.profile-image-container img {
-  transition: transform 0.3s ease-in-out;
-  border: 4px solid var(--color-accent);
+.profile-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
 }
 
-.profile-image-container img:hover {
-  transform: scale(1.05);
+.profile-image-container:hover .profile-image {
+  transform: scale(1.1);
+}
+
+.name {
+  font-size: 2.5rem;
+  font-weight: bold;
+  color: var(--color-primary);
+  margin-bottom: 0.5rem;
+}
+
+.title {
+  font-size: 1.2rem;
+  color: var(--color-post-secondary);
+  margin-bottom: 1rem;
+}
+
+.social-icons {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
 }
 
 .social-icon {
   font-size: 1.5rem;
   color: var(--color-post-secondary);
-  transition: color 0.3s ease-in-out, transform 0.3s ease-in-out;
+  transition: color 0.3s ease, transform 0.3s ease;
 }
 
 .social-icon:hover {
   color: var(--color-accent);
-  transform: scale(1.2);
+  transform: translateY(-3px);
 }
 
-.skill-item, .strength-item, .experience-item, .education-item {
-  transition: transform 0.3s ease-in-out, background-color 0.3s ease-in-out;
-  padding: 0.5rem;
+.hero-content {
+  flex: 0 0 60%;
+  padding: 3rem;
+}
+
+.hero-greeting {
+  font-size: 3rem;
+  font-weight: bold;
+  color: var(--color-primary);
+  margin-bottom: 1rem;
+  animation: fadeInUp 0.8s ease;
+}
+
+.hero-text {
+  font-size: 1.2rem;
+  line-height: 1.6;
+  margin-bottom: 2rem;
+  color: var(--color-text);
+  animation: fadeInUp 1s ease 0.2s;
+  animation-fill-mode: both;
+}
+
+.cta-button {
+  display: inline-block;
+  padding: 1rem 2rem;
+  background: linear-gradient(135deg, var(--color-accent), var(--color-primary));
+  color: var(--color-bg-primary);
+  text-decoration: none;
+  border-radius: 2rem;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  transition: all 0.3s ease;
+  animation: fadeInUp 1.2s ease 0.4s;
+  animation-fill-mode: both;
+}
+
+.cta-button:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+}
+
+.section-title {
+  font-size: 2.0rem;
+  font-weight: bold;
+  color: var(--color-primary);
+  margin-bottom: 1rem;
+  position: relative;
+}
+
+.section-title::after {
+  content: '';
+  position: absolute;
+  bottom: -10px;
+  left: 0;
+  width: 50px;
+  height: 4px;
+  background-color: var(--color-accent);
+}
+
+.skills-section, .experience-section, .education-section, .contact-section {
+  margin-bottom: 4rem;
+}
+
+.skills-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 1.5rem;
+}
+
+.skill-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 1rem;
+  background-color: var(--color-bg-secondary);
+  border-radius: 0.5rem;
+  transition: transform 0.3s ease;
+}
+
+.skill-item:hover {
+  transform: translateY(-5px);
+}
+
+.skill-item i {
+  font-size: 2rem;
+  color: var(--color-accent);
+  margin-bottom: 0.5rem;
+}
+
+.timeline {
+  position: relative;
+  padding: 2rem 0;
+}
+
+.timeline::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 2px;
+  height: 100%;
+  background-color: var(--color-accent);
+}
+
+.timeline-item {
+  display: flex;
+  justify-content: flex-end;
+  padding-right: 30px;
+  position: relative;
+  margin-bottom: 2rem;
+}
+
+.timeline-item:nth-child(even) {
+  justify-content: flex-start;
+  padding-left: 30px;
+  padding-right: 0;
+}
+
+.timeline-icon {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: var(--color-accent);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+}
+
+.timeline-content {
+  width: 45%;
+  padding: 1.5rem;
+  background-color: var(--color-bg-secondary);
   border-radius: 0.5rem;
 }
 
-.skill-item:hover, .strength-item:hover, .experience-item:hover, .education-item:hover {
-  transform: translateX(10px);
-  background-color: rgba(var(--color-accent-rgb), 0.1);
+.timeline-title {
+  font-size: 1.2rem;
+  font-weight: bold;
+  margin-bottom: 0.5rem;
 }
 
-.animate-fade-in {
-  animation: fadeIn 1s ease-out;
+.education-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 2rem;
 }
 
-.animate-slide-in-left {
-  animation: slideInLeft 1s ease-out;
+.education-item {
+  text-align: center;
+  padding: 2rem;
+  background-color: var(--color-bg-secondary);
+  border-radius: 0.5rem;
+  transition: transform 0.3s ease;
 }
 
-.animate-slide-in-right {
-  animation: slideInRight 1s ease-out;
+.education-item:hover {
+  transform: translateY(-5px);
 }
 
-@keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
+.education-icon {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+  display: block;
 }
 
-@keyframes slideInLeft {
-  from { transform: translateX(-50px); opacity: 0; }
-  to { transform: translateX(0); opacity: 1; }
+.education-title {
+  font-size: 1.2rem;
+  font-weight: bold;
 }
 
-@keyframes slideInRight {
-  from { transform: translateX(50px); opacity: 0; }
-  to { transform: translateX(0); opacity: 1; }
+.contact-section {
+  text-align: center;
 }
 
-:root {
-  --color-accent-rgb: 97, 218, 251; /* Replace with your accent color's RGB values */
+.contact-text {
+  font-size: 1.2rem;
+  margin-bottom: 2rem;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 768px) {
+  .hero-section {
+    flex-direction: column;
+  }
+
+  .profile-card, .hero-content {
+    flex: 0 0 100%;
+    padding: 2rem;
+  }
+
+  .profile-card {
+    border-right: none;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  .timeline::before {
+    left: 0;
+  }
+
+  .timeline-item, .timeline-item:nth-child(even) {
+    justify-content: flex-start;
+    padding-left: 30px;
+    padding-right: 0;
+  }
+
+  .timeline-icon {
+    left: 0;
+  }
+
+  .timeline-content {
+    width: 100%;
+  }
+
+  .hero-greeting {
+    font-size: 2.5rem; 
+  }
+
+  .hero-text {
+    font-size: 1rem; 
+  }
+
+  .skills-grid {
+    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr)); 
+  }
+
+  .education-grid {
+    grid-template-columns: 1fr; 
+  }
+
+  .section-title {
+    font-size: 1.8rem; 
+  }
+}
+
+@media (max-width: 480px) {
+  .about-container {
+    padding: 1rem; 
+  }
+
+  .profile-image-container {
+    width: 150px; 
+    height: 150px;
+  }
+
+  .hero-greeting {
+    font-size: 2rem; 
+  }
+
+  .cta-button {
+    padding: 0.8rem 1.5rem;
+  }
 }
 </style>

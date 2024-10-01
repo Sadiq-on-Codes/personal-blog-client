@@ -3,11 +3,11 @@
     <div class="footer-content">
       <p class="copyright">&copy; {{ new Date().getFullYear() }} Yahaya A. Sadick</p>
       <div class="social-links">
-        <a href="https://github.com/yourusername" target="_blank" rel="noopener noreferrer" class="social-link">
+        <a href="https://github.com/SadickYahaya" target="_blank" rel="noopener noreferrer" class="social-link">
           <i class="fab fa-github"></i>
           <span>GitHub</span>
         </a>
-        <a href="https://linkedin.com/in/yourusername" target="_blank" rel="noopener noreferrer" class="social-link">
+        <a href="https://www.linkedin.com/in/abubakar-sadick-y-57a858b0/" target="_blank" rel="noopener noreferrer" class="social-link">
           <i class="fab fa-linkedin"></i>
           <span>LinkedIn</span>
         </a>
@@ -15,7 +15,7 @@
           <i class="fas fa-envelope"></i>
           <span>Email</span>
         </a>
-        <a href="https://www.credly.com/users/yourusername" target="_blank" rel="noopener noreferrer" class="social-link">
+        <a href="https://www.credly.com/users/sadick-abubakar-yahaya" target="_blank" rel="noopener noreferrer" class="social-link">
           <i class="fas fa-certificate"></i>
           <span>Credly</span>
         </a>
@@ -24,13 +24,8 @@
   </footer>
 </template>
 
-<script setup lang="ts">
-// No changes in the script section
-</script>
-
 <style scoped>
 .footer {
-  /* background-color: #f8f9fa; */
   padding: 2rem 0;
   margin-top: 3rem;
 }
