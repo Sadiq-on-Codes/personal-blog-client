@@ -13,7 +13,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 import { isAuthenticated } from '@/utils/auth' // You'll need to create this utility function
 
 const routes = [
-  { path: '/', component: BlogComponent, name: 'BlogComponent' },
+  { path: '/', component: BlogComponent, name: 'Home' },
   { path: '/about', component: AboutComponent, name: 'AboutComponent' },
   { path: '/projects', component: ProjectsComponent, name: 'ProjectsComponent' },
   { path: '/blog', component: BlogComponent, name: 'BlogComponent' },
@@ -29,9 +29,9 @@ const routes = [
   {
     path: '/dashboard',
     component: DashboardComponent,
-    meta: { requiresAuth: true }, 
+    meta: { requiresAuth: true },
     children: [
-      { path: 'home', component: DashboardComponent },
+      { path: '', component: DashboardComponent }, // Add default child route
       { path: 'view-posts', component: PostsComponent },
       { path: 'add-posts', component: AddPost }
     ]
@@ -49,8 +49,6 @@ router.beforeEach((to, from, next) => {
       next({ path: '/register', query: { redirect: to.fullPath } })
     } else {
       next()
-      console.log('authenticated');
-      
     }
   } else {
     next()
