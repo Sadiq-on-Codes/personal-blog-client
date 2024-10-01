@@ -11,7 +11,7 @@
 
     <!-- Modal -->
     <div v-if="isModalOpen" class="fixed inset-0 z-50 overflow-auto bg-black bg-opacity-50 flex items-center justify-center" @click="closeModal">
-      <div class="bg-white p-8 rounded-lg max-w-2xl w-full mx-4" @click.stop>
+      <div class="p-8 dark:bg-[--color-background-dark] bg-[--color-background] rounded-lg max-w-2xl w-full mx-4 max-h-[90vh] overflow-y-auto" @click.stop>
         <h2 class="text-2xl font-bold mb-4">{{ selectedProject?.title }}</h2>
         <img v-if="selectedProject?.image" :src="projectImageUrl" :alt="selectedProject.title" class="w-full h-64 object-cover mb-4 rounded">
         <div v-html="selectedProject?.description" class="mb-4"></div>
