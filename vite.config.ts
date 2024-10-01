@@ -17,7 +17,7 @@ export default defineConfig({
     },
   },
   server: {
-    host: '0.0.0.0',  // Allow access from any IP
-    port: 5173,       // Ensure this matches your Docker configuration
+    host: '0.0.0.0',  
+    port: 5173,       
   }
 });
