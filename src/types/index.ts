@@ -18,7 +18,7 @@ export interface Post {
   _id?: string
   author: string
   date: string
-  image: File | null 
+  image: File | any 
   title: string
   description: string
   tags: Pin[]
