@@ -158,3 +158,19 @@ export const fetchTags = () => {
 // }
 
 // fetchTags().then(onSuccess).catch(onError).finally(onFinally)
+
+// New type for newsletter subscription
+export interface NewsletterSubscription {
+  email: string;
+}
+
+// New function to subscribe to the newsletter
+export const subscribeToNewsletter = async (email: string): Promise<NewsletterSubscription> => {
+  try {
+    const response = await api.post('/newsletter/subscribe', { email })
+    return response.data
+  } catch (error) {
+    console.error('Failed to subscribe to newsletter:', error)
+    throw error
+  }
+}

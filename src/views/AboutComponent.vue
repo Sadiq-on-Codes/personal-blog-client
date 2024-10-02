@@ -1,5 +1,5 @@
 <template>
-  <div class="about-container">
+  <div class="about-container dark:text-white">
     <HeadingComponent text="About" class="mb-10 animate-fade-in" />
     <div class="hero-section">
       <div class="profile-card">
@@ -133,7 +133,6 @@ const education = ref([
   max-width: 1200px;
   margin: 0 auto;
   padding-top: 2rem;
-  color: var(--color-text);
   background-color: var(--color-bg-primary);
 }
 
@@ -157,7 +156,7 @@ const education = ref([
   left: 0;
   right: 0;
   bottom: 0;
-  background: linear-gradient(135deg, rgba(var(--color-primary-rgb), 0.1), rgba(var(--color-accent-rgb), 0.1));
+  /* background: linear-gradient(135deg, rgba(var(--color-primary-rgb), 0.1), rgba(var(--color-accent-rgb), 0.1)); */
   z-index: 0;
 }
 
@@ -170,7 +169,7 @@ const education = ref([
   flex: 0 0 40%;
   text-align: center;
   padding: 3rem;
-  background: rgba(255, 255, 255, 0.1);
+  /* background: rgba(255, 255, 255, 0.1); */
   backdrop-filter: blur(10px);
   border-right: 1px solid rgba(255, 255, 255, 0.1);
 }
@@ -242,7 +241,6 @@ const education = ref([
 .hero-text {
   font-size: 1.2rem;
   line-height: 1.8;
-  color: var(--color-text);
   margin-bottom: 2rem;
 }
 
@@ -520,7 +518,6 @@ const education = ref([
 
 .education-institution {
   font-size: 1rem;
-  color: var(--color-text);
   margin-bottom: 0.25rem;
 }
 

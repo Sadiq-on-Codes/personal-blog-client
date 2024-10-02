@@ -30,9 +30,9 @@
           <td v-if="!isProject" class="px-6 py-4">
             {{ item.author }}
           </td>
-          <td v-if="isProject" class="px-6 py-4">
+          <!-- <td v-if="isProject" class="px-6 py-4">
             {{ item.description }}
-          </td>
+          </td> -->
           <td class="px-6 py-4">
             <div v-if="item.tags.length > 0" class="flex flex-wrap">
               <span
@@ -55,20 +55,31 @@
             </router-link>
           </td>
           <td class="px-6 py-4">
-            <span class="cursor-pointer font-medium text-red-600 dark:text-red-500 hover:underline"
-              >Delete</span
+            <span 
+              @click="openDeleteModal(item._id)"
+              class="cursor-pointer font-medium text-red-600 dark:text-red-500 hover:underline"
             >
+              Delete
+            </span>
           </td>
         </tr>
       </tbody>
     </table>
   </div>
+  
+  <DeleteComponent 
+    :is-open="isDeleteModalOpen" 
+    @confirm="confirmDelete" 
+    @close="closeDeleteModal"
+  />
 </template>
 
 <script setup lang="ts">
+import { ref } from 'vue'
 import type { Post } from '@/types'
+import DeleteComponent from '../DeleteComponent.vue';
 
-defineProps<{
+const props = defineProps<{
   headers: string[]
   data: Post[]
   path: string
@@ -77,4 +88,28 @@ defineProps<{
     default: false
   }
 }>()
+
+const emit = defineEmits(['delete'])
+
+const isDeleteModalOpen = ref(false)
+const itemToDeleteId = ref<string | null>(null)
+
+const openDeleteModal = (id: string) => {
+  itemToDeleteId.value = id
+  console.log(id);
+  
+  isDeleteModalOpen.value = true
+}
+
+const closeDeleteModal = () => {
+  isDeleteModalOpen.value = false
+  itemToDeleteId.value = null
+}
+
+const confirmDelete = () => {
+  if (itemToDeleteId.value) {
+    emit('delete', itemToDeleteId.value)
+    closeDeleteModal()
+  }
+}
 </script>

@@ -30,7 +30,7 @@
             {{ message }}
           </p>
           <p class="text-[--color-post-secondary] text-sm mt-2">
-            We care about your data in our <a href="#" class="underline hover:text-[--color-post-primary]">privacy policy</a>.
+            We care about your data in our <router-link to="/privacy-policy" class="underline hover:text-[--color-post-primary]">privacy policy</router-link>.
           </p>
         </div>
       </div>
@@ -42,6 +42,7 @@
 <script setup lang="ts">
 import { ref, computed } from 'vue';
 import AllBlogPosts from '@/components/AllBlogPosts.vue';
+import { subscribeToNewsletter } from '@/services/apiServices';
 
 const email = ref('');
 const isLoading = ref(false);
@@ -60,12 +61,7 @@ const submitNewsletter = async () => {
   messageType.value = null;
 
   try {
-    // Simulating an API call
-    await new Promise(resolve => setTimeout(resolve, 1500));
-    
-    // Here you would typically make an actual API call to submit the email
-    // For example:
-    // await axios.post('/api/newsletter', { email: email.value });
+    await subscribeToNewsletter(email.value)
 
     message.value = 'Thank you for subscribing!';
     messageType.value = 'success';

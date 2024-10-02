@@ -11,15 +11,16 @@
       @onChange="fetchData"
     />
 
-    <div v-if="loading">Loading...</div>
+    <div v-if="loading"><LoaderComponent /></div>
 
     <div class="w-full" v-else>
       <ul v-if="selectedContent === 'projects'">
         <TableComponent
-          :headers="['Id', 'Title', 'Description', 'Tags', 'Edit', 'Delete']"
+          :headers="['Id', 'Title', 'Tags', 'Edit', 'Delete']"
           :data="data"
           path="/dashboard/add-posts"
           isProject="true"
+          @delete="handleDelete"
         />
       </ul>
       <div v-if="selectedContent === 'blogPosts'">
@@ -27,6 +28,7 @@
           :headers="['Id', 'Title', 'Data Published', 'Author', 'Tags', 'Edit', 'Delete']"
           :data="data"
           path="/dashboard/add-posts"
+          @delete="handleDelete"
         />
       </div>
     </div>
@@ -35,10 +37,11 @@
 
 <script setup>
 import { ref, watch, onMounted } from 'vue'
-import { fetchBlogPosts, fetchProjects } from '@/services/apiServices'
+import { fetchBlogPosts, fetchProjects, deleteProject, deleteBlogPost } from '@/services/apiServices'
 import TableComponent from '@/components/Admin/TableComponent.vue'
 import SelectField from '@/components/common/SingleSelectComponent.vue'
 import { usePostStore } from '@/stores'
+import LoaderComponent from '@/components/common/LoaderComponent.vue'
 
 const store = usePostStore()
 const data = ref([])
@@ -71,6 +74,19 @@ const categoryOptions = [
   { value: 'projects', text: 'Projects' },
   { value: 'blogPosts', text: 'Blog Posts' }
 ]
+
+const handleDelete = async (id) => {
+  try {
+    if (selectedContent.value === 'projects') {
+      await deleteProject(id)
+    } else {
+      await deleteBlogPost(id)
+    }
+    await fetchData()
+  } catch (error) {
+    console.error('Error deleting item:', error)
+  }
+}
 
 onMounted(() => {
   fetchData()

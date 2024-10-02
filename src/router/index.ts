@@ -7,6 +7,7 @@ import BlogComponent from '@/views/BlogComponent.vue'
 import BlogDetailsPage from '@/views/BlogDetailsPage.vue'
 import NewsLetterComponent from '@/views/NewsLetterComponent.vue'
 import ProjectsComponent from '@/views/ProjectsComponent.vue'
+import PrivacyPolicy from '@/views/PrivacyPolicy.vue'
 import { createRouter, createWebHistory } from 'vue-router'
 
 // Add this import for the authentication check
@@ -35,6 +36,11 @@ const routes = [
       { path: 'view-posts', component: PostsComponent },
       { path: 'add-posts', component: AddPost }
     ]
+  },
+  {
+    path: '/privacy-policy',
+    name: 'PrivacyPolicy',
+    component: PrivacyPolicy
   }
 ]
 
