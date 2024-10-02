@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="pt-8">
     <HeadingComponent text="The Blog" />
     <RecentPosts />
     <AllBlogPosts />

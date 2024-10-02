@@ -18,7 +18,9 @@
         <p class="hero-text">
           Passionate about computers and coding, I bring 5 years of experience as a Software Developer to the table. With a strong foundation in Computer Science and a knack for problem-solving, I'm always eager to take on new challenges and push the boundaries of what's possible in tech.
         </p>
-        <a href="#contact" class="cta-button">Let's Collaborate</a>
+        <div class="hero-cta">
+          <a href="#contact" class="cta-button">Get in Touch</a>
+        </div>
       </div>
     </div>
 
@@ -26,8 +28,13 @@
       <h2 class="section-title">Skills & Expertise</h2>
       <div class="skills-grid">
         <div v-for="skill in skills" :key="skill.name" class="skill-item">
-          <i :class="skill.icon"></i>
-          <span>{{ skill.name }}</span>
+          <div class="skill-icon-wrapper">
+            <i :class="skill.icon"></i>
+          </div>
+          <span class="skill-name">{{ skill.name }}</span>
+          <div class="skill-level-bar">
+            <div class="skill-level-fill" :style="{ width: skill.level + '%' }"></div>
+          </div>
         </div>
       </div>
     </section>
@@ -54,8 +61,12 @@
       <h2 class="section-title">Education & Certifications</h2>
       <div class="education-grid">
         <div v-for="edu in education" :key="edu.name" class="education-item">
-          <span class="education-icon">{{ edu.icon }}</span>
+          <div class="education-icon-wrapper">
+            <span class="education-icon">{{ edu.icon }}</span>
+          </div>
           <h3 class="education-title">{{ edu.name }}</h3>
+          <!-- <p class="education-institution">{{ edu.institution }}</p>
+          <p class="education-year">{{ edu.year }}</p> -->
         </div>
       </div>
     </section>
@@ -76,14 +87,14 @@ import HeadingComponent from '@/components/common/HeadingComponent.vue';
 import { ref } from 'vue'
 
 const skills = ref([
-  { name: 'JavaScript', icon: 'fab fa-js' },
-  { name: 'TypeScript', icon: 'fas fa-code' },
-  { name: 'Vue.js', icon: 'fab fa-vuejs' },
-  { name: 'React', icon: 'fab fa-react' },
-  { name: 'Git', icon: 'fab fa-git-alt' },
-  { name: 'Docker', icon: 'fab fa-docker' },
-  { name: 'AWS', icon: 'fab fa-aws' },
-  { name: 'Jenkins', icon: 'fab fa-jenkins' },
+  { name: 'JavaScript', icon: 'fab fa-js', level: 90 },
+  { name: 'TypeScript', icon: 'fas fa-code', level: 85 },
+  { name: 'Vue.js', icon: 'fab fa-vuejs', level: 95 },
+  { name: 'React', icon: 'fab fa-react', level: 80 },
+  { name: 'Git', icon: 'fab fa-git-alt', level: 85 },
+  { name: 'Docker', icon: 'fab fa-docker', level: 75 },
+  { name: 'AWS', icon: 'fab fa-aws', level: 70 },
+  { name: 'Jenkins', icon: 'fab fa-jenkins', level: 65 },
 ])
 
 const experience = ref([
@@ -121,7 +132,7 @@ const education = ref([
 .about-container {
   max-width: 1200px;
   margin: 0 auto;
-  padding: 2rem;
+  padding-top: 2rem;
   color: var(--color-text);
   background-color: var(--color-bg-primary);
 }
@@ -135,6 +146,24 @@ const education = ref([
   border-radius: 1rem;
   overflow: hidden;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  position: relative;
+  overflow: hidden;
+}
+
+.hero-section::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(135deg, rgba(var(--color-primary-rgb), 0.1), rgba(var(--color-accent-rgb), 0.1));
+  z-index: 0;
+}
+
+.profile-card, .hero-content {
+  position: relative;
+  z-index: 1;
 }
 
 .profile-card {
@@ -154,6 +183,7 @@ const education = ref([
   overflow: hidden;
   border-radius: 50%;
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+  animation: float 6s ease-in-out infinite;
 }
 
 .profile-image {
@@ -203,23 +233,24 @@ const education = ref([
 }
 
 .hero-greeting {
-  font-size: zrem;
-  font-weight: bold;
-  color: var(--color-primary);
-  margin-bottom: 1rem;
-  animation: fadeInUp 0.8s ease;
+  font-size: 3rem;
+  background: linear-gradient(135deg, var(--color-primary), var(--color-accent));
+  -webkit-background-clip: text;
+  margin-bottom: 1.5rem;
 }
 
 .hero-text {
   font-size: 1.2rem;
-  line-height: 1.6;
-  margin-bottom: 2rem;
+  line-height: 1.8;
   color: var(--color-text);
-  animation: fadeInUp 1s ease 0.2s;
-  animation-fill-mode: both;
+  margin-bottom: 2rem;
 }
 
-.cta-button {
+.hero-cta {
+  margin-top: 2rem;
+}
+
+.cta-button, .contact-button {
   display: inline-block;
   padding: 1rem 2rem;
   background: linear-gradient(135deg, var(--color-accent), var(--color-primary));
@@ -230,13 +261,12 @@ const education = ref([
   text-transform: uppercase;
   letter-spacing: 1px;
   transition: all 0.3s ease;
-  animation: fadeInUp 1.2s ease 0.4s;
-  animation-fill-mode: both;
+  box-shadow: 0 4px 6px rgba(var(--color-primary-rgb), 0.2);
 }
 
-.cta-button:hover {
+.cta-button:hover, .contact-button:hover {
   transform: translateY(-3px);
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 6px 12px rgba(var(--color-primary-rgb), 0.3);
 }
 
 .section-title {
@@ -263,28 +293,61 @@ const education = ref([
 
 .skills-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-  gap: 1.5rem;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 2rem;
 }
 
 .skill-item {
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 1rem;
+  padding: 1.5rem;
   background-color: var(--color-bg-secondary);
-  border-radius: 0.5rem;
-  transition: transform 0.3s ease;
+  border-radius: 1rem;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
 .skill-item:hover {
   transform: translateY(-5px);
+  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+}
+
+.skill-icon-wrapper {
+  width: 60px;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--color-bg-primary);
+  border-radius: 50%;
+  margin-bottom: 1rem;
 }
 
 .skill-item i {
   font-size: 2rem;
   color: var(--color-accent);
+}
+
+.skill-name {
+  font-size: 1.1rem;
+  font-weight: bold;
   margin-bottom: 0.5rem;
+  color: var(--color-primary);
+}
+
+.skill-level-bar {
+  width: 100%;
+  height: 6px;
+  background-color: var(--color-bg-primary);
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.skill-level-fill {
+  height: 100%;
+  background-color: var(--color-accent);
+  transition: width 1s ease-in-out;
 }
 
 .timeline {
@@ -366,6 +429,7 @@ const education = ref([
   position: relative;
   border-radius: 6px;
   box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+  transition: all 0.3s ease;
 }
 
 .timeline-item:nth-child(odd) .timeline-content {
@@ -416,35 +480,67 @@ const education = ref([
 }
 
 .education-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   text-align: center;
   padding: 2rem;
   background-color: var(--color-bg-secondary);
-  border-radius: 0.5rem;
-  transition: transform 0.3s ease;
+  border-radius: 1rem;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
 .education-item:hover {
   transform: translateY(-5px);
+  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+}
+
+.education-icon-wrapper {
+  width: 80px;
+  height: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--color-bg-primary);
+  border-radius: 50%;
+  margin-bottom: 1rem;
 }
 
 .education-icon {
-  font-size: 3rem;
-  margin-bottom: 1rem;
-  display: block;
+  font-size: 2.5rem;
 }
 
 .education-title {
   font-size: 1.2rem;
   font-weight: bold;
+  color: var(--color-primary);
+  margin-bottom: 0.5rem;
+}
+
+.education-institution {
+  font-size: 1rem;
+  color: var(--color-text);
+  margin-bottom: 0.25rem;
+}
+
+.education-year {
+  font-size: 0.9rem;
+  color: var(--color-post-secondary);
 }
 
 .contact-section {
   text-align: center;
+  background: linear-gradient(135deg, var(--color-bg-secondary), var(--color-bg-primary));
+  padding: 4rem 2rem;
+  border-radius: 1rem;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
 }
 
 .contact-text {
-  font-size: 1.2rem;
+  font-size: 1.3rem;
   margin-bottom: 2rem;
+  color: var(--color-text);
 }
 
 @keyframes fadeInUp {
@@ -456,6 +552,12 @@ const education = ref([
     opacity: 1;
     transform: translateY(0);
   }
+}
+
+@keyframes float {
+  0% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+  100% { transform: translateY(0px); }
 }
 
 @media (max-width: 768px) {
