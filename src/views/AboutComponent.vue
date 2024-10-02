@@ -36,10 +36,15 @@
       <h2 class="section-title">Professional Journey</h2>
       <div class="timeline">
         <div v-for="(exp, index) in experience" :key="index" class="timeline-item">
-          <div class="timeline-icon">{{ exp.icon }}</div>
           <div class="timeline-content">
             <h3 class="timeline-title">{{ exp.title }}</h3>
+            <p class="timeline-period">{{ exp.period }}</p>
             <p class="timeline-description">{{ exp.description }}</p>
+            <ul class="timeline-achievements">
+              <li v-for="(achievement, achIndex) in exp.achievements" :key="achIndex">
+                {{ achievement }}
+              </li>
+            </ul>
           </div>
         </div>
       </div>
@@ -84,13 +89,25 @@ const skills = ref([
 const experience = ref([
   { 
     title: 'Senior Software Developer',
+    period: 'Jan 2020 - Present',
     description: 'Led development of enterprise solutions, optimizing operations for tech and retail clients.',
-    icon: '💼'
+    icon: 'fas fa-laptop-code',
+    achievements: [
+      'Increased system efficiency by 40% through code optimization',
+      'Mentored junior developers, improving team productivity by 25%',
+      'Implemented CI/CD pipeline, reducing deployment time by 60%'
+    ]
   },
   {
     title: 'Technical Lead',
+    period: 'Mar 2018 - Dec 2019',
     description: 'Spearheaded the creation of an innovative ERP system, boosting enterprise efficiency.',
-    icon: '🚀'
+    icon: 'fas fa-project-diagram',
+    achievements: [
+      'Delivered project 2 months ahead of schedule',
+      'Reduced operational costs by 30% through process automation',
+      'Received "Innovation Award" for implementing AI-driven analytics'
+    ]
   }
 ])
 
@@ -186,7 +203,7 @@ const education = ref([
 }
 
 .hero-greeting {
-  font-size: 3rem;
+  font-size: zrem;
   font-weight: bold;
   color: var(--color-primary);
   margin-bottom: 1rem;
@@ -223,7 +240,7 @@ const education = ref([
 }
 
 .section-title {
-  font-size: 2.0rem;
+  font-size: 1.6rem;
   font-weight: bold;
   color: var(--color-primary);
   margin-bottom: 1rem;
@@ -272,58 +289,124 @@ const education = ref([
 
 .timeline {
   position: relative;
+  max-width: 1200px;
+  margin: 0 auto;
   padding: 2rem 0;
 }
 
-.timeline::before {
+.timeline::after {
   content: '';
   position: absolute;
-  top: 0;
-  left: 50%;
-  width: 2px;
-  height: 100%;
+  width: 6px;
   background-color: var(--color-accent);
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  margin-left: -3px;
 }
 
 .timeline-item {
-  display: flex;
-  justify-content: flex-end;
-  padding-right: 30px;
+  padding: 10px;
   position: relative;
-  margin-bottom: 2rem;
+  background-color: inherit;
+  width: 45%;
+  box-sizing: border-box;
+}
+
+.timeline-item::after {
+  content: '';
+  position: absolute;
+  width: 25px;
+  height: 25px;
+  right: -17px;
+  background-color: var(--color-bg-primary);
+  top: 15px;
+  z-index: 1;
 }
 
 .timeline-item:nth-child(even) {
-  justify-content: flex-start;
-  padding-left: 30px;
-  padding-right: 0;
+  left: 50%;
+}
+
+.timeline-item:nth-child(odd) {
+  left: 0;
+}
+
+.timeline-item:nth-child(odd)::after {
+  left: auto;
+  right: -16px;
 }
 
 .timeline-icon {
   position: absolute;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
   background-color: var(--color-accent);
+  color: var(--color-bg-primary);
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 1.2rem;
+  font-size: 1.5rem;
+  z-index: 2;
+  top: 3px;
+}
+
+.timeline-item:nth-child(odd) .timeline-icon {
+  right: -25px;
+}
+
+.timeline-item:nth-child(even) .timeline-icon {
+  left: -25px;
 }
 
 .timeline-content {
-  width: 45%;
-  padding: 1.5rem;
+  padding: 20px 30px;
   background-color: var(--color-bg-secondary);
-  border-radius: 0.5rem;
+  position: relative;
+  border-radius: 6px;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+}
+
+.timeline-item:nth-child(odd) .timeline-content {
+  text-align: right;
 }
 
 .timeline-title {
-  font-size: 1.2rem;
+  font-size: 1.4rem;
   font-weight: bold;
   margin-bottom: 0.5rem;
+  color: var(--color-primary);
+}
+
+.timeline-period {
+  font-size: 0.9rem;
+  color: var(--color-post-secondary);
+  margin-bottom: 1rem;
+}
+
+.timeline-description {
+  font-size: 1rem;
+  line-height: 1.6;
+  margin-bottom: 1rem;
+}
+
+.timeline-achievements {
+  list-style-type: none;
+  padding-left: 0;
+}
+
+.timeline-achievements li {
+  position: relative;
+  padding-left: 20px;
+  margin-bottom: 0.5rem;
+}
+
+.timeline-achievements li::before {
+  content: '✓';
+  position: absolute;
+  left: 0;
+  color: var(--color-accent);
 }
 
 .education-grid {
@@ -390,22 +473,30 @@ const education = ref([
     border-bottom: 1px solid rgba(255, 255, 255, 0.1);
   }
 
-  .timeline::before {
-    left: 0;
+  .timeline::after {
+    left: 31px;
   }
-
-  .timeline-item, .timeline-item:nth-child(even) {
-    justify-content: flex-start;
-    padding-left: 30px;
-    padding-right: 0;
-  }
-
-  .timeline-icon {
-    left: 0;
-  }
-
-  .timeline-content {
+  
+  .timeline-item {
     width: 100%;
+    padding-left: 70px;
+    padding-right: 25px;
+  }
+  
+  .timeline-item::after {
+    left: 15px;
+  }
+  
+  .timeline-item:nth-child(even) {
+    left: 0%;
+  }
+  
+  .timeline-item:nth-child(odd)::after {
+    left: 15px;
+  }
+  
+  .timeline-icon {
+    left: 0 !important;
   }
 
   .hero-greeting {
