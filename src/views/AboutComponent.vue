@@ -578,29 +578,76 @@ const education = ref([
   }
 
   .timeline::after {
-    left: 31px;
+    left: 0;
   }
   
   .timeline-item {
     width: 100%;
-    padding-left: 70px;
-    padding-right: 25px;
+    /* padding-left: 30px; */
+    /* padding-right: 0; */
   }
   
   .timeline-item::after {
-    left: 15px;
+    left: -9px;
   }
   
   .timeline-item:nth-child(even) {
-    left: 0%;
+    left: 0;
+  }
+  
+  .timeline-item:nth-child(odd) {
+    left: 0;
   }
   
   .timeline-item:nth-child(odd)::after {
-    left: 15px;
+    left: -9px;
+    right: auto;
   }
   
   .timeline-icon {
-    left: 0 !important;
+    left: -25px !important;
+    width: 40px;
+    height: 40px;
+    font-size: 1.2rem;
+  }
+
+  .timeline-content {
+    width: 100%;
+    padding: 15px 20px;
+  }
+
+  .timeline-item:nth-child(odd) .timeline-content {
+    text-align: left;
+  }
+
+  .timeline-title {
+    font-size: 1.2rem;
+  }
+
+  .timeline-description,
+  .timeline-achievements li {
+    font-size: 0.9rem;
+  }
+
+  .skills-section,
+  .experience-section,
+  .education-section,
+  .contact-section {
+    margin-bottom: 3rem;
+  }
+
+  .section-title {
+    font-size: 1.4rem;
+  }
+
+  .contact-text {
+    font-size: 1.1rem;
+  }
+
+  .cta-button,
+  .contact-button {
+    padding: 0.8rem 1.5rem;
+    font-size: 0.9rem;
   }
 
   .hero-greeting {
@@ -611,16 +658,14 @@ const education = ref([
     font-size: 1rem; 
   }
 
-  .skills-grid {
-    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr)); 
-  }
-
+  .skills-grid,
   .education-grid {
-    grid-template-columns: 1fr; 
+    grid-template-columns: 1fr;
   }
 
-  .section-title {
-    font-size: 1.8rem; 
+  .skill-item,
+  .education-item {
+    width: 100%;
   }
 }
 
