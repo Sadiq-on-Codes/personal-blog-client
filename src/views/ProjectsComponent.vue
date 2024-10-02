@@ -39,7 +39,7 @@ const selectedProject = ref<Post | null>(null);
 const isModalOpen = ref(false);
 
 const projectImageUrl = computed(() => 
-  selectedProject.value?.image ? `${API_URL}/${selectedProject.value.image}` : ''
+  selectedProject.value?.image ? `${API_URL}${selectedProject.value.image}` : ''
 )
 
 onMounted(async () => {
