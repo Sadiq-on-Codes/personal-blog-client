@@ -78,7 +78,12 @@
               </div>
             </div>
 
-            <Button @click="submitForm" type="submit">
+            <Button 
+              @click="submitForm" 
+              type="submit"
+              :loading="isLoading"
+              :disabled="isLoading"
+            >
               {{ form._id ? 'Update' : 'Publish' }}
             </Button>
           </div>
@@ -139,6 +144,8 @@ const tags = ref()
 const todayDate = computed(() => {
   return new Date().toISOString().split('T')[0]
 })
+
+const isLoading = ref(false)
 
 onMounted(async () => {
   const id = route.query.id as string
@@ -207,6 +214,9 @@ const getDescriptionAsString = (): string => {
 }
 
 const submitForm = async () => {
+  if (isLoading.value) return; // Prevent multiple submissions
+  
+  isLoading.value = true;
   try {
     const formData = new FormData();
     formData.append('title', form.value.title);
@@ -244,9 +254,14 @@ const submitForm = async () => {
         console.log('Project created successfully');
       }
     }
+    
+    // Redirect after successful submission
     router.push({ path: '/dashboard/view-posts' });
   } catch (error) {
     console.error('Error submitting form', error);
+    // Optionally, you can add error handling here, such as showing an error message to the user
+  } finally {
+    isLoading.value = false;
   }
 };
 
