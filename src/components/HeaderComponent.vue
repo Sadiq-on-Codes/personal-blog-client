@@ -28,15 +28,15 @@
       class="fixed inset-0 flex flex-col items-center justify-center gap-[--spacing] dark:bg-[--color-background-dark] bg-[--color-background] text-xl z-50"
     >
       <router-link
-        v-for="(menuItem, index) in ['Blog', 'Projects', 'About', 'Newsletter']"
+        v-for="(menuItem, index) in menuItems"
         :key="index"
-        :to="menuItem.toLowerCase()"
+        :to="{ name: menuItem.routeName }"
         class="hover:underline"
         active-class="underline"
         exact-active-class="underline"
-        @click.prevent="isMenuOpen = false"
+        @click="isMenuOpen = false"
       >
-        {{ menuItem }}
+        {{ menuItem.name }}
       </router-link>
       <DarkModeToggle />
 
