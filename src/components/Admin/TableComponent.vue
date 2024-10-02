@@ -3,59 +3,39 @@
     <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
       <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
         <tr>
-          <th scope="col" class="px-6 py-3">Number</th>
-          <th v-for="header in headers" :key="header" scope="col" class="px-6 py-3">
-            {{ header }}
+          <th v-for="header in headers" :key="header.key" scope="col" class="px-6 py-3">
+            {{ header.label }}
           </th>
+          <th v-if="showActions" scope="col" class="px-6 py-3">Actions</th>
         </tr>
       </thead>
       <tbody>
         <tr
           v-for="(item, index) in data"
-          :key="item._id"
+          :key="item.id"
           class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
         >
-          <td class="px-6 py-4">
-            {{ index + 1 }}
+          <td v-for="header in headers" :key="header.key" class="px-6 py-4">
+            <component
+              v-if="header.component"
+              :is="header.component"
+              :value="item[header.key]"
+              :item="item"
+            />
+            <template v-else>
+              {{ item[header.key] }}
+            </template>
           </td>
-          <td class="px-6 py-4">
-            {{ item._id }}
-          </td>
-          <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-            {{ item.title.slice(0, 35) }}
-          </td>
-          <td v-if="!isProject" class="px-6 py-4">
-            {{ item.date }}
-          </td>
-          <td v-if="!isProject" class="px-6 py-4">
-            {{ item.author }}
-          </td>
-          <!-- <td v-if="isProject" class="px-6 py-4">
-            {{ item.description }}
-          </td> -->
-          <td class="px-6 py-4">
-            <div v-if="item.tags.length > 0" class="flex flex-wrap">
-              <span
-                v-for="tag in item.tags"
-                :key="tag._id"
-                :style="{ color: tag.textColor, backgroundColor: tag.bgColor }"
-                class="text-gray-600 dark:text-gray-300 py-1 px-2 m-0.5 rounded-full"
-              >
-                {{ tag.tag }}
-              </span>
-            </div>
-            <span v-else >No tags</span>
-          </td>
-          <td class="px-6 py-4">
+          <td v-if="showActions" class="px-6 py-4 flex space-x-2">
             <router-link
-              :to="{ path: path, query: { id: item._id } }"
+              v-if="editPath"
+              :to="{ path: editPath, query: { id: item._id } }"
               class="font-medium text-blue-600 dark:text-blue-500 hover:underline"
             >
               Edit
             </router-link>
-          </td>
-          <td class="px-6 py-4">
             <span 
+              v-if="allowDelete"
               @click="openDeleteModal(item._id)"
               class="cursor-pointer font-medium text-red-600 dark:text-red-500 hover:underline"
             >
@@ -75,17 +55,22 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
-import type { Post } from '@/types'
+import { computed, ref } from 'vue'
 import DeleteComponent from '../DeleteComponent.vue';
 
+interface Header {
+  key: string;
+  label: string;
+  component?: any;
+}
+
 const props = defineProps<{
-  headers: string[]
-  data: Post[]
-  path: string
-  isProject: {
-    type: Boolean
-    default: false
+  headers: Header[]
+  data: any[]
+  editPath?: string
+  allowDelete: {
+    type: boolean,
+    default: true
   }
 }>()
 
@@ -96,8 +81,6 @@ const itemToDeleteId = ref<string | null>(null)
 
 const openDeleteModal = (id: string) => {
   itemToDeleteId.value = id
-  console.log(id);
-  
   isDeleteModalOpen.value = true
 }
 
@@ -112,4 +95,6 @@ const confirmDelete = () => {
     closeDeleteModal()
   }
 }
+
+const showActions = computed(() => props.editPath || props.allowDelete)
 </script>

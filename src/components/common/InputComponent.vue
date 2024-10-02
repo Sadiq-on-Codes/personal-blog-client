@@ -12,6 +12,7 @@
       :class="inputClass"
       :required="required"
       :value="modelValue"
+      :pattern="type === 'color' ? '^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$' : undefined"
       @input="onInput"
     />
   </div>
@@ -20,7 +21,7 @@
 <script setup lang="ts">
 import { defineProps, defineEmits } from 'vue'
 
-defineProps({
+const props = defineProps({
   type: {
     type: String,
     default: 'text'
@@ -38,12 +39,19 @@ defineProps({
     type: Boolean,
     default: false
   },
-  modelValue: String // Add modelValue prop to support v-model
+  modelValue: String
 })
 
 const emit = defineEmits(['update:modelValue'])
 
-const onInput = (event: any) => {
-  emit('update:modelValue', event.target.value)
+const onInput = (event: Event) => {
+  const target = event.target as HTMLInputElement
+  let value = target.value
+  
+  if (props.type === 'color' && !value.startsWith('#')) {
+    value = '#' + value
+  }
+  
+  emit('update:modelValue', value)
 }
 </script>

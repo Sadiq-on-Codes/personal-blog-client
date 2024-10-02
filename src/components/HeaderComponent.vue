@@ -56,7 +56,7 @@ const isMenuOpen = ref(false)
 const menuItems = [
   { name: 'Blog', routeName: 'BlogComponent' },
   { name: 'Projects', routeName: 'ProjectsComponent' },
-  { name: 'About', routeName: 'AboutComponent' },
+  { name: 'About Me', routeName: 'AboutComponent' },
   { name: 'Newsletter', routeName: 'NewsLetterComponent' }
 ]
 

@@ -129,37 +129,56 @@ export const deleteProject = async (id: string): Promise<void> => {
 
 export const Tags = (): Promise<AxiosResponse<Post[]>> => api.get('/tags')
 
-// export const fetchTags = async (): Promise<Post[]> => {
-//   try {
-//     const response = await Tags();
-//     return response.data;
-//   } catch (error) {
-//     console.error('Failed to fetch blog posts:', error);
-//     return [];
-//   }
-// };
+export const fetchTags = async (): Promise<Post[]> => {
+  try {
+    const response = await Tags();
+    return response.data;
+  } catch (error) {
+    console.error('Failed to fetch tags:', error);
+    return [];
+  }
+};
 
-export const fetchTags = () => {
-  return Promise.resolve(Tags())
-}
+// New CRUD operations for tags
+export const fetchTagById = async (id: string): Promise<Post> => {
+  try {
+    const response = await api.get(`/tags/${id}`);
+    return response.data;
+  } catch (error) {
+    console.error('Failed to fetch tag by ID:', error);
+    throw error;
+  }
+};
 
-// const onSuccess = (response: any) => {
-//   console.log(response.data)
-//   return response.data
-// }
+export const createTag = async (tagData: { tag: string }): Promise<Post> => {
+  try {
+    const response = await api.post('/tags', tagData);
+    return response.data;
+  } catch (error) {
+    console.error('Failed to create tag:', error);
+    throw error;
+  }
+};
 
-// const onError = (error: any) => {
-//   console.log(error.message)
-//   return []
-// }
+export const updateTag = async (id: string, tagData: { tag: string }): Promise<Post> => {
+  try {
+    const response = await api.put(`/tags/${id}`, tagData);
+    return response.data;
+  } catch (error) {
+    console.error('Failed to update tag:', error);
+    throw error;
+  }
+};
 
-// const onFinally = () => {
-//   console.log('Done')
-// }
+export const deleteTag = async (id: string): Promise<void> => {
+  try {
+    await api.delete(`/tags/${id}`);
+  } catch (error) {
+    console.error('Failed to delete tag:', error);
+    throw error;
+  }
+};
 
-// fetchTags().then(onSuccess).catch(onError).finally(onFinally)
-
-// New type for newsletter subscription
 export interface NewsletterSubscription {
   email: string;
 }

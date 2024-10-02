@@ -74,6 +74,9 @@ const logout = () => {
 const menuItems = [
   { name: 'View Posts', path: '/dashboard/view-posts', icon: PostIcon },
   { name: 'Add Post', path: '/dashboard/add-posts', icon: AddIcon },
+  { name: 'View Tags', path: '/dashboard/view-tags', icon: PostIcon },
+  { name: 'Add Tags', path: '/dashboard/add-tags', icon: AddIcon },
+  { name: 'View Subscribers', path: '/dashboard/view-subscribers', icon: PostIcon },
 ]
 
 onMounted(() => {

@@ -14,29 +14,21 @@
     <div v-if="loading"><LoaderComponent /></div>
 
     <div class="w-full" v-else>
-      <ul v-if="selectedContent === 'projects'">
-        <TableComponent
-          :headers="['Id', 'Title', 'Tags', 'Edit', 'Delete']"
-          :data="data"
-          path="/dashboard/add-posts"
-          isProject="true"
-          @delete="handleDelete"
-        />
-      </ul>
-      <div v-if="selectedContent === 'blogPosts'">
-        <TableComponent
-          :headers="['Id', 'Title', 'Data Published', 'Author', 'Tags', 'Edit', 'Delete']"
-          :data="data"
-          path="/dashboard/add-posts"
-          @delete="handleDelete"
-        />
-      </div>
+      <TableComponent
+        :headers="tableHeaders"
+        :data="data"
+        idKey="_id"
+        editPath="/dashboard/add-posts"
+        :showIndex="true"
+        :showActions="true"
+        @delete="handleDelete"
+      />
     </div>
   </div>
 </template>
 
 <script setup>
-import { ref, watch, onMounted } from 'vue'
+import { ref, watch, onMounted, computed } from 'vue'
 import { fetchBlogPosts, fetchProjects, deleteProject, deleteBlogPost } from '@/services/apiServices'
 import TableComponent from '@/components/Admin/TableComponent.vue'
 import SelectField from '@/components/common/SingleSelectComponent.vue'
@@ -48,19 +40,30 @@ const data = ref([])
 const loading = ref(false)
 const selectedContent = ref(store.selectedContent || 'blogPosts')
 
+const tableHeaders = computed(() => {
+  if (selectedContent.value === 'projects') {
+    return [
+      { key: 'title', label: 'Title', type: 'truncate' },
+      { key: 'tags', label: 'Tags', type: 'tags' },
+    ]
+  } else {
+    return [
+      { key: 'title', label: 'Title', type: 'truncate' },
+      { key: 'date', label: 'Date Published' },
+      { key: 'author', label: 'Author' },
+      { key: 'tags', label: 'Tags', type: 'tags' },
+    ]
+  }
+})
+
 const fetchData = async () => {
   loading.value = true
   try {
     if (selectedContent.value === 'projects') {
       store.setSelectedContent(selectedContent.value)
-      console.log(selectedContent.value)
-      console.log(store.selectedContent)
-
       data.value = await fetchProjects()
     } else {
       store.setSelectedContent(selectedContent.value)
-      console.log(selectedContent.value)
-      console.log(store.selectedContent)
       data.value = await fetchBlogPosts()
     }
   } catch (error) {
@@ -94,7 +97,7 @@ onMounted(() => {
 
 watch(selectedContent, () => {
   fetchData()
-  store.setSelectedContent(selectedContent)
+  store.setSelectedContent(selectedContent.value)
 })
 </script>
 

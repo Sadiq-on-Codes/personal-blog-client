@@ -39,6 +39,9 @@ const hideOnRoutes = [
   '/dashboard/add-posts',
   '/dashboard/view-posts',
   '/dashboard/view-projects',
+  '/dashboard/view-tags',
+  '/dashboard/add-tags',
+  '/dashboard/view-subscribers',
 ]
 
 

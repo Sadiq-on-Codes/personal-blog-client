@@ -8,6 +8,8 @@ import BlogDetailsPage from '@/views/BlogDetailsPage.vue'
 import NewsLetterComponent from '@/views/NewsLetterComponent.vue'
 import ProjectsComponent from '@/views/ProjectsComponent.vue'
 import PrivacyPolicy from '@/views/PrivacyPolicy.vue'
+import ViewTags from '@/views/Admin/ViewTags.vue'
+import AddTag from '@/views/Admin/AddTag.vue'
 import { createRouter, createWebHistory } from 'vue-router'
 
 // Add this import for the authentication check
@@ -32,9 +34,12 @@ const routes = [
     component: DashboardComponent,
     meta: { requiresAuth: true },
     children: [
-      { path: '', component: DashboardComponent }, // Add default child route
+      { path: '', component: DashboardComponent },
       { path: 'view-posts', component: PostsComponent },
-      { path: 'add-posts', component: AddPost }
+      { path: 'add-posts', component: AddPost },
+      { path: 'view-tags', component: ViewTags },
+      { path: 'add-tags', component: AddTag },
+      // { path: 'view-subscribers', component: ViewSubscribers }
     ]
   },
   {

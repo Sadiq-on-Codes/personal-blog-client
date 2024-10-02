@@ -1,6 +1,6 @@
 <template>
   <div class="about-container dark:text-white">
-    <HeadingComponent text="About" class="mb-10 animate-fade-in" />
+    <HeadingComponent text="About Me" class="mb-10 animate-fade-in" />
     <div class="hero-section">
       <div class="profile-card">
         <div class="profile-image-container">
