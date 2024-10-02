@@ -98,26 +98,31 @@ const skills = ref([
 ])
 
 const experience = ref([
+{
+    title: 'Technical Lead',
+    period: 'Sep 2023 - Dec 2024',
+    description: 'Led cross-functional teams in developing an innovative ERP system, revolutionizing enterprise operations.',
+    icon: 'fas fa-project-diagram',
+    achievements: [
+      'Spearheaded micro frontend architecture implementation, enhancing system flexibility and scalability',
+      'Reduced technical debt through robust coding standards and design principles',
+      'Improved release process, increasing annual deployment frequency',
+      'Led 10 cross-functional teams in successful ERP module development and implementation'
+    ]
+  },
   { 
     title: 'Senior Software Developer',
-    period: 'Jan 2020 - Present',
+    period: 'Jan 2019 - Sep 2023',
     description: 'Led development of enterprise solutions, optimizing operations for tech and retail clients.',
     icon: 'fas fa-laptop-code',
     achievements: [
       'Increased system efficiency by 40% through code optimization',
       'Mentored junior developers, improving team productivity by 25%',
-      'Implemented CI/CD pipeline, reducing deployment time by 60%'
-    ]
-  },
-  {
-    title: 'Technical Lead',
-    period: 'Mar 2018 - Dec 2019',
-    description: 'Spearheaded the creation of an innovative ERP system, boosting enterprise efficiency.',
-    icon: 'fas fa-project-diagram',
-    achievements: [
-      'Delivered project 2 months ahead of schedule',
-      'Reduced operational costs by 30% through process automation',
-      'Received "Innovation Award" for implementing AI-driven analytics'
+      'Implemented CI/CD pipeline, reducing deployment time by 60%',
+      'Enhanced user experience in a ride recording app with optimized flow, localization, and automated 360° video retrieval',
+      'Improved QR code scanning to 100% success rate, boosting application reliability',
+      'Developed resource management and automated staffing solution, streamlining HR processes',
+      'Created integrated contract management system, enabling in-app signing and improving document accessibility'
     ]
   }
 ])
