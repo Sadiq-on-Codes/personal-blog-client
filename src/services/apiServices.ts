@@ -1,4 +1,4 @@
-import type { Pin, Post, Tag } from '@/types'
+import type { Pin, Post, Comment } from '@/types'  // Add Comment to the imports
 import axios, { type AxiosResponse } from 'axios'
 import { API_URL } from '@/utils'
 
@@ -132,7 +132,7 @@ export const updateProject = async (id: string, formData: FormData): Promise<Pos
       }
     })
     return response.data
-  } catch (error)   {
+  } catch (error) {
     console.error('Failed to update project:', error)
     throw error
   }
@@ -221,6 +221,56 @@ export const fetchNewsletterSubscribers = async (): Promise<NewsletterSubscripti
     return response.data
   } catch (error) {
     console.error('Failed to fetch newsletter subscribers:', error)
+    throw error
+  }
+}
+
+// New interface for creating a comment
+export interface CreateCommentData {
+  postId: string;
+  name: string;
+  content: string;
+}
+
+// Fetch comments for a specific post
+export const fetchComments = async (postId: string): Promise<Comment[]> => {
+  try {
+    const response = await api.get(`/comments/${postId}`)
+    return response.data
+  } catch (error) {
+    console.error('Failed to fetch comments:', error)
+    return []
+  }
+}
+
+// Create a new comment
+export const createComment = async (commentData: CreateCommentData): Promise<Comment> => {
+  try {
+    const response = await api.post('/comments', commentData)
+    return response.data
+  } catch (error) {
+    console.error('Failed to create comment:', error)
+    throw error
+  }
+}
+
+// Update a comment
+export const updateComment = async (id: string, content: string): Promise<Comment> => {
+  try {
+    const response = await api.put(`/comments/${id}`, { content })
+    return response.data
+  } catch (error) {
+    console.error('Failed to update comment:', error)
+    throw error
+  }
+}
+
+// Delete a comment
+export const deleteComment = async (id: string): Promise<void> => {
+  try {
+    await api.delete(`/comments/${id}`)
+  } catch (error) {
+    console.error('Failed to delete comment:', error)
     throw error
   }
 }

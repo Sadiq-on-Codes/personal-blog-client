@@ -23,3 +23,11 @@ export interface Post {
   description: string
   tags: Pin[]
 }
+
+export interface Comment {
+  _id: string;
+  name: string;
+  post: string;
+  content: string;
+  createdAt: string;
+}
