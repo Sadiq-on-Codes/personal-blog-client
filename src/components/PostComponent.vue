@@ -57,7 +57,7 @@
         <div class="h-4 w-2/3 bg-gray-300 dark:bg-gray-700 animate-pulse rounded"></div>
       </div>
       <div v-else-if="isBlog" :ref="descriptionContainer" class="text-gray-600 dark:text-gray-300 text-base leading-relaxed"></div>
-      <div v-else-if="isProject" class="text-gray-600 dark:text-gray-300 text-base leading-relaxed">{{ blogPost.description }}</div>
+      <div v-else-if="isProject" class="text-gray-600 dark:text-gray-300 text-base leading-relaxed">{{ blogPost.description.slice(0, 100) + '...' }}</div>
       
       <!-- Tags -->
       <div v-if="isLoading" class="flex gap-2 mt-2">
