@@ -255,9 +255,9 @@ export const createComment = async (commentData: CreateCommentData): Promise<Com
 }
 
 // Update a comment
-export const updateComment = async (id: string, content: string): Promise<Comment> => {
+export const updateComment = async (id: string, name: string, content: string): Promise<Comment> => {
   try {
-    const response = await api.put(`/comments/${id}`, { content })
+    const response = await api.put(`/comments/${id}`, { name, content })
     return response.data
   } catch (error) {
     console.error('Failed to update comment:', error)

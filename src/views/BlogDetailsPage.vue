@@ -1,5 +1,5 @@
 <template>
-  <div class="min-h-screen flex flex-col">
+  <div class="min-h-screen flex flex-col py-12">
     <div v-if="error" class="flex-grow flex justify-center items-center">
       <p class="text-xl text-[--color-post-secondary]">{{ error }}</p>
     </div>
@@ -23,41 +23,10 @@
               loading="lazy"
             />
             <div ref="descriptionContainer" class="text-[--color-post-secondary] text-lg max-w-full mb-8">
-              <!-- This div will be populated by Quill -->
             </div>
             
             <!-- Comments section -->
-            <div class="mt-12">
-              <h3 class="text-2xl font-semibold mb-4">Comments</h3>
-              <div v-for="comment in comments" :key="comment._id" class="mb-4 p-4 bg-gray-100 rounded-lg">
-                <h4 class="font-semibold">{{ comment.name }}</h4>
-                <p>{{ comment.content }}</p>
-                <small class="text-gray-500">{{ new Date(comment.createdAt).toLocaleString() }}</small>
-              </div>
-              
-              <!-- Comment form -->
-              <form @submit.prevent="submitComment" class="mt-8">
-                <input 
-                  v-model="newComment.name" 
-                  placeholder="Your Name" 
-                  required
-                  class="w-full p-2 mb-4 border rounded"
-                >
-                <textarea 
-                  v-model="newComment.content" 
-                  placeholder="Your Comment" 
-                  required
-                  class="w-full p-2 mb-4 border rounded"
-                  rows="4"
-                ></textarea>
-                <button 
-                  type="submit" 
-                  class="bg-[--color-post-primary] text-white px-4 py-2 rounded hover:bg-opacity-90"
-                >
-                  Submit Comment
-                </button>
-              </form>
-            </div>
+            <CommentSection :postId="blogPost._id" />
           </article>
         </div>
       </div>
@@ -78,6 +47,7 @@ import { CLOUDINARY_URL, initializeQuill } from '@/utils'
 import type { Post, Comment } from '@/types'
 import AllBlogPosts from '@/components/AllBlogPosts.vue'
 import Loader from '@/components/common/LoaderComponent.vue'
+import CommentSection from '@/components/CommentsComponent.vue'
 
 const route = useRoute()
 const router = useRouter()
