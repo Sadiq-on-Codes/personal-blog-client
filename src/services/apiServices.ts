@@ -1,4 +1,4 @@
-import type { Post } from '@/types'
+import type { Pin, Post, Tag } from '@/types'
 import axios, { type AxiosResponse } from 'axios'
 import { API_URL } from '@/utils'
 
@@ -127,9 +127,9 @@ export const deleteProject = async (id: string): Promise<void> => {
   }
 }
 
-export const Tags = (): Promise<AxiosResponse<Post[]>> => api.get('/tags')
+export const Tags = (): Promise<AxiosResponse<Pin[]>> => api.get('/tags')
 
-export const fetchTags = async (): Promise<Post[]> => {
+export const fetchTags = async (): Promise<Pin[]> => {
   try {
     const response = await Tags();
     return response.data;
@@ -140,7 +140,7 @@ export const fetchTags = async (): Promise<Post[]> => {
 };
 
 // New CRUD operations for tags
-export const fetchTagById = async (id: string): Promise<Post> => {
+export const fetchTagById = async (id: string): Promise<Pin> => {
   try {
     const response = await api.get(`/tags/${id}`);
     return response.data;
@@ -150,7 +150,7 @@ export const fetchTagById = async (id: string): Promise<Post> => {
   }
 };
 
-export const createTag = async (tagData: { tag: string }): Promise<Post> => {
+export const createTag = async (tagData: { tag: string }): Promise<Pin> => {
   try {
     const response = await api.post('/tags', tagData);
     return response.data;
@@ -160,7 +160,7 @@ export const createTag = async (tagData: { tag: string }): Promise<Post> => {
   }
 };
 
-export const updateTag = async (id: string, tagData: { tag: string }): Promise<Post> => {
+export const updateTag = async (id: string, tagData: { tag: string }): Promise<Pin> => {
   try {
     const response = await api.put(`/tags/${id}`, tagData);
     return response.data;
