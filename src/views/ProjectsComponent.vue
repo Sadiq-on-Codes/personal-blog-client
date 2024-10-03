@@ -1,5 +1,5 @@
 <template>
-  <div class="container mx-auto py-12">
+  <div class="mx-auto py-12">
     <HeadingComponent text="Projects" class="mb-12 text-5xl font-bold text-center text-gray-800 dark:text-gray-200" />
     <div v-if="!isLoading && projects.length > 0" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
       <div v-for="project in projects" :key="project._id" 

@@ -219,10 +219,9 @@ const submitForm = async () => {
     const formData = new FormData();
     formData.append('title', form.value.title);
 
-    // Append each tag separately
-    form.value.tags.forEach((tag) => {
-      formData.append('tags', tag._id);
-    });
+    // Convert tag IDs array to comma-separated string
+    const tagsString = form.value.tags.map(tag => tag._id).join(',');
+    formData.append('tags', tagsString);
 
     if (selectedContent.value === 'blogPosts') {
       formData.append('author', form.value.author);

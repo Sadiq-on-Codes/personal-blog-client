@@ -1,5 +1,5 @@
 <template>
-  <div class="pt-8">
+  <div class="container py-12">
     <HeadingComponent text="The Blog" />
     <RecentPosts />
     <AllBlogPosts />

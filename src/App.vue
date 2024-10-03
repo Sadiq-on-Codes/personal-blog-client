@@ -1,5 +1,5 @@
 <template>
-  <div :class="{ dark: isDarkMode }" class="bg-[--color-background-white]">
+  <div :class="{ dark: isDarkMode }" class="bg-[--color-background-white] w-full">
     <!-- Conditionally render the header based on the current route -->
     <HeaderComponent v-if="showHeader" />
     <router-view />

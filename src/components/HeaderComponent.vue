@@ -5,7 +5,7 @@
         <div class="sm:hidden flex items-center justify-between w-full">
           <div class="flex items-center">
             <div class="logo mr-2"></div>
-            <span class="font-bold text-xl logo-text">Sadiq on Code</span>
+            <span class="font-bold text-xl logo-text">Sadiq on Codes</span>
           </div>
           <button @click="toggleMenu" v-if="!isMenuOpen" class="text-2xl justify-self-end">☰</button>
         </div>
@@ -13,7 +13,7 @@
         <div class="items-center w-full h-full sm:flex hidden">
           <div class="flex items-center">
             <div class="logo mr-3"></div>
-            <span class="font-bold text-2xl logo-text text-gradient">Sadiq on Code</span>
+            <span class="font-bold text-2xl logo-text text-gradient">Sadiq on Codes</span>
           </div>
           <nav class="flex text-lg items-center justify-end gap-6 ml-auto">
             <router-link

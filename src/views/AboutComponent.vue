@@ -1,5 +1,5 @@
 <template>
-  <div class="about-container dark:text-white">
+  <div class="about-container dark:text-white py-12">
     <HeadingComponent text="About Me" class="mb-10 animate-fade-in" />
     <div class="hero-section">
       <div class="profile-card">
@@ -137,7 +137,6 @@ const education = ref([
 .about-container {
   max-width: 1200px;
   margin: 0 auto;
-  padding-top: 2rem;
   background-color: var(--color-bg-primary);
 }
 
