@@ -193,3 +193,14 @@ export const subscribeToNewsletter = async (email: string): Promise<NewsletterSu
     throw error
   }
 }
+
+// New function to fetch newsletter subscribers
+export const fetchNewsletterSubscribers = async (): Promise<NewsletterSubscription[]> => {
+  try {
+    const response = await api.get('/newsletter/subscribers')
+    return response.data
+  } catch (error) {
+    console.error('Failed to fetch newsletter subscribers:', error)
+    throw error
+  }
+}

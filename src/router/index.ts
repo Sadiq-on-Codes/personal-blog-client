@@ -10,6 +10,7 @@ import ProjectsComponent from '@/views/ProjectsComponent.vue'
 import PrivacyPolicy from '@/views/PrivacyPolicy.vue'
 import ViewTags from '@/views/Admin/ViewTags.vue'
 import AddTag from '@/views/Admin/AddTag.vue'
+import ViewSubscribers from '@/views/Admin/ViewSubscribers.vue'
 import { createRouter, createWebHistory } from 'vue-router'
 
 // Add this import for the authentication check
@@ -39,7 +40,7 @@ const routes = [
       { path: 'add-posts', component: AddPost },
       { path: 'view-tags', component: ViewTags },
       { path: 'add-tags', component: AddTag },
-      // { path: 'view-subscribers', component: ViewSubscribers }
+      { path: 'view-subscribers', component: ViewSubscribers }
     ]
   },
   {
