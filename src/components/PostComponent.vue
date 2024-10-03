@@ -7,10 +7,9 @@
         'flex-col-reverse': (layout === 'vertical' || isMobileOrTablet) && reverse,
         'flex-row-reverse': layout === 'horizontal' && reverse && !isMobileOrTablet
       },
-      'flex gap-[--spacing] mt-[--spacing] h-fit'
+      'flex mt-8 h-fit bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden transition-all duration-300 hover:shadow-lg'
     ]"
   >
-    <!-- Skeleton for image -->
     <div
       v-if="isLoading"
       :class="[
@@ -19,7 +18,7 @@
           'w-1/2': layout === 'horizontal' && !isMobileOrTablet,
         },
         'animate-pulse bg-gray-300 dark:bg-gray-700',
-        layout === 'horizontal' && !isMobileOrTablet ? 'h-[150px]' : 'h-[300px]'
+        layout === 'horizontal' && !isMobileOrTablet ? 'h-[200px]' : 'h-[300px]'
       ]"
     ></div>
     <img
@@ -30,47 +29,49 @@
           'w-1/2': layout === 'horizontal' && !isMobileOrTablet,
         },
         'object-cover',
-        layout === 'horizontal' && !isMobileOrTablet ? 'h-[150px]' : 'h-[300px]'
+        layout === 'horizontal' && !isMobileOrTablet ? 'h-[200px]' : 'h-[300px]'
       ]"
       :src="blogPostImageUrl"
-      alt=""
+      :alt="blogPost.title"
     />
-    <div :class="[{ 'gap-1.5': isHalfHeight }, 'flex flex-col gap-[--spacing] flex-1']">
-      <!-- Skeleton for author and date -->
-      <div v-if="isBlog && isLoading" class="h-4 w-1/3 bg-gray-300 dark:bg-gray-700 animate-pulse rounded"></div>
+
+    <div :class="[{ 'gap-2': isHalfHeight }, 'flex flex-col gap-2 flex-1 p-6']">
+      <!-- Author and date -->
+      <div v-if="isBlog && isLoading" class="h-5 w-1/3 bg-gray-300 dark:bg-gray-700 animate-pulse rounded"></div>
       <div v-else-if="isBlog" class="text-sm text-[--color-post-primary]">
         <span class="font-semibold">{{ blogPost.author }}</span>
-        <span class="ml-0.5">•</span>
-        <span class="ml-0.5 font-semibold">{{ blogPost.date }}</span>
+        <span class="mx-2">•</span>
+        <span class="font-medium">{{ blogPost.date }}</span>
       </div>
       
-      <!-- Skeleton for title -->
-      <div v-if="isLoading" class="h-6 w-3/4 bg-gray-300 dark:bg-gray-700 animate-pulse rounded"></div>
-      <span v-else class="text-sm text-[--color-post-secondary2] dark:text-[--color-text-dark] font-semibold">
+      <!-- Title -->
+      <div v-if="isLoading" class="h-7 w-3/4 bg-gray-300 dark:bg-gray-700 animate-pulse rounded"></div>
+      <h2 v-else class="text-xl font-bold text-gray-800 dark:text-white">
         {{ blogPost.title }}
-      </span>
+      </h2>
       
-      <!-- Skeleton for description -->
+      <!-- Description -->
       <div v-if="isLoading" class="space-y-2">
         <div class="h-4 bg-gray-300 dark:bg-gray-700 animate-pulse rounded"></div>
         <div class="h-4 bg-gray-300 dark:bg-gray-700 animate-pulse rounded"></div>
         <div class="h-4 w-2/3 bg-gray-300 dark:bg-gray-700 animate-pulse rounded"></div>
       </div>
-      <div v-else-if="isBlog" :ref="descriptionContainer" class="text-[--color-post-secondary] text-lg"></div>
-      <div v-else-if="isProject">{{ blogPost.description }}</div>
+      <div v-else-if="isBlog" :ref="descriptionContainer" class="text-gray-600 dark:text-gray-300 text-base leading-relaxed"></div>
+      <div v-else-if="isProject" class="text-gray-600 dark:text-gray-300 text-base leading-relaxed">{{ blogPost.description }}</div>
       
-      <!-- Skeleton for tags -->
-      <div v-if="isLoading" class="flex gap-2">
+      <!-- Tags -->
+      <div v-if="isLoading" class="flex gap-2 mt-2">
         <div v-for="i in 3" :key="i" class="h-6 w-16 bg-gray-300 dark:bg-gray-700 animate-pulse rounded-full"></div>
       </div>
-      <div v-else>
+      <div v-else class="flex flex-wrap gap-2 mt-2">
         <span
           v-for="tag in blogPost.tags"
           :key="tag._id"
           :style="{ color: tag.textColor, backgroundColor: tag.bgColor }"
-          class="rounded-full mr-2 text-sm px-2 py-1"
-          >{{ tag.tag }}</span
+          class="rounded-full text-xs px-3 py-1 font-medium"
         >
+          {{ tag.tag }}
+        </span>
       </div>
     </div>
   </div>

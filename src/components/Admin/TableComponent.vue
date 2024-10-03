@@ -11,7 +11,7 @@
       </thead>
       <tbody>
         <tr
-          v-for="(item, index) in data"
+          v-for="(item) in data"
           :key="item.id"
           class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
         >
@@ -35,7 +35,6 @@
               Edit
             </router-link>
             <span 
-              v-if="allowDelete"
               @click="openDeleteModal(item._id)"
               class="cursor-pointer font-medium text-red-600 dark:text-red-500 hover:underline"
             >
@@ -68,10 +67,6 @@ const props = defineProps<{
   headers: Header[]
   data: any[]
   editPath?: string
-  allowDelete: {
-    type: boolean,
-    default: true
-  }
 }>()
 
 const emit = defineEmits(['delete'])
@@ -96,5 +91,5 @@ const confirmDelete = () => {
   }
 }
 
-const showActions = computed(() => props.editPath || props.allowDelete)
+const showActions = computed(() => props.editPath)
 </script>

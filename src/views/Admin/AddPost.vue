@@ -168,9 +168,7 @@ onMounted(async () => {
     selectedContent.value = 'blogPosts'
   }
   (async function () {
-    const result: any = await fetchTags()
-    tags.value =  result.data
-    
+    tags.value = await fetchTags()
   })()
 })
 
