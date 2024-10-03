@@ -79,7 +79,7 @@
 
 <script setup lang="ts">
 import { ref, onMounted, defineProps, computed } from 'vue'
-import { API_URL, initializeQuill } from '@/utils'
+import { CLOUDINARY_URL, initializeQuill } from '@/utils'
 import 'quill/dist/quill.snow.css'
 
 
@@ -127,7 +127,7 @@ const isMobileOrTablet = ref(false)
 const descriptionContainer = ref<any>(null)
 
 const blogPostImageUrl = computed(() => 
-  props.blogPost.image ? `${API_URL}${props.blogPost.image}` : ''
+  props.blogPost.image ? `${CLOUDINARY_URL}${props.blogPost.image}` : ''
 )
 const checkIsMobileOrTablet = () => {
   isMobileOrTablet.value = window.innerWidth <= 1024 // Adjust breakpoint for tablets

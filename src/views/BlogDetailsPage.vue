@@ -41,7 +41,7 @@
 import { ref, watch, onMounted, computed } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { fetchBlogPostById } from '@/services/apiServices'
-import { API_URL, initializeQuill } from '@/utils'
+import { CLOUDINARY_URL, initializeQuill } from '@/utils'
 import type { Post } from '@/types'
 import AllBlogPosts from '@/components/AllBlogPosts.vue'
 import Loader from '@/components/common/LoaderComponent.vue'
@@ -55,7 +55,7 @@ const descriptionContainer = ref<HTMLElement | null>(null)
 const quillInstance = ref<any>(null)
 
 const blogPostImageUrl = computed(() => 
-  blogPost.value?.image ? `${API_URL}${blogPost.value.image}` : ''
+  blogPost.value?.image ? `${CLOUDINARY_URL}${blogPost.value.image}` : ''
 )
 
 const loadBlogPost = async (id: string) => {

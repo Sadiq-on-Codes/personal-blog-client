@@ -31,7 +31,7 @@ import LoaderComponent from '@/components/common/LoaderComponent.vue';
 import { fetchProjects } from '@/services/apiServices';
 import type { Post } from '@/types';
 import { ref, onMounted, computed } from 'vue';
-import { API_URL } from '@/utils';
+import { CLOUDINARY_URL } from '@/utils';
 
 const projects = ref<Post[]>([]);
 const isLoading = ref(true);
@@ -39,7 +39,7 @@ const selectedProject = ref<Post | null>(null);
 const isModalOpen = ref(false);
 
 const projectImageUrl = computed(() => 
-  selectedProject.value?.image ? `${API_URL}${selectedProject.value.image}` : ''
+  selectedProject.value?.image ? `${CLOUDINARY_URL}${selectedProject.value.image}` : ''
 )
 
 onMounted(async () => {
