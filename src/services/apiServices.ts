@@ -268,9 +268,9 @@ export const updateComment = async (id: string, name: string, content: string): 
 // Delete a comment
 export const deleteComment = async (id: string): Promise<void> => {
   try {
-    await api.delete(`/comments/${id}`)
+    await api.delete(`/comments/${id}`);
   } catch (error) {
-    console.error('Failed to delete comment:', error)
-    throw error
+    console.error('Failed to delete comment:', error);
+    throw error;
   }
 }
