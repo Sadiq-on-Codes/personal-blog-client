@@ -582,8 +582,8 @@ const education = ref([
   
   .timeline-item {
     width: 100%;
-    /* padding-left: 30px; */
-    /* padding-right: 0; */
+    padding-left: 0;
+    padding-right: 0;
   }
   
   .timeline-item::after {
