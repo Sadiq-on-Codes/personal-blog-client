@@ -20,6 +20,26 @@ export const fetchBlogPosts = async (): Promise<Post[]> => {
   }
 }
 
+export const fetchRecentPosts = async (): Promise<Post[]> => {
+  try {
+    const response = await api.get('/blogPosts/recent')
+    return response.data
+  } catch (error) {
+    console.error('Failed to fetch recent blog posts:', error)
+    return []
+  }
+}
+
+export const fetchOtherPosts = async (): Promise<Post[]> => {
+  try {
+    const response = await api.get('/blogPosts/others')
+    return response.data
+  } catch (error) {
+    console.error('Failed to fetch blog posts:', error)
+    return []
+  }
+}
+
 export const fetchBlogPostById = async (id: string): Promise<Post> => {
   try {
     const response = await api.get(`/blogPosts/${id}`)

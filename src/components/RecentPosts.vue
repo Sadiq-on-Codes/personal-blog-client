@@ -40,7 +40,7 @@
 </template>
 
 <script setup lang="ts">
-import { fetchBlogPosts } from '@/services/apiServices'
+import { fetchRecentPosts } from '@/services/apiServices'
 import { onMounted, ref } from 'vue'
 import BlogPost from './PostComponent.vue'
 import LoaderComponent from '@/components/common/LoaderComponent.vue';
@@ -50,7 +50,7 @@ const isLoading = ref(true)
 
 onMounted(async () => {
   try {
-    blogPosts.value = await fetchBlogPosts()
+    blogPosts.value = await fetchRecentPosts()
   } catch (error) {
     console.error('Failed to fetch projects:', error)
   } finally { 

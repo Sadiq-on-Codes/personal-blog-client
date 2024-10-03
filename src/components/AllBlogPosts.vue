@@ -13,12 +13,9 @@
 
 <script setup lang="ts">
 import { defineProps, onMounted, ref } from 'vue'
-import { useRouter } from 'vue-router'
 import BlogPost from './PostComponent.vue'
-import { fetchBlogPosts } from '@/services/apiServices.js'
+import { fetchOtherPosts } from '@/services/apiServices.js'
 import type { Post } from '@/types'
-
-const router = useRouter()
 
 defineProps({
   horizontal: {
@@ -34,7 +31,7 @@ defineProps({
 const blogPosts = ref<Post[]>()
 
 onMounted(async () => {
-  blogPosts.value = await fetchBlogPosts()
+  blogPosts.value = await fetchOtherPosts()
 })
 
 const navigateToBlogPost = (id: string) => {
