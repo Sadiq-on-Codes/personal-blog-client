@@ -669,10 +669,6 @@ const education = ref([
 }
 
 @media (max-width: 480px) {
-  .about-container {
-    padding: 1rem; 
-  }
-
   .profile-image-container {
     width: 150px; 
     height: 150px;
