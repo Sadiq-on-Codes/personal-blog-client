@@ -1,6 +1,6 @@
 <template>
   <div class="container mx-auto py-8">
-    <HeadingComponent text="Projects" class="mb-8 text-4xl font-bold text-center text-gray-800" />
+    <HeadingComponent text="Projects" class="mb-10 text-4xl font-bold text-center text-gray-800" />
     <div v-if="!isLoading && projects.length > 0" class="grid grid-cols-1 sm:grid-cols-2 gap-6">
       <div v-for="project in projects" :key="project._id" class="p-4 transform transition duration-300 hover:-translate-y-1 hover:shadow-lg cursor-pointer" @click="openModal(project)">
         <PostComponent i:sProject="true" :isBlog="false" :blogPost="project" />
@@ -63,6 +63,3 @@ const closeModal = () => {
 };
 </script>
 
-<style scoped>
-/* Add any additional styles here if needed */
-</style>

@@ -51,4 +51,7 @@ const showFooter = computed(() => !hideOnRoutes.includes(route.path))
 
 <style scoped>
 /* Add your styles here */
+* {
+  /* outline: 1px solid red; */
+}
 </style>
