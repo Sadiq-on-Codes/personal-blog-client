@@ -43,10 +43,17 @@
 import { fetchRecentPosts } from '@/services/apiServices'
 import { onMounted, ref } from 'vue'
 import BlogPost from './PostComponent.vue'
-import LoaderComponent from '@/components/common/LoaderComponent.vue';
+import LoaderComponent from '@/components/common/LoaderComponent.vue'
+import { useSEO } from '@/utils/seoComposable'
 
 const blogPosts = ref()
 const isLoading = ref(true)
+
+// Apply SEO
+useSEO(
+  'Recent Blog Posts',
+  'Check out our latest blog posts. Stay updated with our most recent articles and insights.'
+)
 
 onMounted(async () => {
   try {

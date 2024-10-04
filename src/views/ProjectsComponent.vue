@@ -40,6 +40,7 @@ import { fetchProjects } from '@/services/apiServices';
 import type { Post } from '@/types';
 import { ref, onMounted, computed } from 'vue';
 import { CLOUDINARY_URL } from '@/utils';
+import { useSEO } from '@/utils/seoComposable';
 
 const projects = ref<Post[]>([]);
 const isLoading = ref(true);
@@ -49,6 +50,13 @@ const isModalOpen = ref(false);
 const projectImageUrl = computed(() => 
   selectedProject.value?.image ? `${CLOUDINARY_URL}${selectedProject.value.image}` : ''
 )
+
+// Apply SEO
+useSEO(
+  'Projects',
+  'Explore innovative projects by Sadiq on Codes. Discover a showcase of coding and technology initiatives from across Africa.',
+  'Africa'
+);
 
 onMounted(async () => {
   try {

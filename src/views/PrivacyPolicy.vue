@@ -41,7 +41,7 @@
         <section>
           <h2 class="text-2xl font-semibold text-[--color-post-secondary2] dark:text-[--color-text-dark] mb-4">6. Contact Us</h2>
           <p class="text-[--color-post-secondary] mb-4">
-            If you have any questions about this Privacy Policy, please contact us at sadickashton@gmail.com.
+            If you have any questions about this Privacy Policy, please contact us at sadickashton@live.com.
           </p>
         </section>
       </div>

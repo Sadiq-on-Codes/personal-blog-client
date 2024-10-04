@@ -43,6 +43,7 @@
 import { ref, computed } from 'vue';
 import AllBlogPosts from '@/components/AllBlogPosts.vue';
 import { subscribeToNewsletter } from '@/services/apiServices';
+import { useSEO } from '@/utils/seoComposable';
 
 const email = ref('');
 const isLoading = ref(false);
@@ -54,6 +55,13 @@ const messageClass = computed(() => {
   if (messageType.value === 'error') return 'text-red-600';
   return '';
 });
+
+// Apply SEO
+useSEO(
+  'Newsletter Subscription',
+  'Stay connected with Sadiq on Codes. Subscribe to our newsletter for the latest blog posts, coding insights, and tech updates from across Africa.',
+  'Africa'
+);
 
 const submitNewsletter = async () => {
   isLoading.value = true;

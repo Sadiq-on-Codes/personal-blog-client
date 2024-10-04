@@ -48,6 +48,7 @@ import type { Post, Comment } from '@/types'
 import AllBlogPosts from '@/components/AllBlogPosts.vue'
 import Loader from '@/components/common/LoaderComponent.vue'
 import CommentSection from '@/components/CommentsComponent.vue'
+import { useSEO } from '@/utils/seoComposable'
 
 const route = useRoute()
 const router = useRouter()
@@ -73,6 +74,13 @@ const loadBlogPost = async (id: string) => {
         descriptionContainer.value,
         blogPost.value.description,
         true 
+      )
+      
+      // Apply SEO after blog post is loaded
+      useSEO(
+        blogPost.value.title,
+        blogPost.value.description.substring(0, 160), // Use first 160 characters as description
+        'Africa'
       )
     }
     await loadComments(id)

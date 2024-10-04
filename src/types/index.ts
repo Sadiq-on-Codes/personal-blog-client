@@ -15,7 +15,7 @@ export interface Tag {
 }
 
 export interface Post {
-  _id?: string
+  _id: string
   author: string
   date: string
   image: File | any 
