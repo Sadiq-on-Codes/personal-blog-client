@@ -1,53 +1,68 @@
-import AboutComponent from '@/views/AboutComponent.vue'
-import AddPost from '@/views/Admin/AddPost.vue'
-import AuthenticationComponent from '@/views/Admin/AuthenticationComponent.vue'
-import DashboardComponent from '@/views/Admin/DashboardComponent.vue'
-import PostsComponent from '@/views/Admin/PostsComponent.vue'
-import BlogComponent from '@/views/BlogComponent.vue'
-import BlogDetailsPage from '@/views/BlogDetailsPage.vue'
-import NewsLetterComponent from '@/views/NewsLetterComponent.vue'
-import ProjectsComponent from '@/views/ProjectsComponent.vue'
-import PrivacyPolicy from '@/views/PrivacyPolicy.vue'
-import ViewTags from '@/views/Admin/ViewTags.vue'
-import AddTag from '@/views/Admin/AddTag.vue'
-import ViewSubscribers from '@/views/Admin/ViewSubscribers.vue'
-import UnsubscribeComponent from '@/views/UnsubscribeComponent.vue'
 import { createRouter, createWebHistory } from 'vue-router'
-
 import { isAuthenticated } from '@/utils/auth'
 
 const routes = [
-  { path: '/', component: BlogComponent, name: 'Home' },
-  { path: '/about', component: AboutComponent, name: 'AboutComponent' },
-  { path: '/projects', component: ProjectsComponent, name: 'ProjectsComponent' },
-  { path: '/blog', component: BlogComponent, name: 'BlogComponent' },
-  { path: '/newsletter', component: NewsLetterComponent, name: 'NewsLetterComponent' },
-  { path: '/unsubscribe/:id', component: UnsubscribeComponent, name: 'UnsubscribeComponent' },
+  { 
+    path: '/', 
+    component: () => import('@/views/BlogComponent.vue'), 
+    name: 'Home' 
+  },
+  { 
+    path: '/about', 
+    component: () => import('@/views/AboutComponent.vue'), 
+    name: 'AboutComponent' 
+  },
+  { 
+    path: '/projects', 
+    component: () => import('@/views/ProjectsComponent.vue'), 
+    name: 'ProjectsComponent' 
+  },
+  { 
+    path: '/blog', 
+    component: () => import('@/views/BlogComponent.vue'), 
+    name: 'BlogComponent' 
+  },
+  { 
+    path: '/newsletter', 
+    component: () => import('@/views/NewsLetterComponent.vue'), 
+    name: 'NewsLetterComponent' 
+  },
+  { 
+    path: '/unsubscribe/:id', 
+    component: () => import('@/views/UnsubscribeComponent.vue'), 
+    name: 'UnsubscribeComponent' 
+  },
   {
     path: '/blog-details/:id',
     name: 'BlogDetailsPage',
-    component: BlogDetailsPage,
+    component: () => import('@/views/BlogDetailsPage.vue'),
     props: true
   },
-  { path: '/register', component: AuthenticationComponent },
-  { path: '/posts', component: PostsComponent },
+  { 
+    path: '/register', 
+    component: () => import('@/views/Admin/AuthenticationComponent.vue') 
+  },
+  { 
+    path: '/posts', 
+    component: () => import('@/views/Admin/PostsComponent.vue') 
+  },
   {
     path: '/dashboard',
-    component: DashboardComponent,
+    component: () => import('@/views/Admin/DashboardComponent.vue'),
     meta: { requiresAuth: true },
     children: [
-      { path: '', component: DashboardComponent },
-      { path: 'view-posts', component: PostsComponent },
-      { path: 'add-posts', component: AddPost },
-      { path: 'view-tags', component: ViewTags },
-      { path: 'add-tags', component: AddTag },
-      { path: 'view-subscribers', component: ViewSubscribers }
+      { path: '', component: () => import('@/views/Admin/DashboardComponent.vue') },
+      { path: 'view-posts', component: () => import('@/views/Admin/PostsComponent.vue') },
+      { path: 'add-posts', component: () => import('@/views/Admin/AddPost.vue') },
+      { path: 'view-tags', component: () => import('@/views/Admin/ViewTags.vue') },
+      { path: 'add-tags', component: () => import('@/views/Admin/AddTag.vue') },
+      { path: 'view-subscribers', component: () => import('@/views/Admin/ViewSubscribers.vue') }
     ]
   },
   {
     path: '/privacy-policy',
     name: 'PrivacyPolicy',
-    component: PrivacyPolicy
+    component: () => import('@/views/PrivacyPolicy.vue')
   }
 ]
 

@@ -1,68 +1,46 @@
 <template>
   <header class="fixed top-0 left-0 right-0 z-50 bg-opacity-90 backdrop-blur-sm dark:bg-opacity-90 dark:backdrop-blur-sm bg-white dark:bg-gray-900 shadow-md">
     <div class="container mx-auto px-4">
-      <div class="flex h-16 items-center justify-between">
+      <nav class="flex h-16 items-center justify-between" aria-label="Main Navigation">
         <div class="sm:hidden flex items-center justify-between w-full">
-          <div class="flex items-center">
-            <div class="logo mr-2"></div>
+          <a href="/" class="flex items-center">
+            <div class="logo mr-2" aria-hidden="true"></div>
             <span class="font-bold text-xl logo-text">Sadiq on Codes</span>
-          </div>
-          <button @click="toggleMenu" v-if="!isMenuOpen" class="text-2xl justify-self-end">☰</button>
+          </a>
+          <button @click="toggleMenu" v-if="!isMenuOpen" class="text-2xl justify-self-end" aria-label="Open menu">☰</button>
         </div>
 
         <div class="items-center w-full h-full sm:flex hidden">
-          <div class="flex items-center">
-            <div class="logo mr-3"></div>
+          <a href="/" class="flex items-center">
+            <div class="logo mr-3" aria-hidden="true"></div>
             <span class="font-bold text-2xl logo-text text-gradient">Sadiq on Codes</span>
-          </div>
-          <nav class="flex text-lg items-center justify-end gap-6 ml-auto">
-            <router-link
-              v-for="(menuItem, index) in menuItems"
-              :key="index"
-              :to="{ name: menuItem.routeName }"
-              class="hover:text-primary transition-colors duration-200"
-              active-class="text-primary font-semibold"
-              exact-active-class="text-primary font-semibold"
-            >
-              {{ menuItem.name }}
-            </router-link>
-            <DarkModeToggle />
-          </nav>
+          </a>
+          <ul class="flex text-lg items-center justify-end gap-6 ml-auto">
+            <li v-for="(menuItem, index) in menuItems" :key="index">
+              <router-link
+                :to="{ name: menuItem.routeName }"
+                class="hover:text-primary transition-colors duration-200"
+                active-class="text-primary font-semibold"
+                exact-active-class="text-primary font-semibold"
+              >
+                {{ menuItem.name }}
+              </router-link>
+            </li>
+            <li>
+              <DarkModeToggle />
+            </li>
+          </ul>
         </div>
-
-        <div
-          v-if="isMenuOpen"
-          class="fixed inset-0 flex flex-col items-center justify-center gap-[--spacing] dark:bg-[--color-background-dark] bg-[--color-background] text-xl z-50 w-full h-full"
-        >
-          <nav class="flex flex-col items-center space-y-6">
-            <router-link
-              v-for="(menuItem, index) in menuItems"
-              :key="index"
-              :to="{ name: menuItem.routeName }"
-              class="hover:underline text-2xl"
-              active-class="underline"
-              exact-active-class="underline"
-              @click="isMenuOpen = false"
-            >
-              {{ menuItem.name }}
-            </router-link>
-            <DarkModeToggle />
-          </nav>
-
-          <button @click="isMenuOpen = false" class="absolute top-4 right-4 text-3xl">
-            <CloseIcon :fill="isDarkMode ? '#fff' : '#090D1F'" />
-          </button>
-        </div>
-      </div>
+      </nav>
     </div>
   </header>
 
   <!-- Mobile Menu -->
-  <div
+  <dialog
     v-if="isMenuOpen"
     class="fixed inset-0 z-[100] bg-white dark:bg-gray-900 flex flex-col items-center justify-center"
   >
-    <nav class="flex flex-col items-center space-y-8">
+    <nav class="flex flex-col items-center space-y-8" aria-label="Mobile Navigation">
       <router-link
         v-for="(menuItem, index) in menuItems"
         :key="index"
@@ -77,10 +55,10 @@
       <DarkModeToggle />
     </nav>
 
-    <button @click="isMenuOpen = false" class="absolute top-4 right-4 text-4xl">
+    <button @click="isMenuOpen = false" class="absolute top-4 right-4 text-4xl" aria-label="Close menu">
       &times;
     </button>
-  </div>
+  </dialog>
 </template>
 
 <script setup lang="ts">
@@ -104,11 +82,8 @@ const toggleMenu = () => {
 </script>
 
 <style scoped>
-/* Add your styles here */
 .text-gradient {
-  /* background: linear-gradient(45deg, #3b82f6, #10b981); */
   -webkit-background-clip: text;
-  /* -webkit-text-fill-color: transparent; */
   background-clip: text;
 }
 

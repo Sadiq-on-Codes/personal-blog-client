@@ -13,6 +13,7 @@ import { ref, provide, onMounted, computed } from 'vue'
 import { useRoute } from 'vue-router'
 import HeaderComponent from './components/HeaderComponent.vue'
 import FooterComponent from './components/FooterComponent.vue'
+import { useSEO } from './utils/seoComposable';
 
 const isDarkMode = ref(false)
 const route = useRoute()
@@ -47,6 +48,12 @@ const hideOnRoutes = [
 
 const showHeader = computed(() => !hideOnRoutes.includes(route.path))
 const showFooter = computed(() => !hideOnRoutes.includes(route.path))
+
+useSEO(
+  'Sadiq on Codes', 
+  'Explore web development insights, coding projects, and tech tutorials by Sadiq. Learn about frontend frameworks, backend technologies, and software engineering best practices.',
+  'Africa'
+)
 </script>
 
 <style scoped>
