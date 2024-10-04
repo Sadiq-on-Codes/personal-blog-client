@@ -214,6 +214,18 @@ export const subscribeToNewsletter = async (email: string): Promise<NewsletterSu
   }
 }
 
+
+// New function to unsubscribe from the newsletter
+export const unsubscribeFromNewsletter = async (subscriberId: string): Promise<void> => {
+  try {
+    await api.delete(`/newsletter/unsubscribe/${subscriberId}`)
+  } catch (error) {
+    console.error('Failed to unsubscribe from newsletter:', error)
+    throw error
+  }
+}
+
+
 // New function to fetch newsletter subscribers
 export const fetchNewsletterSubscribers = async (): Promise<NewsletterSubscription[]> => {
   try {

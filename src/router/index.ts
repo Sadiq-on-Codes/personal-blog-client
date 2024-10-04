@@ -11,10 +11,10 @@ import PrivacyPolicy from '@/views/PrivacyPolicy.vue'
 import ViewTags from '@/views/Admin/ViewTags.vue'
 import AddTag from '@/views/Admin/AddTag.vue'
 import ViewSubscribers from '@/views/Admin/ViewSubscribers.vue'
+import UnsubscribeComponent from '@/views/UnsubscribeComponent.vue'
 import { createRouter, createWebHistory } from 'vue-router'
 
-// Add this import for the authentication check
-import { isAuthenticated } from '@/utils/auth' // You'll need to create this utility function
+import { isAuthenticated } from '@/utils/auth'
 
 const routes = [
   { path: '/', component: BlogComponent, name: 'Home' },
@@ -22,6 +22,7 @@ const routes = [
   { path: '/projects', component: ProjectsComponent, name: 'ProjectsComponent' },
   { path: '/blog', component: BlogComponent, name: 'BlogComponent' },
   { path: '/newsletter', component: NewsLetterComponent, name: 'NewsLetterComponent' },
+  { path: '/unsubscribe/:id', component: UnsubscribeComponent, name: 'UnsubscribeComponent' },
   {
     path: '/blog-details/:id',
     name: 'BlogDetailsPage',
