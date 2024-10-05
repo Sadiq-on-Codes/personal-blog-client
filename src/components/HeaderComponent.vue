@@ -38,14 +38,14 @@
   <!-- Mobile Menu -->
   <dialog
     v-if="isMenuOpen"
-    class="fixed inset-0 z-[100] bg-white dark:bg-gray-900 flex flex-col items-center justify-center"
+    class="fixed inset-0 z-[100] bg-white dark:bg-gray-900 flex flex-col items-center justify-center pt-16 w-full h-full overflow-y-auto"
   >
-    <nav class="flex flex-col items-center space-y-8" aria-label="Mobile Navigation">
+    <nav class="flex flex-col items-center space-y-8 w-full" aria-label="Mobile Navigation">
       <router-link
         v-for="(menuItem, index) in menuItems"
         :key="index"
         :to="{ name: menuItem.routeName }"
-        class="text-3xl hover:text-primary transition-colors duration-200"
+        class="text-3xl text-gray-800 dark:text-white hover:text-primary transition-colors duration-200 w-full text-center py-4"
         active-class="text-primary font-semibold"
         exact-active-class="text-primary font-semibold"
         @click="isMenuOpen = false"
@@ -55,14 +55,13 @@
       <DarkModeToggle />
     </nav>
 
-    <button @click="isMenuOpen = false" class="absolute top-4 right-4 text-4xl" aria-label="Close menu">
+    <button @click="isMenuOpen = false" class="absolute top-4 right-4 text-4xl p-2 text-gray-800 dark:text-white" aria-label="Close menu">
       &times;
     </button>
   </dialog>
 </template>
 
 <script setup lang="ts">
-import CloseIcon from '@/components/icons/CloseIcon.vue'
 import { inject, ref } from 'vue'
 import DarkModeToggle from './common/DarkModeToggle.vue'
 
@@ -136,15 +135,28 @@ const toggleMenu = () => {
   @apply text-blue-600 dark:text-blue-400;
 }
 
-/* Add this new style for the mobile menu */
-.fixed {
-  position: fixed;
+/* Update the mobile menu styles */
+dialog {
+  margin: 0;
+  padding: 0;
+  border: none;
+  background: rgba(255, 255, 255, 1); /* Fully opaque white background */
 }
 
-.inset-0 {
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
+dialog.dark {
+  background: rgba(17, 24, 39, 1); /* Fully opaque dark background (adjust color as needed) */
+}
+
+dialog::backdrop {
+  background: rgba(0, 0, 0, 0.5);
+}
+
+/* Add smooth transition for menu items */
+dialog a {
+  transition: background-color 0.2s ease;
+}
+
+dialog a:active {
+  background-color: rgba(0, 0, 0, 0.1);
 }
 </style>
