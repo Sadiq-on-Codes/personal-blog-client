@@ -1,19 +1,28 @@
 <template>
-  <div
-    class="flex flex-col gap-[--spacing] justify-center items-start w-full md:inset-0 h-modal md:h-full"
-  >
-    <SelectField
-      id="category"
-      name="category"
-      label=""
-      v-model="selectedContent"
-      :options="categoryOptions"
-      @onChange="fetchData"
-    />
+  <div class="container mx-auto px-4 py-8">
+    <h1 class="text-3xl font-bold mb-6">Manage {{ contentTypeTitle }}</h1>
+    
+    <div class="mb-6">
+      <SelectField
+        id="category"
+        name="category"
+        label="Select Content Type"
+        v-model="selectedContent"
+        :options="categoryOptions"
+        @onChange="fetchData"
+        class="w-full md:w-64"
+      />
+    </div>
 
-    <div v-if="loading"><LoaderComponent /></div>
+    <div v-if="loading" class="flex justify-center items-center h-64">
+      <LoaderComponent />
+    </div>
 
-    <div class="w-full" v-else>
+    <div v-else-if="data.length === 0" class="text-center py-8">
+      <p class="text-xl text-gray-600">No {{ contentTypeTitle.toLowerCase() }} found.</p>
+    </div>
+
+    <div v-else class="w-full overflow-x-auto">
       <TableComponent
         :headers="tableHeaders"
         :data="data"
@@ -22,6 +31,7 @@
         :showIndex="true"
         :showActions="true"
         @delete="handleDelete"
+        :is-loading="loading"
       />
     </div>
   </div>
@@ -90,6 +100,10 @@ const handleDelete = async (id) => {
     console.error('Error deleting item:', error)
   }
 }
+
+const contentTypeTitle = computed(() => 
+  selectedContent.value === 'projects' ? 'Projects' : 'Blog Posts'
+)
 
 onMounted(() => {
   fetchData()

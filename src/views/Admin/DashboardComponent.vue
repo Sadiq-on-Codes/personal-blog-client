@@ -1,6 +1,6 @@
 <template>
-  <div class="flex flex-col md:flex-row h-screen bg-gray-100 dark:bg-gray-900">
-    <aside class="w-full md:w-[20%] bg-white dark:bg-gray-800 shadow-md">
+  <div class="flex flex-col md:flex-row h-screen">
+    <aside class="w-full md:w-[20%] shadow-md">
       <div class="flex items-center justify-between md:justify-center h-16 border-b dark:border-gray-700 px-4 md:px-0">
         <div class="flex items-center">
             <div class="logo mr-2"></div>
@@ -17,7 +17,7 @@
           :to="item.path"
           class="flex items-center px-6 py-3 text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700"
         >
-          <component :is="item.icon" class="w-5 h-5 mr-3" />
+          <i :class="[item.icon, 'w-5 h-5 mr-3']"></i>
           {{ item.name }}
         </router-link>
       </nav>
@@ -58,8 +58,6 @@ import { ref, onMounted } from 'vue'
 import { jwtDecode } from 'jwt-decode'
 import { useRouter } from 'vue-router'
 import DarkModeToggle from '@/components/common/DarkModeToggle.vue'
-import PostIcon from '@/components/icons/PostIcon.vue'
-import AddIcon from '@/components/icons/AddIcon.vue'
 
 const router = useRouter()
 const userMenuOpen = ref(false)
@@ -80,11 +78,11 @@ const toggleSidebar = () => {
 }
 
 const menuItems = [
-  { name: 'View Posts', path: '/dashboard/view-posts', icon: PostIcon },
-  { name: 'Add Post', path: '/dashboard/add-posts', icon: AddIcon },
-  { name: 'View Tags', path: '/dashboard/view-tags', icon: PostIcon },
-  { name: 'Add Tags', path: '/dashboard/add-tags', icon: AddIcon },
-  { name: 'View Subscribers', path: '/dashboard/view-subscribers', icon: PostIcon },
+  { name: 'View Posts', path: '/dashboard/view-posts', icon: 'fas fa-newspaper' },
+  { name: 'Add Post', path: '/dashboard/add-posts', icon: 'fas fa-plus' },
+  { name: 'View Tags', path: '/dashboard/view-tags', icon: 'fas fa-tags' },
+  { name: 'Add Tags', path: '/dashboard/add-tags', icon: 'fas fa-plus' },
+  { name: 'View Subscribers', path: '/dashboard/view-subscribers', icon: 'fas fa-users' },
 ]
 
 onMounted(() => {

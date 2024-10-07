@@ -60,22 +60,25 @@
 
           <SelectComponent v-model="form.tags" :options="tags" />
 
+          <TextAreaComponent
+            v-model="form.description"
+            v-if="selectedContent === 'projects'"
+            id="description"
+            name="description"
+            placeholder="Select image"
+            label="Content"
+            ref="projectTextArea"
+          />
+
           <div v-if="selectedContent === 'blogPosts'">
             <label for="description" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
               Content
             </label>
-            <QuillEditor v-model="form.description" />
+            <div v-if="editMode" id="description" ref="descriptionContainer" class="quill-editor"></div>
+            <div v-else>
+              <QuillEditor v-model:content="form.description" theme="snow" toolbar="full" />
+            </div>
           </div>
-
-          <TextAreaComponent
-            v-model="form.description"
-            v-else
-            id="description"
-            name="description"
-            placeholder="Enter project description"
-            label="Content"
-            ref="projectTextArea"
-          />
 
           <div v-if="form._id && selectedContent === 'blogPosts'" class="space-y-4 bg-gray-100 dark:bg-gray-700 p-4 rounded-md">
             <h3 class="text-lg font-medium text-gray-900 dark:text-white mb-2">Additional Actions</h3>
@@ -115,7 +118,8 @@ import { ref, onMounted, watch, computed } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import Button from '@/components/common/ButtonComponent.vue'
 import InputComponent from '@/components/common/InputComponent.vue'
-import QuillEditor from '@/components/QuillEditor.vue'
+import Quill from 'quill'
+import { QuillEditor } from '@vueup/vue-quill'
 import 'quill/dist/quill.snow.css'
 import {
   createBlogPost,
