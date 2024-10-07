@@ -286,3 +286,19 @@ export const deleteComment = async (id: string): Promise<void> => {
     throw error;
   }
 }
+
+// New functions for sending newsletter, posting to Twitter, and posting to LinkedIn
+export const sendNewsletter = async (postId: string) => {
+  const response = await api.post(`/blogPosts/${postId}/send-newsletter`);
+  return response.data;
+};
+
+export const postToTwitter = async (postId: string) => {
+  const response = await api.post(`/blogPosts/${postId}/post-twitter`);
+  return response.data;
+};
+
+export const postToLinkedIn = async (postId: string) => {
+  const response = await api.post(`/blogPosts/${postId}/post-linkedin`);
+  return response.data;
+};

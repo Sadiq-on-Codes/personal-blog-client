@@ -78,6 +78,21 @@
               </div>
             </div>
 
+            <div v-if="form._id && selectedContent === 'blogPosts'" class="flex flex-col gap-2">
+              <label class="flex items-center">
+                <input type="checkbox" v-model="sendNewsletter" class="mr-2">
+                Send Newsletter
+              </label>
+              <label class="flex items-center">
+                <input type="checkbox" v-model="postToTwitter" class="mr-2">
+                Post to Twitter
+              </label>
+              <label class="flex items-center">
+                <input type="checkbox" v-model="postToLinkedIn" class="mr-2">
+                Post to LinkedIn
+              </label>
+            </div>
+
             <Button 
               @click="submitForm" 
               type="submit"
@@ -108,19 +123,23 @@ import {
   createProject,
   updateProject,
   fetchProjectById,
-  fetchTags
+  fetchTags,
+  sendNewsletter as apiSendNewsletter,
+  postToTwitter as apiPostToTwitter,
+  postToLinkedIn as apiPostToLinkedIn
 } from '@/services/apiServices'
 import SelectField from '@/components/common/SingleSelectComponent.vue'
 import TextAreaComponent from '@/components/common/TextAreaComponent.vue'
 import type { Post } from '@/types'
 import { usePostStore } from '@/stores'
 import SelectComponent from '@/components/common/SelectComponent.vue'
+import { useToast } from 'vue-toastification'
 
 const form = ref<Post>({
   _id: '',
   title: '',
   author: '',
-  date: new Date().toISOString().split('T')[0], // Set default date to today
+  date: new Date().toISOString().split('T')[0], 
   image: null,
   description: '',
   tags: []
@@ -146,6 +165,12 @@ const todayDate = computed(() => {
 })
 
 const isLoading = ref(false)
+
+const sendNewsletter = ref(false)
+const postToTwitter = ref(false)
+const postToLinkedIn = ref(false)
+
+const toast = useToast()
 
 onMounted(async () => {
   const id = route.query.id as string
@@ -234,9 +259,11 @@ const submitForm = async () => {
       formData.append('image', form.value.image);
     }
 
+    let postId;
     if (form.value._id) {
       if (selectedContent.value === 'blogPosts') {
         await updateBlogPost(form.value._id, formData);
+        postId = form.value._id;
         console.log('Post updated successfully');
       } else if (selectedContent.value === 'projects') {
         await updateProject(form.value._id, formData);
@@ -244,11 +271,43 @@ const submitForm = async () => {
       }
     } else {
       if (selectedContent.value === 'blogPosts') {
-        await createBlogPost(formData);
+        const response = await createBlogPost(formData);
+        postId = response._id;
         console.log('Post created successfully');
       } else if (selectedContent.value === 'projects') {
         await createProject(formData);
         console.log('Project created successfully');
+      }
+    }
+
+    // Perform additional actions if checkboxes are checked
+    if (selectedContent.value === 'blogPosts' && postId) {
+      if (sendNewsletter.value) {
+        try {
+          await apiSendNewsletter(postId);
+          toast.success('Newsletter sent successfully');
+        } catch (error) {
+          console.error('Error sending newsletter:', error);
+          toast.error('Failed to send newsletter');
+        }
+      }
+      if (postToTwitter.value) {
+        try {
+          await apiPostToTwitter(postId);
+          toast.success('Posted to Twitter successfully');
+        } catch (error) {
+          console.error('Error posting to Twitter:', error);
+          toast.error('Failed to post to Twitter');
+        }
+      }
+      if (postToLinkedIn.value) {
+        try {
+          await apiPostToLinkedIn(postId);
+          toast.success('Posted to LinkedIn successfully');
+        } catch (error) {
+          console.error('Error posting to LinkedIn:', error);
+          toast.error('Failed to post to LinkedIn');
+        }
       }
     }
     
@@ -256,7 +315,7 @@ const submitForm = async () => {
     router.push({ path: '/dashboard/view-posts' });
   } catch (error) {
     console.error('Error submitting form', error);
-    // Optionally, you can add error handling here, such as showing an error message to the user
+    toast.error('Error submitting form. Please try again.');
   } finally {
     isLoading.value = false;
   }
