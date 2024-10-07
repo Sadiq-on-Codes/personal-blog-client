@@ -22,7 +22,7 @@
               class="rounded-lg shadow-md w-full object-cover max-h-96 mb-8 transition-transform duration-300 ease-in-out hover:scale-[1.02]"
               loading="lazy"
             />
-            <div ref="descriptionContainer" class="text-[--color-post-secondary] text-lg max-w-full mb-8">
+            <div ref="descriptionContainer" class="text-[--color-post-secondary] text-lg max-w-full mb-8 prose">
             </div>
             
             <!-- Comments section -->
@@ -40,7 +40,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, watch, onMounted, computed } from 'vue'
+import { ref, watch, onMounted, computed, nextTick } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { fetchBlogPostById, fetchComments, createComment } from '@/services/apiServices'
 import { CLOUDINARY_URL, initializeQuill } from '@/utils'
@@ -70,6 +70,7 @@ const loadBlogPost = async (id: string) => {
   try {
     blogPost.value = await fetchBlogPostById(id)
     if (blogPost.value && descriptionContainer.value) {
+      await nextTick()
       quillInstance.value = initializeQuill(
         descriptionContainer.value,
         blogPost.value.description,
@@ -136,7 +137,7 @@ const loadComments = async (id: string) => {
 
 <style scoped>
 .prose {
-  max-width: 65ch;
+  max-width: 100%;
   margin-left: auto;
   margin-right: auto;
 }
@@ -145,9 +146,17 @@ const loadComments = async (id: string) => {
   border: none;
 }
 
+.ql-editor {
+  padding: 0;
+}
+
 @media (max-width: 640px) {
   h1 {
     font-size: 2rem;
+  }
+  
+  .ql-editor {
+    font-size: 16px;
   }
 }
 </style>
