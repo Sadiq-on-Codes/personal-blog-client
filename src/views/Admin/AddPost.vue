@@ -1,109 +1,111 @@
 <template>
-  <div aria-hidden="true" class="flex flex-col justify-center items-start w-full md:inset-0">
-    <div class="px-5">
+  <div class="max-w-4xl mx-auto py-8 px-4 sm:px-6 lg:px-8">
+    <h1 class="text-3xl font-bold text-gray-900 dark:text-white mb-8">
+      {{ form._id ? 'Edit' : 'Create' }} {{ selectedContent === 'blogPosts' ? 'Blog Post' : 'Project' }}
+    </h1>
+
+    <div class="bg-white dark:bg-gray-800 shadow rounded-lg p-6 mb-6">
       <SelectField
         id="category"
         name="category"
-        label=""
+        label="Content Type"
         v-model="selectedContent"
         :options="categoryOptions"
         :disabled="disableSelection"
+        class="mb-6"
       />
-    </div>
 
-    <div class="relative w-full p-4 h-full md:h-auto">
-      <div class="relative p-4 bg-white rounded-lg shadow dark:bg-gray-800 sm:p-5">
-        <form @submit.prevent="submitForm">
-          <div class="flex flex-col gap-[--spacing]">
-            <InputComponent
-              v-model="form.title"
-              id="title"
-              name="title"
-              type="text"
-              placeholder="Enter title"
-              label="Title"
-              required
-            />
+      <form @submit.prevent="submitForm" class="space-y-6">
+        <div class="flex flex-col gap-[--spacing]">
+          <InputComponent
+            v-model="form.title"
+            id="title"
+            name="title"
+            type="text"
+            placeholder="Enter title"
+            label="Title"
+            required
+          />
 
-            <InputComponent
-              v-if="selectedContent === 'blogPosts'"
-              v-model="form.author"
-              id="author"
-              name="author"
-              type="text"
-              placeholder="Enter author's name"
-              label="Author"
-              required
-            />
+          <InputComponent
+            v-if="selectedContent === 'blogPosts'"
+            v-model="form.author"
+            id="author"
+            name="author"
+            type="text"
+            placeholder="Enter author's name"
+            label="Author"
+            required
+          />
 
-            <InputComponent
-              v-if="selectedContent === 'blogPosts'"
-              v-model="form.date"
-              id="date"
-              name="date"
-              type="date"
-              :placeholder="todayDate"
-              label="Date"
-              required
-            />
+          <InputComponent
+            v-if="selectedContent === 'blogPosts'"
+            v-model="form.date"
+            id="date"
+            name="date"
+            type="date"
+            :placeholder="todayDate"
+            label="Date"
+            required
+          />
 
-            <InputComponent
-              id="image"
-              name="image"
-              type="file"
-              placeholder="Select image"
-              label="Image"
-              @change="handleFileUpload"
-            />
+          <InputComponent
+            id="image"
+            name="image"
+            type="file"
+            placeholder="Select image"
+            label="Image"
+            @change="handleFileUpload"
+          />
 
-            <SelectComponent v-model="form.tags" :options="tags" />
+          <SelectComponent v-model="form.tags" :options="tags" />
 
-            <TextAreaComponent
-              v-model="form.description"
-              v-if="selectedContent === 'projects'"
-              id="description"
-              name="description"
-              placeholder="Select image"
-              label="Content"
-              ref="projectTextArea"
-            />
-
-            <div v-if="selectedContent === 'blogPosts'">
-              <label for="description" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-                Content
-              </label>
-              <div v-if="editMode" id="description" ref="descriptionContainer" class="quill-editor"></div>
-              <div v-else>
-                <QuillEditor v-model:content="form.description" theme="snow" toolbar="full" />
-              </div>
-            </div>
-
-            <div v-if="form._id && selectedContent === 'blogPosts'" class="flex flex-col gap-2">
-              <label class="flex items-center">
-                <input type="checkbox" v-model="sendNewsletter" class="mr-2">
-                Send Newsletter
-              </label>
-              <label class="flex items-center">
-                <input type="checkbox" v-model="postToTwitter" class="mr-2">
-                Post to Twitter
-              </label>
-              <label class="flex items-center">
-                <input type="checkbox" v-model="postToLinkedIn" class="mr-2">
-                Post to LinkedIn
-              </label>
-            </div>
-
-            <Button 
-              @click="submitForm" 
-              type="submit"
-              :loading="isLoading"
-              :disabled="isLoading"
-            >
-              {{ form._id ? 'Update' : 'Publish' }}
-            </Button>
+          <div v-if="selectedContent === 'blogPosts'">
+            <label for="description" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+              Content
+            </label>
+            <QuillEditor v-model="form.description" />
           </div>
-        </form>
-      </div>
+
+          <TextAreaComponent
+            v-model="form.description"
+            v-else
+            id="description"
+            name="description"
+            placeholder="Enter project description"
+            label="Content"
+            ref="projectTextArea"
+          />
+
+          <div v-if="form._id && selectedContent === 'blogPosts'" class="space-y-4 bg-gray-100 dark:bg-gray-700 p-4 rounded-md">
+            <h3 class="text-lg font-medium text-gray-900 dark:text-white mb-2">Additional Actions</h3>
+            <div class="flex flex-col gap-2">
+              <label class="inline-flex items-center">
+                <input type="checkbox" v-model="sendNewsletter" class="form-checkbox h-5 w-5 text-blue-600">
+                <span class="ml-2 text-gray-700 dark:text-gray-300">Send Newsletter</span>
+              </label>
+              <label class="inline-flex items-center">
+                <input type="checkbox" v-model="postToTwitter" class="form-checkbox h-5 w-5 text-blue-600">
+                <span class="ml-2 text-gray-700 dark:text-gray-300">Post to Twitter</span>
+              </label>
+              <label class="inline-flex items-center">
+                <input type="checkbox" v-model="postToLinkedIn" class="form-checkbox h-5 w-5 text-blue-600">
+                <span class="ml-2 text-gray-700 dark:text-gray-300">Post to LinkedIn</span>
+              </label>
+            </div>
+          </div>
+
+          <Button 
+            @click="submitForm" 
+            type="submit"
+            :loading="isLoading"
+            :disabled="isLoading"
+            class="w-full"
+          >
+            {{ form._id ? 'Update' : 'Publish' }}
+          </Button>
+        </div>
+      </form>
     </div>
   </div>
 </template>
@@ -113,8 +115,7 @@ import { ref, onMounted, watch, computed } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import Button from '@/components/common/ButtonComponent.vue'
 import InputComponent from '@/components/common/InputComponent.vue'
-import Quill from 'quill'
-import { QuillEditor } from '@vueup/vue-quill'
+import QuillEditor from '@/components/QuillEditor.vue'
 import 'quill/dist/quill.snow.css'
 import {
   createBlogPost,
@@ -326,8 +327,16 @@ const submitForm = async () => {
 <style scoped>
 .ql-container.ql-snow {
   height: 20em !important;
+  border-radius: 0.375rem;
 }
 .quill-editor {
   height: 20em;
+}
+/* Add transitions for smooth interactions */
+.form-checkbox, .form-input, .form-select, .form-textarea {
+  transition: all 0.2s ease-in-out;
+}
+.form-checkbox:hover, .form-input:hover, .form-select:hover, .form-textarea:hover {
+  border-color: #4a5568;
 }
 </style>
