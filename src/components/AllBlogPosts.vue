@@ -1,9 +1,9 @@
 <template>
   <section class="mt-14" aria-labelledby="blog-posts-heading">
     <h2 id="blog-posts-heading" class="text-xl mb-4">{{ text }}</h2>
-    <div v-if="blogPosts && blogPosts.length > 0">
+    <div v-if="paginatedPosts && paginatedPosts.length > 0">
       <ul :class="['grid gap-[--spacing]', horizontal ? 'grid-cols-1' : 'sm:grid-cols-3']">
-        <li v-for="post in blogPosts" :key="post._id">
+        <li v-for="post in paginatedPosts" :key="post._id">
           <article>
             <a :href="`/blog-details/${post._id}`" @click.prevent="navigateToBlogPost(post._id ?? '')">
               <BlogPost :blogPost="post" />
@@ -11,13 +11,36 @@
           </article>
         </li>
       </ul>
+      <div class="mt-12 flex justify-center items-center space-x-4">
+        <button
+          v-if="currentPage > 1"
+          @click="currentPage--"
+          class="px-4 py-2 bg-blue-600 text-white rounded-md shadow-md hover:bg-blue-700 transition duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 flex items-center"
+        >
+          <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+          </svg>
+          Previous
+        </button>
+        <span class="text-gray-600">Page {{ currentPage }} of {{ totalPages }}</span>
+        <button
+          v-if="currentPage < totalPages"
+          @click="currentPage++"
+          class="px-4 py-2 bg-blue-600 text-white rounded-md shadow-md hover:bg-blue-700 transition duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 flex items-center"
+        >
+          Next
+          <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+          </svg>
+        </button>
+      </div>
     </div>
     <EmptyState v-else title="You're all caught up!" message="Looks like you've seen all the posts. Check back later for new content!" />
   </section>
 </template>
 
 <script setup lang="ts">
-import { defineProps, onMounted, ref } from 'vue'
+import { defineProps, onMounted, ref, computed } from 'vue'
 import BlogPost from './PostComponent.vue'
 import { fetchOtherPosts, fetchBlogPosts } from '@/services/apiServices.js'
 import EmptyState from './common/EmptyState.vue'
@@ -36,7 +59,18 @@ const props = defineProps({
   }
 })
 
-const blogPosts = ref<Post[]>()
+const blogPosts = ref<Post[]>([])
+const currentPage = ref(1)
+const postsPerPage = 9
+
+const paginatedPosts = computed(() => {
+  const start = (currentPage.value - 1) * postsPerPage
+  const end = start + postsPerPage
+  return blogPosts.value.slice(start, end)
+})
+
+const totalPages = computed(() => Math.ceil(blogPosts.value.length / postsPerPage))
+
 const route = useRoute()
 
 onMounted(async () => {
