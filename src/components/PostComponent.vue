@@ -46,7 +46,10 @@
       
       <!-- Title -->
       <div v-if="isLoading" class="h-7 w-3/4 bg-gray-300 dark:bg-gray-700 animate-pulse rounded"></div>
-      <h2 v-else class="text-xl font-bold text-gray-800 dark:text-white">
+      <h2 v-else :class="[
+        'font-bold text-gray-800 dark:text-white',
+        layout === 'horizontal' && !isMobileOrTablet ? 'text-lg' : 'text-xl'
+      ]">
         {{ blogPost.title }}
       </h2>
       
