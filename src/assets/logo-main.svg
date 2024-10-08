@@ -1,22 +1,13 @@
-<svg width="40" height="40" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="w-8 h-8">
   <defs>
     <linearGradient id="logoGradient" x1="0%" y1="0%" x2="100%" y2="100%">
       <stop offset="0%" style="stop-color:#3b82f6;stop-opacity:1" />
       <stop offset="100%" style="stop-color:#10b981;stop-opacity:1" />
     </linearGradient>
-    <filter id="innerShadow">
-      <feOffset dx="0" dy="2" />
-      <feGaussianBlur stdDeviation="1" result="offset-blur" />
-      <feComposite operator="out" in="SourceGraphic" in2="offset-blur" result="inverse" />
-      <feFlood flood-color="white" flood-opacity="0.3" result="color" />
-      <feComposite operator="in" in="color" in2="inverse" result="shadow" />
-      <feComposite operator="over" in="shadow" in2="SourceGraphic" />
-    </filter>
   </defs>
-  <circle cx="20" cy="20" r="19" fill="url(#logoGradient)" filter="url(#innerShadow)" />
-  <text x="50%" y="50%" dominant-baseline="central" text-anchor="middle" 
-        font-size="24" font-weight="bold" fill="white" 
-        style="text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);">
-    S
-  </text>
+  <rect x="2" y="2" width="20" height="20" rx="4" ry="4" fill="url(#logoGradient)" />
+  <path fill="none" stroke="white" stroke-width="2"
+    d="M7,7 L5,12 L7,17 M17,7 L19,12 L17,17 M11,7 L13,17" />
+  <path fill="white" stroke="white" stroke-width="2"
+    d="M10,12 L14,12" />
 </svg>

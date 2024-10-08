@@ -3,7 +3,9 @@
     <aside class="w-full md:w-[20%] shadow-md">
       <div class="flex items-center justify-between md:justify-center h-16 border-b dark:border-gray-700 px-4 md:px-0">
         <div class="flex items-center">
-            <div class="logo mr-2"></div>
+            <div class="mr-2">
+              <img src="../../assets/logo-main.svg" alt="logo" class="w-8 h-8">
+            </div>
             <span class="font-bold text-xl logo-text">Sadiq on Codes</span>
           </div>
         <button @click="toggleSidebar" class="md:hidden">
