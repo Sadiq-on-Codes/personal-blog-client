@@ -35,7 +35,11 @@
       :alt="blogPost.title"
     />
 
-    <div :class="[{ 'gap-2': isHalfHeight }, 'flex flex-col gap-2 flex-1 p-6']">
+    <div :class="[
+      { 'gap-2': isHalfHeight },
+      { 'gap-1.5': layout === 'horizontal' && !isMobileOrTablet },
+      'flex flex-col gap-2 flex-1 p-6'
+    ]">
       <!-- Author and date -->
       <div v-if="isBlog && isLoading" class="h-5 w-1/3 bg-gray-300 dark:bg-gray-700 animate-pulse rounded"></div>
       <div v-else-if="isBlog" class="text-sm text-[--color-post-primary]">
