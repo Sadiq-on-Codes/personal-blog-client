@@ -28,18 +28,25 @@ const loadingMessages = [
   "Consulting the digital oracle...",
 ];
 
-const currentMessage = ref(loadingMessages[0]);
+const currentMessage = ref('');
 let intervalId: number | null = null;
+let messageTimeoutId: number | null = null;
 
 onMounted(() => {
   if (props.isLoading) {
-    intervalId = startMessageRotation(loadingMessages, (message) => currentMessage.value = message);
+    messageTimeoutId = setTimeout(() => {
+      currentMessage.value = loadingMessages[0];
+      intervalId = startMessageRotation(loadingMessages, (message) => currentMessage.value = message);
+    }, 4000);
   }
 });
 
 onUnmounted(() => {
   if (intervalId) {
     clearInterval(intervalId);
+  }
+  if (messageTimeoutId) {
+    clearTimeout(messageTimeoutId);
   }
 });
 </script>

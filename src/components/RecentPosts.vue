@@ -1,7 +1,7 @@
 <template>
   <div class="mt-[--spacing]">
     <span class="text-xl">Recent blog posts</span>
-    <div v-if="!isLoading && blogPosts?.length > 0">
+    <div v-if="!isLoading && blogPosts?.length > 0" class="mt-4">
       <div class="grid sm:grid-cols-2 grid-cols-1 gap-[--spacing]">
       <div>
         <router-link
