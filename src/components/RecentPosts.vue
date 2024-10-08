@@ -13,7 +13,7 @@
         <p v-else>No posts available.</p>
       </div>
 
-      <div class="flex flex-col gap-[--spacing]">
+      <div class="flex flex-col gap-[--spacing] justify-between">
         <router-link v-if="blogPosts?.length > 1" :to="{ name: 'BlogDetailsPage', params: { id: blogPosts[1]?._id } }">
           <BlogPost :blogPost="blogPosts[1]" :isHalfHeight="false" layout="horizontal" />
         </router-link>
