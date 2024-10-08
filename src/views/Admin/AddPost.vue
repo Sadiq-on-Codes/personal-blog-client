@@ -215,7 +215,22 @@ const setQuillContent = (content: string) => {
       theme: 'snow',
       readOnly: false,
       modules: {
-        toolbar: true
+        toolbar:  [
+      ['bold', 'italic', 'underline', 'strike'],
+      ['blockquote', 'code-block'],
+      [{ 'header': 1 }, { 'header': 2 }],
+      [{ 'list': 'ordered'}, { 'list': 'bullet' }],
+      [{ 'script': 'sub'}, { 'script': 'super' }],
+      [{ 'indent': '-1'}, { 'indent': '+1' }],
+      [{ 'direction': 'rtl' }],
+      [{ 'size': ['small', false, 'large', 'huge'] }],
+      [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
+      [{ 'color': [] }, { 'background': [] }],
+      [{ 'font': [] }],
+      [{ 'align': [] }],
+      ['clean'],
+          ['link', 'image', 'video']
+        ]
       }
     })
 
@@ -269,30 +284,28 @@ const submitForm = async () => {
       if (selectedContent.value === 'blogPosts') {
         await updateBlogPost(form.value._id, formData);
         postId = form.value._id;
-        console.log('Post updated successfully');
+        toast.success('Post updated successfully');
       } else if (selectedContent.value === 'projects') {
         await updateProject(form.value._id, formData);
-        console.log('Project updated successfully');
+        toast.success('Project updated successfully');
       }
     } else {
       if (selectedContent.value === 'blogPosts') {
         const response = await createBlogPost(formData);
         postId = response._id;
-        console.log('Post created successfully');
+        toast.success('Post created successfully');
       } else if (selectedContent.value === 'projects') {
         await createProject(formData);
-        console.log('Project created successfully');
+        toast.success('Project created successfully');
       }
     }
 
-    // Perform additional actions if checkboxes are checked
     if (selectedContent.value === 'blogPosts' && postId) {
       if (sendNewsletter.value) {
         try {
           await apiSendNewsletter(postId);
           toast.success('Newsletter sent successfully');
         } catch (error) {
-          console.error('Error sending newsletter:', error);
           toast.error('Failed to send newsletter');
         }
       }
@@ -301,7 +314,6 @@ const submitForm = async () => {
           await apiPostToTwitter(postId);
           toast.success('Posted to Twitter successfully');
         } catch (error) {
-          console.error('Error posting to Twitter:', error);
           toast.error('Failed to post to Twitter');
         }
       }
@@ -310,16 +322,14 @@ const submitForm = async () => {
           await apiPostToLinkedIn(postId);
           toast.success('Posted to LinkedIn successfully');
         } catch (error) {
-          console.error('Error posting to LinkedIn:', error);
           toast.error('Failed to post to LinkedIn');
         }
       }
     }
     
-    // Redirect after successful submission
+  
     router.push({ path: '/dashboard/view-posts' });
   } catch (error) {
-    console.error('Error submitting form', error);
     toast.error('Error submitting form. Please try again.');
   } finally {
     isLoading.value = false;
