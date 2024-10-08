@@ -1,6 +1,6 @@
 <template>
   <div class="newsletter-container">
-    <div class="mt-14 max-w-4xl mx-auto">
+    <div class="mt-14 mx-auto">
       <div class="flex flex-col justify-center items-center gap-8 text-center">
         <span class="text-sm text-[--color-post-primary] font-semibold uppercase tracking-wider bg-[--color-post-primary-light] px-4 py-1 rounded-full">Stay Connected</span>
         <h2 class="text-5xl text-[--color-post-secondary2] dark:text-[--color-text-dark] font-bold leading-tight">
