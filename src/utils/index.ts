@@ -20,3 +20,17 @@ export function initializeQuill(descriptionContainer: HTMLElement, content: stri
 
   return quill;
 }
+
+export function startMessageRotation(
+  messages: string[],
+  updateCallback: (message: string) => void,
+  interval: number = 3000
+): NodeJS.Timeout {
+  let index = 0;
+  updateCallback(messages[index]);
+  const intervalId = setInterval(() => {
+    index = (index + 1) % messages.length;
+    updateCallback(messages[index]);
+  }, interval);
+  return intervalId;
+}
