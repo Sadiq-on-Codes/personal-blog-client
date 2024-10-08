@@ -33,7 +33,11 @@
       <Loader :isLoading="isLoading" v-else />
       <aside class="py-8">
         <div class="container mx-auto px-4 sm:px-6 lg:px-8">
-          <AllBlogPosts text="More Posts" :horizontal="false" />
+          <AllBlogPosts 
+            text="More Posts" 
+            :horizontal="false" 
+            :excludePostId="blogPost?._id"
+          />
         </div>
       </aside>
   </div>

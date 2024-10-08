@@ -40,7 +40,7 @@
 </template>
 
 <script setup lang="ts">
-import { defineProps, onMounted, ref, computed } from 'vue'
+import { defineProps, onMounted, ref, computed, watch } from 'vue'
 import BlogPost from './PostComponent.vue'
 import { fetchOtherPosts, fetchBlogPosts } from '@/services/apiServices.js'
 import EmptyState from './common/EmptyState.vue'
@@ -56,6 +56,10 @@ const props = defineProps({
   text: {
     type: String,
     default: 'All Posts'
+  },
+  excludePostId: {
+    type: String,
+    default: ''
   }
 })
 
@@ -63,23 +67,31 @@ const blogPosts = ref<Post[]>([])
 const currentPage = ref(1)
 const postsPerPage = 9
 
+const filteredPosts = computed(() => {
+  return blogPosts.value.filter(post => post._id !== props.excludePostId)
+})
+
 const paginatedPosts = computed(() => {
   const start = (currentPage.value - 1) * postsPerPage
   const end = start + postsPerPage
-  return blogPosts.value.slice(start, end)
+  return filteredPosts.value.slice(start, end)
 })
 
-const totalPages = computed(() => Math.ceil(blogPosts.value.length / postsPerPage))
+const totalPages = computed(() => Math.ceil(filteredPosts.value.length / postsPerPage))
 
 const route = useRoute()
 
-onMounted(async () => {
+const loadPosts = async () => {
   if (route.name === 'NewsLetterComponent') {
     blogPosts.value = await fetchBlogPosts()
   } else {
     blogPosts.value = await fetchOtherPosts()
   }
-})
+}
+
+onMounted(loadPosts)
+
+watch(() => props.excludePostId, loadPosts)
 
 useSEO(
   props.text,
