@@ -14,8 +14,12 @@
       />
     </div>
 
-    <div v-if="loading" class="flex justify-center items-center h-64">
-      <LoaderComponent />
+    <div v-if="isLoading" class="flex justify-center items-center">
+      <LoaderComponent :isLoading="isLoading" />
+    </div>
+
+    <div v-else-if="error" class="text-center py-8">
+      <p class="text-xl text-red-600">{{ error }}</p>
     </div>
 
     <div v-else-if="data.length === 0" class="text-center py-8">
@@ -31,7 +35,6 @@
         :showIndex="true"
         :showActions="true"
         @delete="handleDelete"
-        :is-loading="loading"
       />
     </div>
   </div>
@@ -48,6 +51,7 @@ import LoaderComponent from '@/components/common/LoaderComponent.vue'
 const store = usePostStore()
 const data = ref([])
 const loading = ref(false)
+const error = ref(null)
 const selectedContent = ref(store.selectedContent || 'blogPosts')
 
 const tableHeaders = computed(() => {

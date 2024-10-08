@@ -1,7 +1,6 @@
 <template>
   <div class="relative w-full overflow-x-auto shadow-md sm:rounded-lg">
-    <LoaderComponent :isLoading="isLoading" v-if="isLoading" />
-    <table v-else class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+    <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
       <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
         <tr>
           <th v-for="header in headers" :key="header.key" scope="col" class="px-6 py-3">
@@ -60,7 +59,6 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue'
 import DeleteComponent from '../DeleteComponent.vue';
-import LoaderComponent from '../common/LoaderComponent.vue'; 
 import type { Pin } from '@/types';
 
 interface Header {
@@ -73,7 +71,6 @@ const props = defineProps<{
   headers: Header[]
   data: any[]
   editPath?: string
-  isLoading: boolean 
 }>()
 
 const emit = defineEmits(['delete'])
