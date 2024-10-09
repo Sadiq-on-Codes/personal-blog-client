@@ -51,7 +51,7 @@
 <script setup lang="ts">
 import { ref, computed, watch, onMounted } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
-import { createComment, fetchBlogPostById, fetchComments } from '@/services/apiServices'
+import { fetchBlogPostById } from '@/services/apiServices'
 import { CLOUDINARY_URL } from '@/utils'
 import type { Post } from '@/types'
 import AllBlogPosts from '@/components/AllBlogPosts.vue'
@@ -141,29 +141,6 @@ onMounted(() => {
     loadBlogPost(id)
   }
 })
-
-const submitComment = async () => {
-  if (!blogPost.value) return
-  try {
-    await createComment({
-      postId: blogPost.value._id,
-      name: newComment.value.name,
-      content: newComment.value.content
-    })
-    newComment.value = { name: '', content: '' }
-    await loadComments(blogPost.value._id)
-  } catch (err) {
-    console.error('Error submitting comment:', err)
-  }
-}
-
-const loadComments = async (id: string) => {
-  try {
-    comments.value = await fetchComments(id)
-  } catch (err) {
-    console.error('Error fetching comments:', err)
-  }
-}
 </script>
 
 <style scoped>

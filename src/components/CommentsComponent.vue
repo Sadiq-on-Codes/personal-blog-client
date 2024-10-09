@@ -54,7 +54,7 @@ const props = defineProps<{
 }>()
 
 const comments = ref<Comment[]>([])
-const newComment = ref({ name: '', content: '' })
+const newComment = ref<any>({ name: '', content: '' })
 const editingComment = ref<string | null>(null)
 const editedComment = ref({ name: '', content: '' })
 
