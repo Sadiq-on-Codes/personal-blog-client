@@ -98,7 +98,7 @@ const skills = ref([
 ])
 
 const experience = ref([
-{
+  {
     title: 'Technical Lead',
     period: 'Sep 2023 - Dec 2024',
     description: 'Led cross-functional teams in developing an innovative ERP system, revolutionizing enterprise operations.',
@@ -123,6 +123,19 @@ const experience = ref([
       'Improved QR code scanning to 100% success rate, boosting application reliability',
       'Developed resource management and automated staffing solution, streamlining HR processes',
       'Created integrated contract management system, enabling in-app signing and improving document accessibility'
+    ]
+  },
+  {
+    title: 'IT Support',
+    period: '01/09/2020 - 01/11/2021',
+    description: 'Provided technical support and assisted in IT operations at Ga East Municipal Assembly, Accra, Ghana.',
+    icon: 'fas fa-desktop',
+    achievements: [
+      'Assisted in providing technical support to end-users, resolving hardware and software issues, and troubleshooting network connectivity problems',
+      'Participated in setting up, configuring, and deploying computer systems, ensuring proper installation of operating systems, drivers, and necessary software applications',
+      'Monitored network performance and assisted in identifying potential bottlenecks or security vulnerabilities',
+      'Conducted routine hardware and software maintenance tasks, including system updates, data backups, and antivirus scans',
+      'Contributed to IT projects, such as system upgrades and network expansions, by conducting research, testing, and documentation tasks'
     ]
   }
 ])
