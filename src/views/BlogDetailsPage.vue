@@ -60,6 +60,8 @@ import CommentSection from '@/components/CommentsComponent.vue'
 import { useSEO } from '@/utils/seoComposable'
 import DOMPurify from 'dompurify'
 import { QuillDeltaToHtmlConverter } from 'quill-delta-to-html'
+import hljs from 'highlight.js'
+import 'highlight.js/styles/github.css' // You can choose a different style if you prefer
 
 const route = useRoute()
 const router = useRouter()
@@ -76,8 +78,20 @@ const parsedDescription = computed(() => {
   try {
     const content = JSON.parse(blogPost.value.description)
     if (content.ops) {
-      const converter = new QuillDeltaToHtmlConverter(content.ops, {});
-      const html = converter.convert();
+      const converter = new QuillDeltaToHtmlConverter(content.ops, {
+        customTag: (op: any) => {
+          if (op.attributes && op.attributes.code) {
+            return 'code'
+          }
+        }
+      });
+      let html = converter.convert();
+    
+      html = html.replace(/<p><code>([\s\S]*?)<\/code><\/p>/g, (match: any, p1: any) => {
+        const highlightedCode = hljs.highlightAuto(p1).value;
+        return `<pre><code>${highlightedCode}</code></pre>`;
+      });
+      
       return DOMPurify.sanitize(html)
     }
   } catch (error) {
@@ -144,27 +158,72 @@ onMounted(() => {
 </script>
 
 <style scoped>
-.prose {
+/* Ensure the blog content doesn't overflow */
+::v-deep .blog-content,
+:deep(.blog-content) {
   max-width: 100%;
-  margin-left: auto;
-  margin-right: auto;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+  word-break: break-word;
+  hyphens: auto;
 }
 
-.ql-container.ql-snow {
-  border: none;
+/* Style for pre elements */
+::v-deep pre,
+:deep(pre) {
+  background-color: #f4f4f4;
+  border-radius: 4px;
+  padding: 1em;
+  margin: 1em 0;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  overflow-x: auto;
+  max-width: 100%;
 }
 
-.ql-editor {
-  padding: 0;
+/* Style for code elements */
+::v-deep code,
+:deep(code) {
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 0.9em;
+  max-width: 100%;
+  display: inline-block;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
 }
 
-@media (max-width: 640px) {
-  h1 {
-    font-size: 2rem;
-  }
-  
-  .ql-editor {
-    font-size: 16px;
-  }
+/* Style for code blocks */
+::v-deep pre code,
+:deep(pre code) {
+  display: block;
+  border: 1px solid #e0e0e0;
+  background-color: #fafafa;
+  color: #f3ebeb;
+}
+
+/* Style for inline code */
+::v-deep p code,
+:deep(p code) {
+  background-color: #f0f0f0;
+  padding: 0.2em 0.4em;
+  border-radius: 3px;
+  white-space: normal;
+}
+
+/* Ensure all content wraps */
+::v-deep *,
+:deep(*) {
+  max-width: 100%;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+}
+
+/* Add horizontal scrolling for very long lines in highlighted code */
+::v-deep .hljs,
+:deep(.hljs) {
+  overflow-x: auto;
+  white-space: pre;
+  word-wrap: normal;
 }
 </style>
