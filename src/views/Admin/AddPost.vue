@@ -95,6 +95,10 @@
                 <input type="checkbox" v-model="postToLinkedIn" class="form-checkbox h-5 w-5 text-blue-600">
                 <span class="ml-2 text-gray-700 dark:text-gray-300">Post to LinkedIn</span>
               </label>
+              <label class="inline-flex items-center">
+                <input type="checkbox" v-model="postToFacebook" class="form-checkbox h-5 w-5 text-blue-600">
+                <span class="ml-2 text-gray-700 dark:text-gray-300">Post to Facebook</span>
+              </label>
             </div>
           </div>
 
@@ -131,7 +135,8 @@ import {
   fetchTags,
   sendNewsletter as apiSendNewsletter,
   postToTwitter as apiPostToTwitter,
-  postToLinkedIn as apiPostToLinkedIn
+  postToLinkedIn as apiPostToLinkedIn,
+  postToFacebook as apiPostToFacebook
 } from '@/services/apiServices'
 import SelectField from '@/components/common/SingleSelectComponent.vue'
 import TextAreaComponent from '@/components/common/TextAreaComponent.vue'
@@ -174,7 +179,7 @@ const isLoading = ref(false)
 const sendNewsletter = ref(false)
 const postToTwitter = ref(false)
 const postToLinkedIn = ref(false)
-
+const postToFacebook = ref(false)
 const toast = useToast()
 
 onMounted(async () => {
@@ -257,14 +262,13 @@ const getDescriptionAsString = (): string => {
 }
 
 const submitForm = async () => {
-  if (isLoading.value) return; // Prevent multiple submissions
+  if (isLoading.value) return; 
   
   isLoading.value = true;
   try {
     const formData = new FormData();
     formData.append('title', form.value.title);
 
-    // Convert tag IDs array to comma-separated string
     const tagsString = form.value.tags.map(tag => tag._id).join(',');
     formData.append('tags', tagsString);
 
@@ -323,6 +327,14 @@ const submitForm = async () => {
           toast.success('Posted to LinkedIn successfully');
         } catch (error) {
           toast.error('Failed to post to LinkedIn');
+        }
+      }
+      if (postToFacebook.value) {
+        try {
+          await apiPostToFacebook(postId);
+          toast.success('Posted to Facebook successfully');
+        } catch (error) {
+          toast.error('Failed to post to Facebook');
         }
       }
     }

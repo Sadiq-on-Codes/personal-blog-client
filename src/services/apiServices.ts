@@ -302,3 +302,8 @@ export const postToLinkedIn = async (postId: string) => {
   const response = await api.post(`/blogPosts/${postId}/post-linkedin`);
   return response.data;
 };
+
+export const postToFacebook = async (postId: string) => {
+  const response = await api.post(`/blogPosts/${postId}/post-facebook`);
+  return response.data;
+};
