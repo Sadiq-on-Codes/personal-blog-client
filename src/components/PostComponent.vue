@@ -50,10 +50,11 @@
       
       
       <div v-if="isLoading" class="h-7 w-3/4 bg-gray-300 dark:bg-gray-700 animate-pulse rounded"></div>
-      <h2 v-else :class="[
-        'font-bold text-gray-800 dark:text-white',
-        layout === 'horizontal' && !isMobileOrTablet ? 'text-lg' : 'text-xl'
-      ]">
+      <h2 v-else :class="[ 
+        'font-bold text-gray-800 dark:text-white', 
+        layout === 'horizontal' && !isMobileOrTablet ? 'text-lg' : 'text-xl', 
+        props.animateTitle && blogPost.title.length > 80 ? 'animate-title overflow-hidden whitespace-nowrap' : '' 
+      ]" style="width: 100%;">
         {{ blogPost.title }}
       </h2>
       
@@ -124,7 +125,11 @@ const props = defineProps({
   isLoading: {
     type: Boolean,
     default: false
-  }
+  },
+  animateTitle: {
+    type: Boolean,
+    default: false // If true, applies the title animation
+  },
 })
 
 const isMobileOrTablet = ref(false)
@@ -170,6 +175,21 @@ img {
   }
   50% {
     opacity: 0.5;
+  }
+}
+
+.animate-title {
+  animation: moveAndFade 5s linear infinite;
+}
+
+@keyframes moveAndFade {
+  0% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(-100%);
+    opacity: 1;
   }
 }
 </style>
