@@ -340,7 +340,7 @@ const submitForm = async () => {
     }
     
   
-    router.push({ path: '/dashboard/view-posts' });
+    // router.push({ path: '/dashboard/view-posts' });
   } catch (error) {
     toast.error('Error submitting form. Please try again.');
   } finally {
