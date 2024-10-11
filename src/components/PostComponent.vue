@@ -53,7 +53,7 @@
       <h2 v-else :class="[ 
         'font-bold text-gray-800 dark:text-white', 
         layout === 'horizontal' && !isMobileOrTablet ? 'text-lg' : 'text-xl', 
-        props.animateTitle && blogPost.title.length > 80 ? 'animate-title overflow-hidden whitespace-nowrap' : '' 
+        props.animateTitle && blogPost.title.length > 80 ? 'animate-title whitespace-nowrap' : '' 
       ]" style="width: 100%;">
         {{ blogPost.title }}
       </h2>
