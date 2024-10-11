@@ -62,8 +62,10 @@ import { ref } from 'vue'
 import DarkModeToggle from './common/DarkModeToggle.vue'
 
 const isMenuOpen = ref(false)
+const routePath = window.location.pathname;
+
 const menuItems = [
-  { name: 'Blog', routeName: 'BlogComponent' },
+  { name: 'Blog', routeName: routePath === '/' ? 'Home' : 'BlogComponent' },
   { name: 'Projects', routeName: 'ProjectsComponent' },
   { name: 'About Me', routeName: 'AboutComponent' },
   { name: 'Newsletter', routeName: 'NewsLetterComponent' }
