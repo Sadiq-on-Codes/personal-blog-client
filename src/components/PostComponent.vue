@@ -18,7 +18,7 @@
           'w-1/2': layout === 'horizontal' && !isMobileOrTablet,
         },
         'animate-pulse bg-gray-300 dark:bg-gray-700',
-        layout === 'horizontal' && !isMobileOrTablet ? 'h-[200px]' : 'h-[300px]'
+        layout === 'horizontal' && !isMobileOrTablet ? 'h-[200px]' : 'h-[280px]'
       ]"
     ></div>
     <img
@@ -29,7 +29,7 @@
           'w-1/2': layout === 'horizontal' && !isMobileOrTablet,
         },
         'object-cover',
-        layout === 'horizontal' && !isMobileOrTablet ? 'h-[200px]' : 'h-[300px]'
+        layout === 'horizontal' && !isMobileOrTablet ? 'h-[200px]' : 'h-[280px]'
       ]"
       :src="blogPostImageUrl"
       :alt="blogPost.title"

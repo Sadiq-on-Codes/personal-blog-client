@@ -8,7 +8,7 @@
           v-if="blogPosts?.length > 0"
           :to="{ name: 'BlogDetailsPage', params: { id: blogPosts[0]?._id } }"
         >
-          <BlogPost :blogPost="blogPosts[0]" :isHalfHeight="false" layout="vertical" />
+          <BlogPost :blogPost="blogPosts[0]" :isHalfHeight="true" layout="vertical" />
         </router-link>
         <p v-else>No posts available.</p>
       </div>
