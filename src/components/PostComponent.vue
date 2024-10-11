@@ -2,7 +2,7 @@
   <div
     :class="[
       {
-        'flex-col': layout === 'vertical' || isMobileOrTablet,
+        'flex-col h-[430px]': layout === 'vertical' || isMobileOrTablet,
         'flex-row': layout === 'horizontal' && !isMobileOrTablet,
         'flex-col-reverse': (layout === 'vertical' || isMobileOrTablet) && reverse,
         'flex-row-reverse': layout === 'horizontal' && reverse && !isMobileOrTablet
