@@ -7,7 +7,7 @@
         'flex-col-reverse': (layout === 'vertical' || isMobileOrTablet) && reverse,
         'flex-row-reverse': layout === 'horizontal' && reverse && !isMobileOrTablet
       },
-      'flex h-fit bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden transition-all duration-300 hover:shadow-lg'
+      'flex bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden transition-all duration-300 hover:shadow-lg'
     ]"
   >
     <div
