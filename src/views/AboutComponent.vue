@@ -12,6 +12,9 @@
           <a href="https://www.linkedin.com/in/abubakar-sadick-y-57a858b0/" class="social-icon" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
           <a href="https://www.credly.com/users/sadick-abubakar-yahaya" class="social-icon" aria-label="Credly"><i class="fab fa-credly"></i></a>
         </div>
+        <div class="linktree">
+          <a href="https://linktr.ee/sadiqoncodes" target="_blank" class="linktree-button">Linktree</a>
+        </div>
       </div>
       <div class="hero-content">
         <h2 class="hero-greeting">Hello, I'm Sadick</h2>
@@ -694,5 +697,29 @@ const education = ref([
   .cta-button {
     padding: 0.8rem 1.5rem;
   }
+}
+
+.linktree {
+  margin-top: 1rem;
+  text-align: center;
+}
+
+.linktree-button {
+  display: inline-block;
+  padding: 0.8rem 1.5rem;
+  background: linear-gradient(135deg, var(--color-accent), var(--color-primary));
+  color: var(--color-bg-primary);
+  text-decoration: none;
+  border-radius: 2rem;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+}
+
+.linktree-button:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
 }
 </style>

@@ -51,12 +51,11 @@
       
       <div v-if="isLoading" class="h-7 w-3/4 bg-gray-300 dark:bg-gray-700 animate-pulse rounded"></div>
       <h2 v-else :class="[ 
-        'font-bold text-gray-800 dark:text-white', 
-        layout === 'horizontal' && !isMobileOrTablet ? 'text-lg' : 'text-xl', 
-        props.animateTitle && blogPost.title.length > 80 ? 'animate-title whitespace-nowrap' : '' 
-      ]" style="width: 100%;">
-        {{ blogPost.title }}
-      </h2>
+      'font-bold text-gray-800 dark:text-white', 
+      layout === 'horizontal' && !isMobileOrTablet ? 'text-lg' : 'text-xl', 
+    ]" style="width: 100%;" v-tooltip="blogPost.title"> <!-- Use v-tooltip directive -->
+      {{ blogPost.title.length > 80 ? blogPost.title.slice(0, 50) + '...' :  blogPost.title }}
+    </h2>
       
 
       <div v-if="isLoading" class="space-y-2">
@@ -126,13 +125,14 @@ const props = defineProps({
     type: Boolean,
     default: false
   },
-  animateTitle: {
+  shortenTitle: {
     type: Boolean,
     default: false // If true, applies the title animation
   },
 })
 
 const isMobileOrTablet = ref(false)
+const showTitleTooltip = ref(false)
 const descriptionContainer = ref<any>(null)
 
 const blogPostImageUrl = computed(() => 
