@@ -53,8 +53,8 @@
       <h2 v-else :class="[ 
       'font-bold text-gray-800 dark:text-white', 
       layout === 'horizontal' && !isMobileOrTablet ? 'text-lg' : 'text-xl', 
-    ]" style="width: 100%;" v-tooltip="blogPost.title"> <!-- Use v-tooltip directive -->
-      {{ props.shortenTitle && blogPost.title.length > 80 ? blogPost.title.slice(0, 50) + '...' :  blogPost.title }}
+    ]" style="width: 100%;" >
+          {{ props.shortenTitle && blogPost.title.length > 80 ? blogPost.title.slice(0, 50) + '...' :  blogPost.title }}
     </h2>
       
 
