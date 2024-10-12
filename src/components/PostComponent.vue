@@ -54,7 +54,7 @@
       'font-bold text-gray-800 dark:text-white', 
       layout === 'horizontal' && !isMobileOrTablet ? 'text-lg' : 'text-xl', 
     ]" style="width: 100%;" v-tooltip="blogPost.title"> <!-- Use v-tooltip directive -->
-      {{ blogPost.title.length > 80 ? blogPost.title.slice(0, 50) + '...' :  blogPost.title }}
+      {{ props.shortenTitle && blogPost.title.length > 80 ? blogPost.title.slice(0, 50) + '...' :  blogPost.title }}
     </h2>
       
 
