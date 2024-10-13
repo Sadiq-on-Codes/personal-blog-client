@@ -34,7 +34,6 @@ const toggleDarkMode = () => {
   isDarkMode.value = !isDarkMode.value
   document.documentElement.classList.toggle('dark', isDarkMode.value)
   localStorage.setItem('darkMode', JSON.stringify(isDarkMode.value))
-  hasVisited.value = localStorage.getItem('hasVisited') === 'true';
 }
 
 provide('toggleDarkMode', toggleDarkMode)
@@ -42,6 +41,7 @@ provide('isDarkMode', isDarkMode)
 
 onMounted(() => {
   const storedDarkMode = JSON.parse(localStorage.getItem('darkMode') || 'false')
+  hasVisited.value = localStorage.getItem('hasVisited') === 'true';
   isDarkMode.value = storedDarkMode
   document.documentElement.classList.toggle('dark', storedDarkMode)
 })
