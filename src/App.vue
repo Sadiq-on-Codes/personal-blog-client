@@ -10,6 +10,10 @@
     >
       Subscribe
     </button>
+
+    <div v-if="!hasVisited">
+      <NewsLetter :newsletterOverlay="true" />
+    </div>
   </div>
 </template>
 
@@ -19,15 +23,18 @@ import { useRoute, useRouter } from 'vue-router'
 import HeaderComponent from './components/HeaderComponent.vue'
 import FooterComponent from './components/FooterComponent.vue'
 import { useSEO } from './utils/seoComposable';
+import NewsLetter from './components/NewsLetter.vue';
 
 const isDarkMode = ref(false)
 const route = useRoute()
 const router = useRouter()
+const hasVisited = ref(false)
 
 const toggleDarkMode = () => {
   isDarkMode.value = !isDarkMode.value
   document.documentElement.classList.toggle('dark', isDarkMode.value)
   localStorage.setItem('darkMode', JSON.stringify(isDarkMode.value))
+  hasVisited.value = localStorage.getItem('hasVisited') === 'true';
 }
 
 provide('toggleDarkMode', toggleDarkMode)
