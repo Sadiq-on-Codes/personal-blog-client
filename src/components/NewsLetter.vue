@@ -1,6 +1,6 @@
 <template>
     <div :class="[{ 'overlay': letterOverlay }]">
-        <div :class="[{ 'bg-white p-4 rounded-xl': letterOverlay }]"
+        <div :class="[{ 'bg-white dark:bg-gray-900 p-4 rounded-xl': letterOverlay }]"
             class="flex flex-col justify-center items-center gap-8 text-center sm:mx-0 mx-4">
             <div :class="[{ 'flex-col': !letterOverlay }]"
                 class="text-4xl w-full flex justify-between items-center text-[--color-post-primary] font-semibold uppercase tracking-wider bg-[--color-post-primary-light] px-4 rounded-full">
