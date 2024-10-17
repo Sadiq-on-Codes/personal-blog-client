@@ -106,12 +106,12 @@ const props = defineProps({
   },
   layout: {
     type: String,
-    default: 'vertical', // Options: 'vertical' (image top), 'horizontal' (image left)
+    default: 'vertical', 
     validator: (value: string) => ['vertical', 'horizontal'].includes(value)
   },
   reverse: {
     type: Boolean,
-    default: false // If true, reverses the order of image and content
+    default: false
   },
   isBlog: {
     type: Boolean,
@@ -132,14 +132,13 @@ const props = defineProps({
 })
 
 const isMobileOrTablet = ref(false)
-const showTitleTooltip = ref(false)
 const descriptionContainer = ref<any>(null)
 
 const blogPostImageUrl = computed(() => 
   props.blogPost.image ? `${CLOUDINARY_URL}${props.blogPost.image}` : ''
 )
 const checkIsMobileOrTablet = () => {
-  isMobileOrTablet.value = window.innerWidth <= 1024 // Adjust breakpoint for tablets
+  isMobileOrTablet.value = window.innerWidth <= 1024 
 }
 
 onMounted(() => {
