@@ -15,10 +15,10 @@
 
       <div class="flex flex-col gap-[--spacing] justify-between">
         <router-link v-if="blogPosts?.length > 1" :to="{ name: 'BlogDetailsPage', params: { id: blogPosts[1]?._id } }">
-          <BlogPost :blogPost="blogPosts[1]" :isHalfHeight="false" layout="horizontal" />
+          <BlogPost :blogPost="blogPosts[1]" :isHalfHeight="false" layout="horizontal" :shortenTitle="true" />
         </router-link>
         <router-link v-if="blogPosts?.length > 2" :to="{ name: 'BlogDetailsPage', params: { id: blogPosts[2]?._id } }">
-          <BlogPost :blogPost="blogPosts[2]" :isHalfHeight="false" layout="horizontal" />
+          <BlogPost :blogPost="blogPosts[2]" :isHalfHeight="false" layout="horizontal" :shortenTitle="true" />
         </router-link>
       </div>
     </div>
