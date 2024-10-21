@@ -4,7 +4,7 @@
       {
         'flex-col h-[430px]': layout === 'vertical' || isMobileOrTablet,
         'flex-row': layout === 'horizontal' && !isMobileOrTablet,
-        'flex-col-reverse': (layout === 'vertical' || isMobileOrTablet) && reverse,
+        'flex-col-reverse h-auto': (layout === 'vertical' || isMobileOrTablet) && reverse,
         'flex-row-reverse': layout === 'horizontal' && reverse && !isMobileOrTablet
       },
       'flex bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden transition-all duration-300 hover:shadow-lg'
